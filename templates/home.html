@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}SIGCO Systems — Sistema de Gestión Empresarial{% endblock %}
+
+{% block content %}
+<div class="home-wrap">
+
+    <!-- Fondo animado -->
+    <div class="home-bg">
+        <div class="bg-grid"></div>
+        <div class="bg-orb orb1"></div>
+        <div class="bg-orb orb2"></div>
+    </div>
+
+    <!-- Contenido principal -->
+    <main class="home-main">
+        <div class="home-card">
+            <img src="/static/img/logo.png" alt="SIGCO Systems" class="home-logo">
+
+            <div class="home-divider"></div>
+
+            <h1 class="home-title">Sistema de Gestión<br><span>Empresarial</span></h1>
+            <p class="home-sub">Control total de tu negocio — ventas, compras, almacén, tesorería y más.</p>
+
+            <a href="/login" class="btn-ingresar">
+                <span>Ingresar al sistema</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </a>
+
+            <div class="home-footer">
+                <span>¿Necesitas ayuda?</span>
+                <a href="https://wa.me/51944831711" target="_blank" class="home-wa">
+                    Escríbenos por WhatsApp
+                </a>
+            </div>
+        </div>
+    </main>
+
+</div>
+{% endblock %}

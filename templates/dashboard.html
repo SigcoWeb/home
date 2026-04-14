@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — SIGCO Systems{% endblock %}
+
+{% block content %}
+<div class="dash-wrap">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <img src="/static/img/logo.png" alt="SIGCO">
+        </div>
+        <nav class="sidebar-nav">
+            <a href="/dashboard" class="nav-item active">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+                    <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
+                </svg>
+                <span>Dashboard</span>
+            </a>
+            <!-- Módulos se agregarán aquí -->
+        </nav>
+        <div class="sidebar-bottom">
+            <a href="/logout" class="nav-item nav-logout">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/>
+                </svg>
+                <span>Salir</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Contenido -->
+    <main class="dash-main">
+        <header class="dash-header">
+            <h1>Bienvenido, <strong>{{ nombre }}</strong></h1>
+        </header>
+
+        <div class="dash-content">
+            <div class="dash-card">
+                <p>Sistema en configuración inicial.</p>
+                <p>Los módulos se irán habilitando según tu plan.</p>
+            </div>
+        </div>
+    </main>
+
+</div>
+{% endblock %}
