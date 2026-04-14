@@ -78,3 +78,4 @@ async def home(request: Request):
 @app.get("/ping")
 async def ping():
     return {"status": "ok", "version": settings.APP_VERSION, "modo": settings.MODO_DEPLOY}
+    
