@@ -75,7 +75,11 @@ async def home(request: Request):
     return templates.TemplateResponse("home.html", {"request": request})
 
 
+@app.get("/walter", response_class=HTMLResponse)
+async def walter(request: Request):
+    return templates.TemplateResponse("preguntas.html", {"request": request})
+
+
 @app.get("/ping")
 async def ping():
     return {"status": "ok", "version": settings.APP_VERSION, "modo": settings.MODO_DEPLOY}
-    
