@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SigcoWeb — Entrevista de Requisitos del Sistema</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,600;1,300&display=swap');
+
+:root {
+  --bg: #0f1117;
+  --bg2: #161b27;
+  --bg3: #1e2535;
+  --border: rgba(99,179,237,0.12);
+  --border2: rgba(99,179,237,0.25);
+  --azul: #63b3ed;
+  --azul-dark: #2b6cb0;
+  --verde: #68d391;
+  --amarillo: #f6e05e;
+  --rojo: #fc8181;
+  --text: #e2e8f0;
+  --text2: #a0aec0;
+  --text3: #4a5568;
+  --mono: 'IBM Plex Mono', monospace;
+  --sans: 'IBM Plex Sans', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* ── HEADER ── */
+.header {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border2);
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: 'SIGCOWEB';
+  position: absolute;
+  right: -20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--mono);
+  font-size: 8rem;
+  font-weight: 600;
+  color: rgba(99,179,237,0.04);
+  letter-spacing: -0.05em;
+  pointer-events: none;
+  white-space: nowrap;
+}
+.header-inner { max-width: 900px; margin: 0 auto; }
+.header-tag {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--azul);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+.header h1 {
+  font-size: 1.75rem;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+}
+.header h1 strong { font-weight: 600; color: var(--azul); }
+.header p { font-size: 0.9rem; color: var(--text2); max-width: 600px; }
+
+/* ── PROGRESS ── */
+.progress-bar {
+  height: 2px;
+  background: var(--bg3);
+  margin-bottom: 0;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--azul-dark), var(--azul));
+  transition: width 0.4s ease;
+  width: 0%;
+}
+
+/* ── LAYOUT ── */
+.layout {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  max-width: 1100px;
+  margin: 0 auto;
+  min-height: calc(100vh - 120px);
+}
+
+/* ── SIDEBAR / NAV ── */
+.nav {
+  padding: 2rem 1rem;
+  border-right: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+.nav-title {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--text3);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  padding-left: 0.5rem;
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+  margin-bottom: 2px;
+  font-size: 0.8rem;
+  color: var(--text2);
+  text-decoration: none;
+  border: 1px solid transparent;
+}
+.nav-item:hover { background: var(--bg3); color: var(--text); }
+.nav-item.active { background: rgba(99,179,237,0.08); color: var(--azul); border-color: var(--border); }
+.nav-item .nav-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--text3);
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+.nav-item.done .nav-dot { background: var(--verde); }
+.nav-item.active .nav-dot { background: var(--azul); }
+.nav-num {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--text3);
+  min-width: 16px;
+}
+
+/* ── MAIN CONTENT ── */
+.main { padding: 2rem 2.5rem; }
+
+/* ── SECCIÓN ── */
+.section {
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+.section.active { display: block; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.section-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.section-num {
+  font-family: var(--mono);
+  font-size: 2rem;
+  font-weight: 600;
+  color: rgba(99,179,237,0.2);
+  line-height: 1;
+  min-width: 48px;
+}
+.section-title { font-size: 1.4rem; font-weight: 300; }
+.section-title strong { font-weight: 600; }
+.section-desc { font-size: 0.85rem; color: var(--text2); margin-top: 0.25rem; }
+
+/* ── PREGUNTA ── */
+.pregunta {
+  margin-bottom: 2rem;
+  padding: 1.25rem;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  transition: border-color 0.2s;
+}
+.pregunta:focus-within {
+  border-color: var(--border2);
+}
+.pregunta-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+.pregunta-num {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--azul);
+  background: rgba(99,179,237,0.08);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.pregunta-label {
+  font-size: 0.9rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--text);
+}
+.pregunta-hint {
+  font-size: 0.78rem;
+  color: var(--text3);
+  margin-bottom: 0.75rem;
+  margin-left: 2.5rem;
+  font-style: italic;
+}
+
+/* ── INPUTS ── */
+textarea, input[type="text"] {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 0.875rem;
+  resize: vertical;
+  transition: border-color 0.2s;
+  outline: none;
+  line-height: 1.6;
+}
+textarea:focus, input[type="text"]:focus {
+  border-color: var(--azul);
+}
+textarea { min-height: 80px; }
+textarea.grande { min-height: 130px; }
+
+/* ── OPCIONES ── */
+.opciones {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.opcion {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s;
+  border: 1px solid transparent;
+}
+.opcion:hover { background: var(--bg3); }
+.opcion input[type="checkbox"],
+.opcion input[type="radio"] {
+  width: auto;
+  margin-top: 2px;
+  flex-shrink: 0;
+  accent-color: var(--azul);
+  cursor: pointer;
+}
+.opcion label {
+  font-size: 0.85rem;
+  color: var(--text2);
+  cursor: pointer;
+  line-height: 1.4;
+}
+.opcion:has(input:checked) {
+  background: rgba(99,179,237,0.06);
+  border-color: var(--border);
+}
+.opcion:has(input:checked) label { color: var(--text); }
+
+/* ── ESCALA ── */
+.escala {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.escala-btn {
+  width: 44px; height: 44px;
+  border-radius: 6px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text2);
+  font-family: var(--mono);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.escala-btn:hover, .escala-btn.selected {
+  background: rgba(99,179,237,0.12);
+  border-color: var(--azul);
+  color: var(--azul);
+}
+.escala-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  color: var(--text3);
+  margin-top: 0.3rem;
+}
+
+/* ── TABLA DE MÓDULOS ── */
+.modulos-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+.modulo-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 0.75rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.modulo-item:hover { border-color: var(--border2); }
+.modulo-item input { accent-color: var(--azul); cursor: pointer; flex-shrink: 0; }
+.modulo-item label { font-size: 0.8rem; color: var(--text2); cursor: pointer; }
+.modulo-item:has(input:checked) {
+  background: rgba(99,179,237,0.06);
+  border-color: var(--azul);
+}
+.modulo-item:has(input:checked) label { color: var(--azul); }
+
+/* ── NAVEGACIÓN ── */
+.nav-btns {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+.btn {
+  padding: 0.65rem 1.5rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.15s;
+  font-family: var(--sans);
+}
+.btn-prev {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text2);
+}
+.btn-prev:hover { border-color: var(--border2); color: var(--text); }
+.btn-next {
+  background: var(--azul);
+  color: var(--bg);
+}
+.btn-next:hover { background: #90cdf4; }
+.btn-submit {
+  background: var(--verde);
+  color: var(--bg);
+}
+.btn-submit:hover { background: #9ae6b4; }
+.step-info {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--text3);
+}
+
+/* ── RESULTADO / RESUMEN ── */
+.resultado {
+  display: none;
+}
+.resultado.active { display: block; }
+.resultado-header {
+  text-align: center;
+  padding: 3rem 2rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 2rem;
+}
+.resultado-icon { font-size: 3rem; margin-bottom: 1rem; }
+.resultado-title { font-size: 1.75rem; font-weight: 300; margin-bottom: 0.5rem; }
+.resultado-desc { color: var(--text2); font-size: 0.9rem; }
+.resultado-section { margin-bottom: 2rem; }
+.resultado-section-title {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--azul);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.resultado-item {
+  margin-bottom: 1.25rem;
+  padding: 1rem;
+  background: var(--bg2);
+  border-radius: 8px;
+  border-left: 2px solid var(--azul);
+}
+.resultado-pregunta {
+  font-size: 0.75rem;
+  color: var(--text3);
+  margin-bottom: 0.35rem;
+  font-style: italic;
+}
+.resultado-respuesta {
+  font-size: 0.875rem;
+  color: var(--text);
+  white-space: pre-wrap;
+  line-height: 1.6;
+}
+.resultado-respuesta.vacio { color: var(--text3); font-style: italic; }
+
+.btn-copy {
+  margin-top: 1rem;
+  padding: 0.65rem 1.5rem;
+  background: transparent;
+  border: 1px solid var(--border2);
+  color: var(--azul);
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  transition: all 0.15s;
+}
+.btn-copy:hover { background: rgba(99,179,237,0.08); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .layout { grid-template-columns: 1fr; }
+  .nav { display: none; }
+  .main { padding: 1.5rem; }
+  .modulos-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-tag">Peru Sistemas Pro · SigcoWeb · Entrevista de Requisitos</div>
+    <h1>Cuéntame cómo <strong>funciona tu sistema</strong></h1>
+    <p>Walter, tus respuestas serán la base del nuevo SigcoWeb. No hay respuestas incorrectas — entre más detalle, mejor el resultado.</p>
+  </div>
+</div>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <nav class="nav">
+    <div class="nav-title">Módulos</div>
+    <a class="nav-item active" onclick="irA(0)" href="#" id="nav-0">
+      <span class="nav-dot"></span>
+      <span class="nav-num">01</span>
+      Contexto general
+    </a>
+    <a class="nav-item" onclick="irA(1)" href="#" id="nav-1">
+      <span class="nav-dot"></span>
+      <span class="nav-num">02</span>
+      Ventas y Caja
+    </a>
+    <a class="nav-item" onclick="irA(2)" href="#" id="nav-2">
+      <span class="nav-dot"></span>
+      <span class="nav-num">03</span>
+      Catálogo y Stock
+    </a>
+    <a class="nav-item" onclick="irA(3)" href="#" id="nav-3">
+      <span class="nav-dot"></span>
+      <span class="nav-num">04</span>
+      Compras y Proveedores
+    </a>
+    <a class="nav-item" onclick="irA(4)" href="#" id="nav-4">
+      <span class="nav-dot"></span>
+      <span class="nav-num">05</span>
+      Clientes y Créditos
+    </a>
+    <a class="nav-item" onclick="irA(5)" href="#" id="nav-5">
+      <span class="nav-dot"></span>
+      <span class="nav-num">06</span>
+      Contabilidad e IRRHH
+    </a>
+    <a class="nav-item" onclick="irA(6)" href="#" id="nav-6">
+      <span class="nav-dot"></span>
+      <span class="nav-num">07</span>
+      Reportes y Datos
+    </a>
+    <a class="nav-item" onclick="irA(7)" href="#" id="nav-7">
+      <span class="nav-dot"></span>
+      <span class="nav-num">08</span>
+      Integraciones y Nube
+    </a>
+    <a class="nav-item" onclick="irA(8)" href="#" id="nav-8">
+      <span class="nav-dot"></span>
+      <span class="nav-num">09</span>
+      Lo que mejorarías
+    </a>
+  </nav>
+
+  <!-- CONTENIDO -->
+  <main class="main">
+
+    <!-- 01: CONTEXTO GENERAL -->
+    <div class="section active" id="sec-0">
+      <div class="section-header">
+        <div class="section-num">01</div>
+        <div>
+          <div class="section-title"><strong>Contexto general</strong> del sistema</div>
+          <div class="section-desc">Cuéntame quién usa tu sistema y cómo está organizado.</div>
+        </div>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-header">
+          <span class="pregunta-num">1.1</span>
+          <span class="pregunta-label">¿A qué tipos de negocio le vendes tu sistema? Pon ejemplos reales de tus clientes actuales.</span>
+        </div>
+        <textarea class="grande" id="q1_1" placeholder="Ej: ferreterías, bodegas, grifos, restaurantes, veterinarias... cuéntame los rubros y si hay alguno que tiene necesidades especiales."></textarea>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-header">
+          <span class="pregunta-num">1.2</span>
+          <span class="pregunta-label">¿Cuántos usuarios simultáneos tiene normalmente cada cliente?</span>
+        </div>
+        <div class="opciones">
+          <label class="opcion"><input type="radio" name="q1_2" value="1"> <label>1 solo usuario (dueño hace todo)</label></label>
+          <label class="opcion"><input type="radio" name="q1_2" value="2-5"> <label>2 a 5 usuarios (cajero, vendedor, admin)</label></label>
+          <label class="opcion"><input type="radio" name="q1_2" value="6-15"> <label>6 a 15 usuarios</label></label>
+          <label class="opcion"><input type="radio" name="q1_2" value="15+"> <label>Más de 15 usuarios</label></label>
+          <label class="opcion"><input type="radio" name="q1_2" value="varía"> <label>Varía mucho según el cliente</label></label>
+        </div>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-header">
+          <span class="pregunta-num">1.3</span>
+          <span class="pregunta-label">¿Cómo está organizado tu sistema hoy? ¿Qué módulos principales tiene?</span>
+        </div>
+        <div class="pregunta-hint">Marca los que tienes actualmente funcionando:</div>
+        <div class="modulos-grid">
+          <label class="modulo-item"><input type="checkbox" name="q1_3" value="ventas"> <label>Ventas / Punto de venta</label></label>
+          <label class="modulo-item"><input type="checkbox" name="q1_3" value="caja"> <label>Caja / Cobros</label></label>
+          <label class="modulo-item"><input type="checkbox" name="q1_3" value="catalogo"> <label>Catálogo de productos</label></label>
+          <label class="modulo-item"><input type="checkbox" name="q1_3" value="stock"> <label>Control de stock / Kardex</label></label>
+          <label class="modulo-item"><input type="checkbox" name="q1_3" value="compras"> <label>Compras / Proveedores</label></label>
+          <label class="modulo-item"><input type="checkbox" name="q1_3" value="clientes"> <label>Clientes / CRM</label></label>
+          <label class="modulo-item"><input type="checkbox" name="q1_3" value="creditos"> <label>Créditos / Cuentas por cobrar</label></label>
+          <label class="modulo-item"><input type="checkbox" name="q1_3" value="contabilidad"> <label>Contabilidad</label></label>
+          <label class="modulo-item"><input type="checkbox" name="q1_3" value="planilla"> <label>Planillas / RRHH</label></label>
+          <label class="modulo-item"><input type="checkbox" name="q1_3" value="reportes"> <label>Reportes y estadísticas</label></label>
+          <label class="modulo-item"><input type="checkbox" name="q1_3" value="facturacion"> <label>Facturación electrónica</label></label>
+          <label class="modulo-item"><input type="checkbox" name="q1_3" value="produccion"> <label>Producción / Recetas</label></label>
+          <label class="modulo-item"><input type="checkbox" name="q1_3" value="delivery"> <label>Delivery / Pedidos</label></label>
+          <label class="modulo-item"><input type="checkbox" name="q1_3" value="activos"> <label>Activos fijos</label></label>
+          <label class="modulo-item"><input type="checkbox" name="q1_3" value="banco"> <label>Bancos / Tesorería</label></label>
+          <label class="modulo-item"><input type="checkbox" name="q1_3" value="otro"> <label>Otro que no está en la lista</label></label>
+        </div>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-header">
+          <span class="pregunta-num">1.4</span>
+          <span class="pregunta-label">¿Qué es lo que MÁS valoran tus clientes de tu sistema actual?</span>
+        </div>
+        <textarea id="q1_4" placeholder="Lo que más les gusta, lo que no cambiarían por nada..."></textarea>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-header">
+          <span class="pregunta-num">1.5</span>
+          <span class="pregunta-label">¿Qué es lo que más te RECLAMAN o piden que mejores?</span>
+        </div>
+        <textarea id="q1_5" placeholder="Lo que más te generan soporte, los dolores de cabeza más comunes..."></textarea>
+      </div>
+
+      <div class="nav-btns">
+        <div class="step-info">Sección 1 de 9</div>
+        <button class="btn btn-next" onclick="siguiente()">Siguiente →</button>
+      </div>
+    </div>
+
+    <!-- 02: VENTAS Y CAJA -->
+    <div class="section" id="sec-1">
+      <div class="section-header">
+        <div class="section-num">02</div>
+        <div>
+          <div class="section-title"><strong>Ventas</strong> y Caja</div>
+          <div class="section-desc">El corazón de tu sistema — cómo registra una venta.</div>
+        </div>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-header">
+          <span class="pregunta-num">2.1</span>
+          <span class="pregunta-label">Tu tabla de ventas tiene cerca de 100 campos. ¿Cuáles son los 10 campos más importantes que SIEMPRE se usan y no pueden faltar?</span>
+        </div>
+        <div class="pregunta-hint">Puedes nombrarlos tal como aparecen en tu base de datos o en pantalla.</div>
+        <textarea class="grande" id="q2_1" placeholder="Ej: fecha, cliente, producto, cantidad, precio, descuento, vendedor, medio de pago, comprobante, almacén..."></textarea>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-header">
+          <span class="pregunta-num">2.2</span>
+          <span class="pregunta-label">¿Cuáles campos de los 100 son específicos de ciertos rubros? ¿Cuáles usas SOLO para restaurantes, o SOLO para grifos, etc.?</span>
+        </div>
+        <textarea class="grande" id="q2_2" placeholder="Ej: 'número de mesa' solo para restaurantes, 'placa del vehículo' solo para grifos, 'talla y color' solo para ropa..."></textarea>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-header">
+          <span class="pregunta-num">2.3</span>
+          <span class="pregunta-label">¿Cómo maneja tu sistema las SERIES de comprobantes? ¿Cada caja tiene su propia serie?</span>
+        </div>
+        <div class="opciones">
+          <label class="opcion"><input type="checkbox" name="q2_3" value="serie_por_caja"> <label>Sí, cada caja tiene su propia serie (F001, F002, etc.)</label></label>
+          <label class="opcion"><input type="checkbox" name="q2_3" value="serie_global"> <label>Serie única para toda la empresa</label></label>
+          <label class="opcion"><input type="checkbox" name="q2_3" value="serie_por_punto"> <label>Serie por punto de venta</label></label>
+          <label class="opcion"><input type="checkbox" name="q2_3" value="serie_por_vendedor"> <label>Serie por vendedor</label></label>
+        </div>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-header">
+          <span class="pregunta-num">2.4</span>
+          <span class="pregunta-label">¿Cómo funciona el proceso de apertura y cierre de caja en tu sistema?</span>
+        </div>
+        <textarea id="q2_4" placeholder="Qué datos se registran al abrir, cómo se hace el arqueo, qué pasa si hay diferencia..."></textarea>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-header">
+          <span class="pregunta-num">2.5</span>
+          <span class="pregunta-label">¿Cómo maneja las DEVOLUCIONES y ANULACIONES? ¿Hay diferencia entre ambas?</span>
+        </div>
+        <textarea id="q2_5" placeholder="Proceso de devolución, nota de crédito, qué pasa con el stock, aprobaciones necesarias..."></textarea>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-header">
+          <span class="pregunta-num">2.6</span>
+          <span class="pregunta-label">¿Tu sistema maneja COTIZACIONES o PEDIDOS antes de convertirlos en venta?</span>
+        </div>
+        <div class="opciones">
+          <label class="opcion"><input type="radio" name="q2_6" value="si_cotizacion"> <label>Sí, cotización → pedido → venta</label></label>
+          <label class="opcion"><input type="radio" name="q2_6" value="si_pedido"> <label>Solo pedido → venta</label></label>
+          <label class="opcion"><input type="radio" name="q2_6" value="directo"> <label>Venta directa sin pasos previos</label></label>
+          <label class="opcion"><input type="radio" name="q2_6" value="depende"> <label>Depende del rubro del cliente</label></label>
+        </div>
+      </div>
+
+      <div class="nav-btns">
+        <button class="btn btn-prev" onclick="anterior()">← Anterior</button>
+        <div class="step-info">Sección 2 de 9</div>
+        <button class="btn btn-next" onclick="siguiente()">Siguiente →</button>
+      </div>
+    </div>
+
+    <!-- 03: CATÁLOGO Y STOCK -->
+    <div class="section" id="sec-2">
+      <div class="section-header">
+        <div class="section-num">03</div>
+        <div>
+          <div class="section-title"><strong>Catálogo</strong> y Control de Stock</div>
+          <div class="section-desc">Cómo organiza los productos y controla el inventario.</div>
+        </div>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-header">
+          <span class="pregunta-num">3.1</span>
+          <span class="pregunta-label">¿Cómo están organizados los productos? ¿Qué niveles de clasificación tiene tu sistema?</span>
+        </div>
+        <textarea id="q3_1" placeholder="Ej: Familia → Subfamilia → Producto, o Línea → Marca → Producto... ¿cuántos niveles? ¿son configurables?"></textarea>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-header">
+          <span class="pregunta-num">3.2</span>
+          <span class="pregunta-label">¿Cómo maneja los PRECIOS? ¿Hay múltiples listas de precios?</span>
+        </div>
+        <div class="pregunta-hint">Marca todo lo que aplica en tu sistema:</div>
+        <div class="opciones">
+          <label class="opcion"><input type="checkbox" name="q3_2" value="precio_unico"> <label>Precio único por producto</label></label>
+          <label class="opcion"><input type="checkbox" name="q3_2" value="precio_por_cliente"> <label>Precio según tipo de cliente (mayorista/minorista)</label></label>
+          <label class="opcion"><input type="checkbox" name="q3_2" value="precio_por_cantidad"> <label>Precio según volumen (a más cantidad, menos precio)</label></label>
+          <label class="opcion"><input type="checkbox" name="q3_2" value="precio_por_fecha"> <label>Precios con vigencia por fechas</label></label>
+          <label class="opcion"><input type="checkbox" name="q3_2" value="precio_por_vendedor"> <label>El vendedor puede modificar el precio</label></label>
+          <label class="opcion"><input type="checkbox" name="q3_2" value="precio_promo"> <label>Precios de promoción o descuento</label></label>
+          <label class="opcion"><input type="checkbox" name="q3_2" value="precio_por_moneda"> <label>Precios en soles y dólares</label></label>
+        </div>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-header">
+          <span class="pregunta-num">3.3</span>
+          <span class="pregunta-label">¿Cómo maneja los productos con VARIANTES (tallas, colores, sabores, presentaciones)?</span>
+        </div>
+        <textarea id="q3_3" placeholder="Ej: cada variante es un producto distinto con su propio código, o es un mismo producto con atributos... ¿cómo lo organizas en tu BD?"></textarea>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-header">
+          <span class="pregunta-num">3.4</span>
+          <span class="pregunta-label">¿Cómo es el KARDEX en tu sistema? ¿Qué métodos de valorización soporta?</span>
+        </div>
+        <div class="opciones">
+          <label class="opcion"><input type="checkbox" name="q3_4" value="prom"> <label>Costo promedio ponderado</label></label>
+          <label class="opcion"><input type="checkbox" name="q3_4" value="fifo"> <label>PEPS / FIFO (primero en entrar, primero en salir)</label></label>
+          <label class="opcion"><input type="checkbox" name="q3_4" value="lifo"> <label>UEPS / LIFO</label></label>
+          <label class="opcion"><input type="checkbox" name="q3_4" value="especifico"> <label>Identificación específica</label></label>
+        </div>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-header">
+          <span class="pregunta-num">3.5</span>
+          <span class="pregunta-label">¿Hay clientes que manejan MÚLTIPLES ALMACENES? ¿Cómo funciona la transferencia entre ellos?</span>
+        </div>
+        <textarea id="q3_5" placeholder="Número típico de almacenes, proceso de transferencia, quién aprueba, qué documentos genera..."></textarea>
+      </div>
+
+      <div class="nav-btns">
+        <button class="btn btn-prev" onclick="anterior()">← Anterior</button>
+        <div class="step-info">Sección 3 de 9</div>
+        <button class="btn btn-next" onclick="siguiente()">Siguiente →</button>
+      </div>
+    </div>
+
+    <!-- 04: COMPRAS Y PROVEEDORES -->
+    <div class="section" id="sec-3">
+      <div class="section-header">
+        <div class="section-num">04</div>
+        <div>
+          <div class="section-title"><strong>Compras</strong> y Proveedores</div>
+          <div class="section-desc">Cómo gestiona las entradas de mercadería y las cuentas por pagar.</div>
+        </div>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-header">
+          <span class="pregunta-num">4.1</span>
+          <span class="pregunta-label">¿Cómo es el proceso completo de una COMPRA en tu sistema, desde el pedido al proveedor hasta que entra al stock?</span>
+        </div>
+        <textarea class="grande" id="q4_1" placeholder="Paso a paso, qué documentos genera, quién aprueba, cómo se registra el ingreso al almacén..."></textarea>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-header">
+          <span class="pregunta-num">4.2</span>
+          <span class="pregunta-label">¿Cómo manejas las CUENTAS POR PAGAR a proveedores? ¿Hay control de fechas de vencimiento?</span>
+        </div>
+        <textarea id="q4_2" placeholder="Registro de facturas pendientes, alertas de vencimiento, formas de pago parcial..."></textarea>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-header">
+          <span class="pregunta-num">4.3</span>
+          <span class="pregunta-label">¿Tus clientes manejan ÓRDENES DE COMPRA formales antes de recibir mercadería?</span>
+        </div>
+        <div class="opciones">
+          <label class="opcion"><input type="radio" name="q4_3" value="siempre"> <label>Sí, siempre generan OC antes de comprar</label></label>
+          <label class="opcion"><input type="radio" name="q4_3" value="algunos"> <label>Solo algunos clientes (los más grandes)</label></label>
+          <label class="opcion"><input type="radio" name="q4_3" value="nunca"> <label>No, registran la compra cuando llega la factura</label></label>
+          <label class="opcion"><input type="radio" name="q4_3" value="depende"> <label>Depende del rubro</label></label>
+        </div>
+      </div>
+
+      <div class="nav-btns">
+        <button class="btn btn-prev" onclick="anterior()">← Anterior</button>
+        <div class="step-info">Sección 4 de 9</div>
+        <button class="btn btn-next" onclick="siguiente()">Siguiente →</button>
+      </div>
+    </div>
+
+    <!-- 05: CLIENTES Y CRÉDITOS -->
+    <div class="section" id="sec-4">
+      <div class="section-header">
+        <div class="section-num">05</div>
+        <div>
+          <div class="section-title"><strong>Clientes</strong> y Créditos</div>
+          <div class="section-desc">Gestión de clientes, créditos y cuentas por cobrar.</div>
+        </div>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-header">
+          <span class="pregunta-num">5.1</span>
+          <span class="pregunta-label">¿Cómo funciona el CRÉDITO A CLIENTES en tu sistema? ¿Hay control de límite de crédito?</span>
+        </div>
+        <textarea class="grande" id="q5_1" placeholder="Proceso de aprobación de crédito, límites, alertas de deuda vencida, bloqueo de ventas por deuda..."></textarea>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-header">
+          <span class="pregunta-num">5.2</span>
+          <span class="pregunta-label">¿Qué datos del cliente son los más importantes en tu sistema? ¿Hay datos que solo usas para ciertos rubros?</span>
+        </div>
+        <textarea id="q5_2" placeholder="Campos especiales, datos que piden los clientes distribuidoras vs restaurantes vs bodegas..."></textarea>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-header">
+          <span class="pregunta-num">5.3</span>
+          <span class="pregunta-label">¿Cuántos TIPOS DE CLIENTE maneja tu sistema? ¿Cómo se diferencian entre sí?</span>
+        </div>
+        <textarea id="q5_3" placeholder="Ej: mayorista, minorista, empleado, VIP... qué diferencia hay en precio, descuento, crédito..."></textarea>
+      </div>
+
+      <div class="nav-btns">
+        <button class="btn btn-prev" onclick="anterior()">← Anterior</button>
+        <div class="step-info">Sección 5 de 9</div>
+        <button class="btn btn-next" onclick="siguiente()">Siguiente →</button>
+      </div>
+    </div>
+
+    <!-- 06: CONTABILIDAD Y RRHH -->
+    <div class="section" id="sec-5">
+      <div class="section-header">
+        <div class="section-num">06</div>
+        <div>
+          <div class="section-title"><strong>Contabilidad</strong> y Planillas</div>
+          <div class="section-desc">¿Qué tan profundo va tu sistema en el área contable y de personal?</div>
+        </div>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-header">
+          <span class="pregunta-num">6.1</span>
+          <span class="pregunta-label">¿Tu sistema genera asientos contables automáticos o solo registra las operaciones comerciales?</span>
+        </div>
+        <div class="opciones">
+          <label class="opcion"><input type="radio" name="q6_1" value="asientos_auto"> <label>Sí, genera asientos contables automáticamente con cada venta/compra</label></label>
+          <label class="opcion"><input type="radio" name="q6_1" value="solo_comercial"> <label>Solo gestión comercial, la contabilidad la hace el contador en otro sistema</label></label>
+          <label class="opcion"><input type="radio" name="q6_1" value="exporta"> <label>Exporta datos para que el contador los importe en su sistema</label></label>
+          <label class="opcion"><input type="radio" name="q6_1" value="parcial"> <label>Algunos módulos sí, otros no</label></label>
+        </div>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-header">
+          <span class="pregunta-num">6.2</span>
+          <span class="pregunta-label">¿Qué tan frecuente es que tus clientes te pidan módulo de PLANILLAS o RRHH?</span>
+        </div>
+        <div class="escala" id="escala-6-2">
+          <button class="escala-btn" onclick="selEscala('escala-6-2', '1', this)">1</button>
+          <button class="escala-btn" onclick="selEscala('escala-6-2', '2', this)">2</button>
+          <button class="escala-btn" onclick="selEscala('escala-6-2', '3', this)">3</button>
+          <button class="escala-btn" onclick="selEscala('escala-6-2', '4', this)">4</button>
+          <button class="escala-btn" onclick="selEscala('escala-6-2', '5', this)">5</button>
+        </div>
+        <input type="hidden" id="q6_2" value="">
+        <div class="escala-labels"><span>Casi nadie lo pide</span><span>Todo el mundo lo quiere</span></div>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-header">
+          <span class="pregunta-num">6.3</span>
+          <span class="pregunta-label">¿Tu sistema genera los archivos PLE para SUNAT (libros electrónicos) o solo hace la facturación electrónica?</span>
+        </div>
+        <textarea id="q6_3" placeholder="Qué libros genera, qué formato, si se integra con el portal SUNAT..."></textarea>
+      </div>
+
+      <div class="nav-btns">
+        <button class="btn btn-prev" onclick="anterior()">← Anterior</button>
+        <div class="step-info">Sección 6 de 9</div>
+        <button class="btn btn-next" onclick="siguiente()">Siguiente →</button>
+      </div>
+    </div>
+
+    <!-- 07: REPORTES -->
+    <div class="section" id="sec-6">
+      <div class="section-header">
+        <div class="section-num">07</div>
+        <div>
+          <div class="section-title"><strong>Reportes</strong> y Datos</div>
+          <div class="section-desc">Qué información necesitan ver los dueños y contadores.</div>
+        </div>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-header">
+          <span class="pregunta-num">7.1</span>
+          <span class="pregunta-label">¿Cuáles son los 5 reportes que MÁS piden tus clientes? ¿Qué es lo que siempre quieren ver?</span>
+        </div>
+        <textarea class="grande" id="q7_1" placeholder="Ej: ventas del día por vendedor, ranking de productos más vendidos, estado de cuentas por cobrar..."></textarea>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-header">
+          <span class="pregunta-num">7.2</span>
+          <span class="pregunta-label">Tu dashboard parece el tablero de un avión. ¿Qué indicadores son los más importantes en pantalla principal?</span>
+        </div>
+        <textarea id="q7_2" placeholder="Qué números o gráficos tienen siempre visibles, qué alertas aparecen, qué ven al entrar al sistema..."></textarea>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-header">
+          <span class="pregunta-num">7.3</span>
+          <span class="pregunta-label">¿Qué formatos de exportación soportas y cuáles son los más usados?</span>
+        </div>
+        <div class="opciones">
+          <label class="opcion"><input type="checkbox" name="q7_3" value="excel"> <label>Excel / CSV</label></label>
+          <label class="opcion"><input type="checkbox" name="q7_3" value="pdf"> <label>PDF</label></label>
+          <label class="opcion"><input type="checkbox" name="q7_3" value="impresora"> <label>Impresora directa (ticket, A4)</label></label>
+          <label class="opcion"><input type="checkbox" name="q7_3" value="txt"> <label>TXT (para SUNAT/PLE)</label></label>
+          <label class="opcion"><input type="checkbox" name="q7_3" value="xml"> <label>XML</label></label>
+          <label class="opcion"><input type="checkbox" name="q7_3" value="whatsapp"> <label>WhatsApp / Email directo</label></label>
+        </div>
+      </div>
+
+      <div class="nav-btns">
+        <button class="btn btn-prev" onclick="anterior()">← Anterior</button>
+        <div class="step-info">Sección 7 de 9</div>
+        <button class="btn btn-next" onclick="siguiente()">Siguiente →</button>
+      </div>
+    </div>
+
+    <!-- 08: INTEGRACIONES -->
+    <div class="section" id="sec-7">
+      <div class="section-header">
+        <div class="section-num">08</div>
+        <div>
+          <div class="section-title"><strong>Integraciones</strong> y Nube</div>
+          <div class="section-desc">Conexiones con servicios externos y la transición a web.</div>
+        </div>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-header">
+          <span class="pregunta-num">8.1</span>
+          <span class="pregunta-label">¿Qué integraciones externas tiene tu sistema actualmente o que más te piden?</span>
+        </div>
+        <div class="opciones">
+          <label class="opcion"><input type="checkbox" name="q8_1" value="sunat_fe"> <label>SUNAT — Facturación electrónica</label></label>
+          <label class="opcion"><input type="checkbox" name="q8_1" value="sunat_ruc"> <label>SUNAT — Consulta RUC/DNI</label></label>
+          <label class="opcion"><input type="checkbox" name="q8_1" value="yape"> <label>Yape</label></label>
+          <label class="opcion"><input type="checkbox" name="q8_1" value="plin"> <label>Plin</label></label>
+          <label class="opcion"><input type="checkbox" name="q8_1" value="pos_bancario"> <label>POS bancario (tarjetas)</label></label>
+          <label class="opcion"><input type="checkbox" name="q8_1" value="correo"> <label>Envío de comprobantes por correo</label></label>
+          <label class="opcion"><input type="checkbox" name="q8_1" value="whatsapp"> <label>WhatsApp Business</label></label>
+          <label class="opcion"><input type="checkbox" name="q8_1" value="ecommerce"> <label>Tienda online / E-commerce</label></label>
+          <label class="opcion"><input type="checkbox" name="q8_1" value="balanza"> <label>Balanzas electrónicas</label></label>
+          <label class="opcion"><input type="checkbox" name="q8_1" value="lector_barras"> <label>Lectores de código de barras</label></label>
+        </div>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-header">
+          <span class="pregunta-num">8.2</span>
+          <span class="pregunta-label">Sobre la transición a web/nube — ¿qué es lo que más preocupa a tus clientes actuales de ese cambio?</span>
+        </div>
+        <textarea id="q8_2" placeholder="Velocidad, internet, privacidad, costo, capacitación... qué objeciones te ponen cuando les hablas de la versión web..."></textarea>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-header">
+          <span class="pregunta-num">8.3</span>
+          <span class="pregunta-label">¿Hay clientes que necesitan trabajar SIN INTERNET en algún momento? ¿Cómo manejas eso hoy?</span>
+        </div>
+        <textarea id="q8_3" placeholder="Si tienen cortes de luz o internet, si necesitan modo offline, cómo sincronizan después..."></textarea>
+      </div>
+
+      <div class="nav-btns">
+        <button class="btn btn-prev" onclick="anterior()">← Anterior</button>
+        <div class="step-info">Sección 8 de 9</div>
+        <button class="btn btn-next" onclick="siguiente()">Siguiente →</button>
+      </div>
+    </div>
+
+    <!-- 09: MEJORAS -->
+    <div class="section" id="sec-8">
+      <div class="section-header">
+        <div class="section-num">09</div>
+        <div>
+          <div class="section-title">Lo que <strong>mejorarías</strong></div>
+          <div class="section-desc">Tu visión para SigcoWeb — qué haría tu sistema 10 veces mejor.</div>
+        </div>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-header">
+          <span class="pregunta-num">9.1</span>
+          <span class="pregunta-label">Si pudieras rediseñar tu sistema desde cero, ¿qué 3 cosas cambiarías completamente?</span>
+        </div>
+        <textarea class="grande" id="q9_1" placeholder="Las cosas que te dan más trabajo hoy, las que más tiempo les toma a tus clientes, las que más errores generan..."></textarea>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-header">
+          <span class="pregunta-num">9.2</span>
+          <span class="pregunta-label">¿Qué funciones tiene tu competencia que tú no tienes y que tus clientes te piden?</span>
+        </div>
+        <textarea id="q9_2" placeholder="Lo que ves en otros sistemas y que te gustaría tener en SigcoWeb..."></textarea>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-header">
+          <span class="pregunta-num">9.3</span>
+          <span class="pregunta-label">¿Qué tiene TU sistema que la competencia NO tiene y que tus clientes valoran mucho?</span>
+        </div>
+        <textarea id="q9_3" placeholder="Tu ventaja diferencial, lo que te hace distinto, por qué tus clientes se quedan contigo..."></textarea>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-header">
+          <span class="pregunta-num">9.4</span>
+          <span class="pregunta-label">¿Hay algún módulo o funcionalidad que siempre quisiste hacer pero nunca pudiste por tiempo o recursos?</span>
+        </div>
+        <textarea id="q9_4" placeholder="La funcionalidad soñada, lo que alguna vez dijiste 'algún día lo hago'..."></textarea>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-header">
+          <span class="pregunta-num">9.5</span>
+          <span class="pregunta-label">¿Algo más que quieras contar sobre tu sistema que no te pregunté?</span>
+        </div>
+        <textarea class="grande" id="q9_5" placeholder="Cualquier detalle importante, casos especiales, situaciones que te han pasado con clientes..."></textarea>
+      </div>
+
+      <div class="nav-btns">
+        <button class="btn btn-prev" onclick="anterior()">← Anterior</button>
+        <div class="step-info">Sección 9 de 9</div>
+        <button class="btn btn-submit" onclick="verResultado()">✓ Ver resumen de respuestas</button>
+      </div>
+    </div>
+
+    <!-- RESULTADO -->
+    <div class="resultado" id="resultado">
+      <div class="resultado-header">
+        <div class="resultado-icon">📋</div>
+        <div class="resultado-title">Resumen de respuestas</div>
+        <div class="resultado-desc">Gracias Walter. Aquí está el resumen de todo lo que respondiste.</div>
+        <button class="btn-copy" onclick="copiarResumen()">📋 Copiar todo el resumen</button>
+      </div>
+      <div id="resumen-contenido"></div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+let seccionActual = 0;
+const totalSecciones = 9;
+
+const SECCIONES = [
+  "Contexto general",
+  "Ventas y Caja",
+  "Catálogo y Stock",
+  "Compras y Proveedores",
+  "Clientes y Créditos",
+  "Contabilidad y Planillas",
+  "Reportes y Datos",
+  "Integraciones y Nube",
+  "Lo que mejorarías"
+];
+
+const PREGUNTAS = {
+  q1_1: "¿A qué tipos de negocio le vendes tu sistema?",
+  q1_2: "¿Cuántos usuarios simultáneos normalmente?",
+  q1_3: "¿Qué módulos tiene tu sistema actualmente?",
+  q1_4: "¿Qué valoran más tus clientes?",
+  q1_5: "¿Qué te reclaman o piden mejorar?",
+  q2_1: "Los 10 campos más importantes de ventas",
+  q2_2: "Campos específicos por rubro",
+  q2_3: "¿Cómo maneja las series de comprobantes?",
+  q2_4: "Proceso de apertura y cierre de caja",
+  q2_5: "Devoluciones y anulaciones",
+  q2_6: "¿Maneja cotizaciones o pedidos previos?",
+  q3_1: "Organización y clasificación de productos",
+  q3_2: "¿Cómo maneja los precios?",
+  q3_3: "Productos con variantes (tallas, colores, etc.)",
+  q3_4: "Método de valorización del Kardex",
+  q3_5: "Múltiples almacenes y transferencias",
+  q4_1: "Proceso completo de una compra",
+  q4_2: "Cuentas por pagar a proveedores",
+  q4_3: "¿Usa órdenes de compra formales?",
+  q5_1: "Crédito a clientes y límites",
+  q5_2: "Datos más importantes del cliente",
+  q5_3: "Tipos de cliente en el sistema",
+  q6_1: "¿Genera asientos contables automáticos?",
+  q6_2: "Frecuencia de pedido de módulo de planillas (1-5)",
+  q6_3: "Archivos PLE para SUNAT",
+  q7_1: "Los 5 reportes más pedidos",
+  q7_2: "Indicadores del dashboard principal",
+  q7_3: "Formatos de exportación soportados",
+  q8_1: "Integraciones externas actuales o pedidas",
+  q8_2: "Preocupaciones de clientes sobre la nube",
+  q8_3: "Trabajo sin internet / modo offline",
+  q9_1: "3 cosas que cambiarías al rediseñar",
+  q9_2: "Funciones de competencia que te piden",
+  q9_3: "Tu ventaja diferencial vs competencia",
+  q9_4: "Funcionalidad soñada nunca implementada",
+  q9_5: "Algo más que quieras contar",
+};
+
+function irA(n) {
+  document.getElementById('sec-' + seccionActual).classList.remove('active');
+  document.getElementById('nav-' + seccionActual).classList.remove('active');
+  document.getElementById('nav-' + seccionActual).classList.add('done');
+  seccionActual = n;
+  document.getElementById('sec-' + seccionActual).classList.add('active');
+  document.getElementById('nav-' + seccionActual).classList.add('active');
+  document.getElementById('nav-' + seccionActual).classList.remove('done');
+  actualizarProgreso();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function siguiente() {
+  if (seccionActual < totalSecciones - 1) irA(seccionActual + 1);
+}
+
+function anterior() {
+  if (seccionActual > 0) irA(seccionActual - 1);
+}
+
+function actualizarProgreso() {
+  const pct = ((seccionActual + 1) / totalSecciones) * 100;
+  document.getElementById('progress').style.width = pct + '%';
+}
+
+function selEscala(grupId, valor, btn) {
+  const grupo = document.getElementById(grupId);
+  grupo.querySelectorAll('.escala-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  // Guardar en hidden input relacionado
+  const inputId = grupId.replace('escala-', 'q').replace('-', '_');
+  const input = document.getElementById(inputId);
+  if (input) input.value = valor;
+}
+
+function obtenerRespuesta(id) {
+  const el = document.getElementById(id);
+  if (el) return el.value.trim();
+
+  // Checkboxes
+  const checks = document.querySelectorAll(`input[name="${id}"]:checked`);
+  if (checks.length > 0) return Array.from(checks).map(c => c.value).join(', ');
+
+  // Radio
+  const radio = document.querySelector(`input[name="${id}"]:checked`);
+  if (radio) return radio.value;
+
+  return '';
+}
+
+function verResultado() {
+  // Ocultar última sección
+  document.getElementById('sec-8').classList.remove('active');
+  document.getElementById('nav-8').classList.add('done');
+
+  // Mostrar resultado
+  document.getElementById('resultado').classList.add('active');
+  document.getElementById('progress').style.width = '100%';
+
+  // Construir resumen
+  const contenido = document.getElementById('resumen-contenido');
+  let html = '';
+
+  SECCIONES.forEach((secNombre, i) => {
+    html += `<div class="resultado-section">
+      <div class="resultado-section-title">0${i+1} — ${secNombre}</div>`;
+
+    const pregIds = Object.keys(PREGUNTAS).filter(k => k.startsWith(`q${i+1}_`));
+    pregIds.forEach(id => {
+      const pregunta = PREGUNTAS[id];
+      let respuesta = '';
+
+      // Texto
+      const elTxt = document.getElementById(id);
+      if (elTxt && elTxt.value.trim()) {
+        respuesta = elTxt.value.trim();
+      }
+      // Checkboxes
+      const checks = document.querySelectorAll(`input[name="${id}"]:checked`);
+      if (checks.length > 0) {
+        respuesta = Array.from(checks).map(c => {
+          const lbl = c.parentElement.querySelector('label');
+          return lbl ? lbl.textContent.trim() : c.value;
+        }).join('\n• ');
+        respuesta = '• ' + respuesta;
+      }
+      // Radio
+      const radio = document.querySelector(`input[name="${id}"]:checked`);
+      if (radio && !respuesta) {
+        const lbl = radio.parentElement.querySelector('label');
+        respuesta = lbl ? lbl.textContent.trim() : radio.value;
+      }
+
+      const esVacio = !respuesta;
+      html += `<div class="resultado-item">
+        <div class="resultado-pregunta">${pregunta}</div>
+        <div class="resultado-respuesta ${esVacio ? 'vacio' : ''}">${esVacio ? '(sin respuesta)' : respuesta}</div>
+      </div>`;
+    });
+
+    html += '</div>';
+  });
+
+  contenido.innerHTML = html;
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function copiarResumen() {
+  let texto = 'SIGCOWEB — ENTREVISTA DE REQUISITOS\n';
+  texto += '='.repeat(50) + '\n\n';
+
+  SECCIONES.forEach((secNombre, i) => {
+    texto += `\n## 0${i+1}. ${secNombre.toUpperCase()}\n\n`;
+
+    const pregIds = Object.keys(PREGUNTAS).filter(k => k.startsWith(`q${i+1}_`));
+    pregIds.forEach(id => {
+      const pregunta = PREGUNTAS[id];
+      let respuesta = '';
+
+      const elTxt = document.getElementById(id);
+      if (elTxt && elTxt.value.trim()) respuesta = elTxt.value.trim();
+
+      const checks = document.querySelectorAll(`input[name="${id}"]:checked`);
+      if (checks.length > 0) {
+        respuesta = Array.from(checks).map(c => {
+          const lbl = c.parentElement.querySelector('label');
+          return lbl ? lbl.textContent.trim() : c.value;
+        }).join(', ');
+      }
+
+      const radio = document.querySelector(`input[name="${id}"]:checked`);
+      if (radio && !respuesta) {
+        const lbl = radio.parentElement.querySelector('label');
+        respuesta = lbl ? lbl.textContent.trim() : radio.value;
+      }
+
+      texto += `${pregunta}\n→ ${respuesta || '(sin respuesta)'}\n\n`;
+    });
+  });
+
+  navigator.clipboard.writeText(texto).then(() => {
+    const btn = document.querySelector('.btn-copy');
+    btn.textContent = '✓ Copiado al portapapeles';
+    btn.style.background = 'rgba(104,211,145,0.15)';
+    btn.style.borderColor = 'rgba(104,211,145,0.4)';
+    btn.style.color = '#68d391';
+    setTimeout(() => {
+      btn.textContent = '📋 Copiar todo el resumen';
+      btn.style = '';
+    }, 2500);
+  });
+}
+
+// Init
+actualizarProgreso();
+</script>
+</body>
+</html>
