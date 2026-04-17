@@ -3,7 +3,7 @@ from fastapi.responses import RedirectResponse
 from app.auth.utils import decodificar_token
 
 # Rutas exactas que NO requieren autenticación
-RUTAS_PUBLICAS_EXACTAS = {"/", "/login", "/ping", "/logout"}
+RUTAS_PUBLICAS_EXACTAS = {"/", "/login", "/ping", "/logout", "/walter"}
 # Prefijos públicos (archivos estáticos, etc.)
 PREFIJOS_PUBLICOS = ("/static/",)
 
