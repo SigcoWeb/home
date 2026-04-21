@@ -7,9 +7,13 @@ from app.models.almacen import SgcAlmacen
 
 class SgcCatalogoGrupo(Base):
     __tablename__ = "sgc_catalogo_grupo"
-    
+
     id_grupo = Column(Integer, primary_key=True, index=True)
-    nombre_grupo = Column(String(50))
+    nombre_grupo = Column(String(50), nullable=False)
+
+    id_usuario = Column(Integer, nullable=True)
+    fhcontrol = Column(DateTime, default=func.now())
+    estacion = Column(String(20), nullable=True)
 
 class SgcCatalogoModelo(Base):
     __tablename__ = "sgc_catalogo_modelo"
