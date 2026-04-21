@@ -87,4 +87,4 @@ class SgcMovimientoTesoreria(Base):
     caja = relationship("SgcCaja")
     cuenta = relationship("SgcCuentaBancaria")
     concepto = relationship("SgcConcepto")
-    usuario = relationship("app.models.auth.SgcUsuario")
+    usuario = relationship("SgcUsuario")
