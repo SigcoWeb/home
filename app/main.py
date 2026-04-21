@@ -49,8 +49,13 @@ from app.models import usuarios                     # noqa
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     print(f"[sigcoWeb] Iniciando en modo: {settings.MODO_DEPLOY}")
-    await init_db()
+    # Orden correcto:
+    # 1) Migraciones primero: crean y ajustan el schema segun los .sql versionados.
+    # 2) create_all despues: solo como safety net, crea tablas que tengan modelo
+    #    Python pero aun no tengan migracion propia. NUNCA modifica tablas existentes.
+    # Regla: todo cambio de schema nuevo va por migracion SQL. Ver app/modulos/README.md.
     await ejecutar_migraciones_pendientes()
+    await init_db()
     yield
     print("[sigcoWeb] Cerrando...")
 
