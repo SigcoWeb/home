@@ -19,7 +19,6 @@ from app.licencias import models as lic_models      # noqa
 from app.models import agenda_clientes              # noqa
 from app.models import agenda_proveedores           # noqa
 from app.models import almacen                      # noqa
-from app.models import auth                         # noqa
 from app.models import catalogo_gastos              # noqa
 from app.models import catalogo_productos           # noqa
 from app.models import clasificador_clientes        # noqa
@@ -44,6 +43,7 @@ from app.models import tipocambio                   # noqa
 from app.models import transportistas               # noqa
 from app.models import ubigeo                       # noqa
 from app.models import unidades                     # noqa
+from app.models import usuarios                     # noqa
 
 
 @asynccontextmanager
@@ -68,6 +68,22 @@ templates = Jinja2Templates(directory="templates")
 
 app.add_middleware(BaseHTTPMiddleware, dispatch=auth_middleware)
 app.include_router(auth_router)
+
+# Módulo UI "Tablas" (zWalter-01)
+from app.modulos.almacen.router import router as almacen_router
+from app.modulos.catalogo.router import router as catalogo_router
+# Módulo UI "Configuración" (zWalter-02 + zWalter-04)
+from app.modulos.usuarios.router import router as usuarios_router
+from app.modulos.permisos.router import router as permisos_router
+
+app.include_router(almacen_router)
+app.include_router(catalogo_router)
+app.include_router(usuarios_router)
+app.include_router(permisos_router)
+
+# Dashboard: endpoint puente /ir-a-modulo/{id} (zWalter-05)
+from app.modulos.dashboard.router import router as dashboard_router
+app.include_router(dashboard_router)
 
 
 @app.get("/", response_class=HTMLResponse)
