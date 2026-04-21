@@ -1,0 +1,176 @@
+/* =============================================
+   sigcoWeb — módulo Configuración (zWalter-02)
+   Reutiliza variables de tablas.css. Importar en ese orden en el layout.
+   ============================================= */
+
+/* Opciones del sidebar de Configuración — lista plana. */
+.config-sidebar__opcion {
+  display: block;
+  padding: 8px 12px;
+  color: var(--tb-text-dim);
+  font-size: 13px;
+  border-radius: 4px;
+  text-decoration: none;
+}
+.config-sidebar__opcion:hover {
+  background: var(--tb-hover);
+  color: #fff;
+}
+.config-sidebar__opcion--activa {
+  background: var(--tb-activa);
+  color: #fff;
+}
+
+/* Opciones aún no implementadas: gris, sin hover, cursor not-allowed. */
+.config-sidebar__opcion--disabled {
+  color: var(--tb-text-muted);
+  cursor: not-allowed;
+  opacity: 0.55;
+  pointer-events: none;
+}
+.config-sidebar__opcion--disabled:hover {
+  background: transparent;
+  color: var(--tb-text-muted);
+}
+
+/* Checkbox dentro del modal (activo). */
+.modal-checkbox {
+  flex-direction: row !important;
+  align-items: center;
+  gap: 8px !important;
+  color: var(--tb-text-dim) !important;
+  font-size: 13px !important;
+}
+.modal-checkbox input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--tb-azul-strong);
+}
+
+/* Small hint text dentro de labels del modal. */
+.modal-dialog label small {
+  color: var(--tb-text-muted);
+  font-weight: 400;
+  margin-left: 4px;
+}
+
+/* ===== Matriz de Permisos ===== */
+.permisos-selector {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  background: var(--tb-panel);
+  padding: 10px 14px;
+  border: 1px solid var(--tb-border);
+  border-radius: 4px;
+}
+.permisos-selector label {
+  font-size: 13px;
+  color: var(--tb-text-dim);
+}
+.permisos-selector select {
+  background: var(--tb-input);
+  border: 1px solid var(--tb-border);
+  color: var(--tb-text);
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-size: 13px;
+  min-width: 320px;
+}
+
+.permisos-placeholder {
+  color: var(--tb-text-muted);
+  font-style: italic;
+  padding: 20px;
+  text-align: center;
+}
+
+.permisos-matriz {
+  background: var(--tb-bg);
+  border: 1px solid var(--tb-border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.permisos-header {
+  padding: 10px 14px;
+  background: var(--tb-panel);
+  border-bottom: 1px solid var(--tb-border);
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+}
+.permisos-header strong { color: var(--tb-text); font-size: 14px; }
+.permisos-header small { color: var(--tb-text-muted); font-size: 12px; }
+
+.permisos-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+.permisos-tabla th {
+  background: var(--tb-input);
+  color: var(--tb-text);
+  padding: 8px 6px;
+  text-align: center;
+  border-bottom: 1px solid var(--tb-border);
+  font-weight: 600;
+}
+.permisos-tabla th:first-child {
+  text-align: left;
+  padding-left: 14px;
+}
+.permisos-tabla td {
+  padding: 6px;
+  text-align: center;
+  border-bottom: 1px solid var(--tb-border);
+}
+.permisos-tabla td:first-child {
+  text-align: left;
+  padding-left: 14px;
+  color: var(--tb-text-dim);
+}
+.permisos-fila-modulo td {
+  background: var(--tb-activa);
+  color: #fff;
+  font-size: 12px;
+  padding: 6px 14px;
+}
+.permisos-fila-modulo td strong { color: #fff; }
+.permisos-fila-opcion:hover { background: var(--tb-hover); }
+.permisos-fila-opcion input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--tb-azul-strong);
+  cursor: pointer;
+}
+
+.permisos-footer {
+  display: flex;
+  gap: 10px;
+  padding: 14px;
+  background: var(--tb-panel);
+  border-top: 1px solid var(--tb-border);
+}
+
+/* ===== Toast ===== */
+.toast-ok {
+  background: #10b981;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 6px;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 10000;
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  animation: toast-fade 3s forwards;
+}
+@keyframes toast-fade {
+  0%   { opacity: 0; transform: translateY(-10px); }
+  10%  { opacity: 1; transform: translateY(0); }
+  85%  { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-10px); }
+}

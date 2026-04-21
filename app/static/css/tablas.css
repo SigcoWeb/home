@@ -1,0 +1,319 @@
+/* =============================================
+   sigcoWeb — módulo Tablas (zWalter-01)
+   Paleta dark, paridad con Walter desktop.
+   ============================================= */
+
+:root {
+  --tb-bg:            #0a0a0a;
+  --tb-bg-alt:        #141414;
+  --tb-panel:         #1a1a1a;
+  --tb-input:         #111;
+  --tb-border:        #2a2a2a;
+  --tb-border-focus:  #2563eb;
+  --tb-azul:          #3b82f6;
+  --tb-azul-strong:   #2563eb;
+  --tb-azul-hover:    #1d4ed8;
+  --tb-activa:        #1e40af;
+  --tb-hover:         #1e293b;
+  --tb-text:          #e5e7eb;
+  --tb-text-dim:      #cbd5e1;
+  --tb-text-muted:    #94a3b8;
+  --tb-danger:        #dc2626;
+  --tb-danger-hover:  #b91c1c;
+}
+
+.tablas-wrap {
+  display: flex;
+  min-height: 100vh;
+  background: var(--tb-bg);
+  color: var(--tb-text);
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* ============ SIDEBAR ============ */
+.tablas-sidebar {
+  width: 260px;
+  background: var(--tb-panel);
+  border-right: 1px solid var(--tb-border);
+  padding: 16px 8px;
+  overflow-y: auto;
+  max-height: 100vh;
+  flex-shrink: 0;
+}
+
+.tablas-sidebar__titulo {
+  color: var(--tb-azul);
+  font-weight: 700;
+  font-size: 18px;
+  text-align: center;
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+}
+
+.tablas-sidebar__buscador {
+  width: 100%;
+  background: var(--tb-input);
+  border: 1px solid var(--tb-border);
+  color: var(--tb-text);
+  padding: 8px 12px;
+  border-radius: 4px;
+  outline: none;
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+.tablas-sidebar__buscador:focus {
+  border-color: var(--tb-border-focus);
+}
+
+.tablas-sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.tablas-sidebar__seccion {
+  background: transparent;
+  border-radius: 4px;
+}
+.tablas-sidebar__seccion > summary {
+  cursor: pointer;
+  padding: 8px 12px;
+  color: var(--tb-azul);
+  font-weight: 700;
+  font-size: 13px;
+  list-style: none;
+  border-radius: 4px;
+  user-select: none;
+}
+.tablas-sidebar__seccion > summary::-webkit-details-marker { display: none; }
+.tablas-sidebar__seccion > summary::before {
+  content: "▶";
+  display: inline-block;
+  margin-right: 6px;
+  font-size: 10px;
+  transition: transform 0.15s ease;
+}
+.tablas-sidebar__seccion[open] > summary::before {
+  content: "▼";
+}
+.tablas-sidebar__seccion > summary:hover {
+  background: var(--tb-hover);
+}
+
+.tablas-sidebar__opcion,
+.tablas-sidebar__opcion-suelta {
+  display: block;
+  padding: 6px 12px 6px 28px;
+  color: var(--tb-text-dim);
+  font-size: 13px;
+  border-radius: 4px;
+  text-decoration: none;
+}
+.tablas-sidebar__opcion-suelta {
+  padding-left: 12px;
+  color: var(--tb-azul);
+  font-weight: 600;
+}
+.tablas-sidebar__seccion--disabled,
+.tablas-sidebar__opcion--disabled {
+  color: var(--tb-text-muted) !important;
+  opacity: 0.55;
+  cursor: not-allowed !important;
+  pointer-events: none;
+}
+.tablas-sidebar__opcion:hover,
+.tablas-sidebar__opcion-suelta:hover {
+  background: var(--tb-hover);
+  color: #fff;
+}
+.tablas-sidebar__opcion--activa {
+  background: var(--tb-activa);
+  color: #fff;
+}
+
+/* ============ MAIN ============ */
+.tablas-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.tablas-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background: var(--tb-panel);
+  border-bottom: 1px solid var(--tb-border);
+}
+.tablas-header h1 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--tb-text);
+}
+.tablas-header__user {
+  font-size: 13px;
+  color: var(--tb-text-muted);
+}
+
+.tablas-contenido {
+  padding: 20px 24px;
+  flex: 1;
+}
+
+.tablas-botonera {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+/* ============ TABLA ============ */
+.tablas-grid {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--tb-bg);
+  border: 1px solid var(--tb-border);
+  border-radius: 4px;
+  overflow: hidden;
+  font-size: 13px;
+}
+.tablas-grid thead {
+  background: var(--tb-input);
+}
+.tablas-grid th {
+  text-align: left;
+  padding: 10px 12px;
+  font-weight: 600;
+  color: var(--tb-text);
+  border-bottom: 1px solid var(--tb-border);
+}
+.tablas-grid td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--tb-border);
+  color: var(--tb-text-dim);
+}
+.tablas-grid tbody tr:nth-child(even) {
+  background: var(--tb-bg-alt);
+}
+.tablas-grid tbody tr:hover {
+  background: var(--tb-activa);
+  color: #fff;
+}
+.tablas-grid tbody tr:hover td {
+  color: #fff;
+}
+.tablas-grid .col-acciones {
+  width: 160px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* ============ BOTONES ============ */
+.btn-primary, .btn-sec, .btn-danger {
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 13px;
+  cursor: pointer;
+  font-weight: 500;
+  color: #fff;
+  transition: background 0.12s ease;
+}
+.btn-primary {
+  background: var(--tb-azul-strong);
+}
+.btn-primary:hover {
+  background: var(--tb-azul-hover);
+}
+.btn-sec {
+  background: #374151;
+}
+.btn-sec:hover {
+  background: #475569;
+}
+.btn-danger {
+  background: var(--tb-danger);
+  padding: 8px 14px;
+}
+.btn-danger:hover {
+  background: var(--tb-danger-hover);
+}
+
+/* ============ MODAL ============ */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.modal-dialog {
+  background: #1f2937;
+  border: 1px solid #374151;
+  border-radius: 8px;
+  padding: 20px 24px;
+  min-width: 400px;
+  max-width: 480px;
+  width: 90%;
+  color: var(--tb-text);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+}
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #374151;
+}
+.modal-header h3 {
+  font-size: 16px;
+  font-weight: 600;
+}
+.modal-close {
+  background: transparent;
+  border: none;
+  color: var(--tb-text-muted);
+  font-size: 18px;
+  cursor: pointer;
+}
+.modal-close:hover {
+  color: #fff;
+}
+.modal-dialog form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.modal-dialog label {
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  color: var(--tb-text-muted);
+  gap: 4px;
+}
+.modal-dialog input,
+.modal-dialog select {
+  background: var(--tb-input);
+  border: 1px solid #374151;
+  color: var(--tb-text);
+  border-radius: 4px;
+  padding: 8px 10px;
+  font-size: 13px;
+  outline: none;
+}
+.modal-dialog input:focus,
+.modal-dialog select:focus {
+  border-color: var(--tb-border-focus);
+}
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 8px;
+  padding-top: 12px;
+  border-top: 1px solid #374151;
+}
