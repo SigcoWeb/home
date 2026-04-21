@@ -2,10 +2,13 @@ from fastapi import APIRouter, Request, Depends, Form
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import text
-from app.database import AsyncSessionLocal
+from sqlalchemy import text, select
+from app.database import AsyncSessionLocal, get_db
 from app.auth.utils import verify_password, crear_token
 from app.core.models import Empresa
+from app.core.auditoria import get_current_user_walter
+from app.core.templating import templates as central_templates, build_context
+from app.models.usuarios import SgcModulo, SgcUsuario
 
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
@@ -84,8 +87,21 @@ async def logout():
 
 
 @router.get("/dashboard", response_class=HTMLResponse)
-async def dashboard(request: Request):
-    return templates.TemplateResponse("dashboard.html", {
-        "request": request,
-        "nombre": getattr(request.state, "nombre", "Usuario"),
-    })
+async def dashboard(
+    request: Request,
+    db: AsyncSession = Depends(get_db),
+    current_user: SgcUsuario = Depends(get_current_user_walter),
+):
+    result = await db.execute(
+        select(SgcModulo).where(SgcModulo.activo.is_(True)).order_by(SgcModulo.orden)
+    )
+    modulos = result.scalars().all()
+
+    return central_templates.TemplateResponse(
+        "dashboard.html",
+        await build_context(
+            request, db, current_user,
+            nombre=current_user.nombre_completo or current_user.usuario,
+            modulos=modulos,
+        ),
+    )
