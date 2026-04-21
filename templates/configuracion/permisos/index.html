@@ -1,0 +1,36 @@
+{% extends "configuracion/_layout.html" %}
+{% set opcion_activa = "permisos" %}
+
+{% block titulo_opcion %}Permisos{% endblock %}
+
+{% block contenido_config %}
+  {% if request.query_params.get("ok") %}
+    <div class="toast-ok">Cambios guardados correctamente.</div>
+  {% endif %}
+
+  <div class="permisos-selector">
+    <label for="permisos-usuario-select">Usuario:</label>
+    <select id="permisos-usuario-select"
+            name="id_usuario"
+            hx-get="/config/permisos/usuario-partial"
+            hx-target="#matriz-permisos"
+            hx-trigger="change"
+            hx-include="this">
+      <option value="">-- Selecciona un usuario --</option>
+      {% for u in usuarios %}
+        <option value="{{ u.id_usuario }}"
+                {% if usuario_seleccionado and u.id_usuario == usuario_seleccionado.id_usuario %}selected{% endif %}>
+          {{ u.usuario }}{% if u.nombre_completo %} — {{ u.nombre_completo }}{% endif %}
+        </option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div id="matriz-permisos">
+    {% if usuario_seleccionado %}
+      {% include "configuracion/permisos/_matriz.html" %}
+    {% else %}
+      <p class="permisos-placeholder">Selecciona un usuario para gestionar sus permisos.</p>
+    {% endif %}
+  </div>
+{% endblock %}

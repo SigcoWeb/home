@@ -1,0 +1,67 @@
+{#- Sidebar del módulo Tablas.
+     Opciones con UI real se filtran por `permisos | puede(...)`.
+     Las aún no implementadas quedan visibles como "--disabled" para mostrar el mapa del sistema. -#}
+
+{% set muestra_almacen = (permisos | puede("TABLAS", "Almacenes")) or (permisos | puede("TABLAS", "Grupos")) %}
+
+<aside class="tablas-sidebar">
+  <h2 class="tablas-sidebar__titulo">TABLAS</h2>
+  <input type="search" class="tablas-sidebar__buscador" placeholder="Buscar opción..." id="buscarOpcion">
+
+  <nav class="tablas-sidebar__nav">
+
+    <details class="tablas-sidebar__seccion">
+      <summary class="tablas-sidebar__seccion--disabled">📦 Catálogo de Productos</summary>
+    </details>
+
+    <details class="tablas-sidebar__seccion">
+      <summary class="tablas-sidebar__seccion--disabled">🔔 Catálogo de Servicios</summary>
+    </details>
+
+    <details class="tablas-sidebar__seccion">
+      <summary class="tablas-sidebar__seccion--disabled">🧪 Catálogo de Insumos</summary>
+    </details>
+
+    <details class="tablas-sidebar__seccion">
+      <summary class="tablas-sidebar__seccion--disabled">💻 Catálogo de Activos</summary>
+    </details>
+
+    <details class="tablas-sidebar__seccion">
+      <summary class="tablas-sidebar__seccion--disabled">💸 Catálogo de Gastos</summary>
+    </details>
+
+    {% if muestra_almacen %}
+      <details class="tablas-sidebar__seccion" {% if seccion_activa == 'almacen' %}open{% endif %}>
+        <summary>🏢 Almacén</summary>
+        {% if permisos | puede("TABLAS", "Almacenes") %}
+          <a href="/tablas/almacen"
+             class="tablas-sidebar__opcion {% if opcion_activa == 'almacenes' %}tablas-sidebar__opcion--activa{% endif %}">
+            🏢 Almacenes
+          </a>
+        {% endif %}
+        {% if permisos | puede("TABLAS", "Grupos") %}
+          <a href="/tablas/grupos"
+             class="tablas-sidebar__opcion {% if opcion_activa == 'grupos' %}tablas-sidebar__opcion--activa{% endif %}">
+            📚 Grupos
+          </a>
+        {% endif %}
+      </details>
+    {% endif %}
+
+    <details class="tablas-sidebar__seccion">
+      <summary class="tablas-sidebar__seccion--disabled">📇 Agenda de Clientes</summary>
+    </details>
+
+    <details class="tablas-sidebar__seccion">
+      <summary class="tablas-sidebar__seccion--disabled">🏦 Cajas y Bancos</summary>
+    </details>
+
+    <a href="#" class="tablas-sidebar__opcion-suelta tablas-sidebar__opcion--disabled">🚚 Agenda de Proveedores</a>
+    <a href="#" class="tablas-sidebar__opcion-suelta tablas-sidebar__opcion--disabled">📄 Documentos SUNAT</a>
+    <a href="#" class="tablas-sidebar__opcion-suelta tablas-sidebar__opcion--disabled">💱 Tipo de Cambio</a>
+    <a href="#" class="tablas-sidebar__opcion-suelta tablas-sidebar__opcion--disabled">💳 Formas de pago</a>
+    <a href="#" class="tablas-sidebar__opcion-suelta tablas-sidebar__opcion--disabled">🚛 Transportistas</a>
+    <a href="#" class="tablas-sidebar__opcion-suelta tablas-sidebar__opcion--disabled">👤 Personal</a>
+
+  </nav>
+</aside>

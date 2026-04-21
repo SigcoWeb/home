@@ -1,0 +1,33 @@
+{% extends "tablas/_layout.html" %}
+{% set seccion_activa = "almacen" %}
+{% set opcion_activa = "grupos" %}
+
+{% block titulo_opcion %}Grupos{% endblock %}
+
+{% block contenido_tablas %}
+<div class="tablas-botonera">
+  {% if permisos | puede("TABLAS", "Grupos", "btn_nuevo") %}
+    <button class="btn-primary"
+            hx-get="/tablas/grupos/nuevo"
+            hx-target="#modal-root"
+            hx-swap="innerHTML">
+      + Nuevo
+    </button>
+  {% endif %}
+</div>
+
+<table class="tablas-grid">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th class="col-acciones">Acciones</th>
+    </tr>
+  </thead>
+  <tbody id="tbody-grupos">
+    {% for g in grupos %}
+      {% include "tablas/grupos/_row.html" %}
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

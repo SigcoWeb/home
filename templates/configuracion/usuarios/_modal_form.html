@@ -1,0 +1,46 @@
+<div class="modal-backdrop" onclick="if(event.target===this) cerrarModal()">
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <h3>{% if usuario %}Editar Usuario{% else %}Nuevo Usuario{% endif %}</h3>
+      <button type="button" class="modal-close" onclick="cerrarModal()">✕</button>
+    </div>
+    <form
+      {% if usuario %}
+        hx-put="/config/usuarios/{{ usuario.id_usuario }}"
+        hx-target="#row-usuario-{{ usuario.id_usuario }}"
+        hx-swap="outerHTML"
+      {% else %}
+        hx-post="/config/usuarios"
+        hx-target="#tbody-usuarios"
+        hx-swap="beforeend"
+      {% endif %}
+      hx-on::after-request="if(event.detail.successful) cerrarModal()"
+    >
+      <label>Usuario:
+        <input name="usuario" value="{{ usuario.usuario if usuario else '' }}" maxlength="15" minlength="3" required>
+      </label>
+      <label>Clave:
+        <input name="clave" type="password"
+               {% if usuario %}placeholder="Dejar vacío para no cambiar"{% else %}required minlength="4"{% endif %}
+               maxlength="100">
+      </label>
+      <label>Nombre completo:
+        <input name="nombre_completo" value="{{ usuario.nombre_completo if usuario and usuario.nombre_completo else '' }}" maxlength="100">
+      </label>
+      <label class="modal-checkbox">
+        <input type="checkbox" name="activo" value="on"
+               {% if usuario is none or usuario.activo %}checked{% endif %}>
+        Activo
+      </label>
+      <label>ID cuenta plataforma
+        <small>(dejar vacío si aún no se vincula)</small>
+        <input name="id_sys_master" type="number" min="1"
+               value="{{ usuario.id_sys_master if usuario and usuario.id_sys_master else '' }}">
+      </label>
+      <div class="modal-footer">
+        <button type="submit" class="btn-primary">Guardar</button>
+        <button type="button" class="btn-sec" onclick="cerrarModal()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -17,7 +17,6 @@
                 </svg>
                 <span>Dashboard</span>
             </a>
-            <!-- Módulos se agregarán aquí -->
         </nav>
         <div class="sidebar-bottom">
             <a href="/logout" class="nav-item nav-logout">
@@ -33,12 +32,14 @@
     <main class="dash-main">
         <header class="dash-header">
             <h1>Bienvenido, <strong>{{ nombre }}</strong></h1>
+            <p class="dash-subheader">Selecciona un módulo para comenzar</p>
         </header>
 
         <div class="dash-content">
-            <div class="dash-card">
-                <p>Sistema en configuración inicial.</p>
-                <p>Los módulos se irán habilitando según tu plan.</p>
+            <div class="modulos-grid">
+                {% for modulo in modulos %}
+                    {% include "_modulo_card.html" %}
+                {% endfor %}
             </div>
         </div>
     </main>

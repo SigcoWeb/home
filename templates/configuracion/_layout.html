@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Configuración — SIGCO Systems{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/tablas.css?v=1">
+<link rel="stylesheet" href="/static/css/configuracion.css?v=1">
+<script src="https://unpkg.com/htmx.org@1.9.12"></script>
+{% endblock %}
+
+{% block content %}
+<div class="tablas-wrap">
+  {% include "configuracion/_sidebar.html" %}
+
+  <main class="tablas-main">
+    <header class="tablas-header">
+      <h1>{% block titulo_opcion %}Seleccione una opción{% endblock %}</h1>
+      <div class="tablas-header__user">
+        Usuario: <strong>{{ request.state.nombre if request.state.nombre is defined else "—" }}</strong>
+      </div>
+    </header>
+
+    <section class="tablas-contenido">
+      {% block contenido_config %}{% endblock %}
+    </section>
+  </main>
+
+  <div id="toast-root"></div>
+  <div id="modal-root"></div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/modulo-comun.js?v=1"></script>
+<script src="/static/js/configuracion.js?v=1"></script>
+{% endblock %}

@@ -1,0 +1,13 @@
+<a href="/ir-a-modulo/{{ modulo.id_modulo }}"
+   class="modulo-card {% if modulo.implementado %}modulo-card--activo{% else %}modulo-card--proximamente{% endif %}">
+
+  {% if not modulo.implementado %}
+    <span class="modulo-badge">Próximamente</span>
+  {% endif %}
+
+  <div class="modulo-icono">
+    {% include "_iconos_modulos.html" %}
+  </div>
+
+  <h3 class="modulo-titulo">{{ modulo.descripcion or modulo.nombre }}</h3>
+</a>

@@ -1,0 +1,30 @@
+<tr id="row-usuario-{{ u.id_usuario }}">
+  <td>{{ u.id_usuario }}</td>
+  <td>{{ u.usuario }}</td>
+  <td>{{ u.nombre_completo or "" }}</td>
+  <td>{{ "✓" if u.activo else "✗" }}</td>
+  <td>{{ u.id_sys_master or "" }}</td>
+  <td class="col-acciones">
+    {% if permisos | puede("CONFIGURACIONES", "Usuarios", "btn_editar") %}
+      <button class="btn-sec"
+              hx-get="/config/usuarios/{{ u.id_usuario }}/editar"
+              hx-target="#modal-root"
+              hx-swap="innerHTML">Editar</button>
+    {% endif %}
+    {% if permisos | puede("CONFIGURACIONES", "Usuarios", "btn_otro") %}
+      <button type="button"
+              class="btn-sec"
+              hx-get="/config/usuarios/{{ u.id_usuario }}/reset-password"
+              hx-target="#modal-root"
+              hx-swap="innerHTML"
+              title="Resetear clave">🔑 Clave</button>
+    {% endif %}
+    {% if permisos | puede("CONFIGURACIONES", "Usuarios", "btn_eliminar") %}
+      <button class="btn-danger"
+              hx-delete="/config/usuarios/{{ u.id_usuario }}"
+              hx-target="#row-usuario-{{ u.id_usuario }}"
+              hx-swap="outerHTML"
+              hx-confirm="¿Eliminar este usuario? Se borrarán también sus accesos.">Eliminar</button>
+    {% endif %}
+  </td>
+</tr>

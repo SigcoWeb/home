@@ -1,0 +1,22 @@
+<tr id="row-almacen-{{ a.id_almacen }}">
+  <td>{{ a.id_almacen }}</td>
+  <td>{{ a.nombre_almacen }}</td>
+  <td>{{ a.direccion or "" }}</td>
+  <td>{{ a.localidad or "" }}</td>
+  <td>{{ a.grupo.nombre_grupo if a.grupo else "" }}</td>
+  <td class="col-acciones">
+    {% if permisos | puede("TABLAS", "Almacenes", "btn_editar") %}
+      <button class="btn-sec"
+              hx-get="/tablas/almacen/{{ a.id_almacen }}/editar"
+              hx-target="#modal-root"
+              hx-swap="innerHTML">Editar</button>
+    {% endif %}
+    {% if permisos | puede("TABLAS", "Almacenes", "btn_eliminar") %}
+      <button class="btn-danger"
+              hx-delete="/tablas/almacen/{{ a.id_almacen }}"
+              hx-target="#row-almacen-{{ a.id_almacen }}"
+              hx-swap="outerHTML"
+              hx-confirm="¿Eliminar este almacén?">Eliminar</button>
+    {% endif %}
+  </td>
+</tr>

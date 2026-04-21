@@ -1,0 +1,28 @@
+<div class="modal-backdrop" onclick="if(event.target===this) cerrarModal()">
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <h3>{% if grupo %}Editar Grupo{% else %}Nuevo Grupo{% endif %}</h3>
+      <button type="button" class="modal-close" onclick="cerrarModal()">✕</button>
+    </div>
+    <form
+      {% if grupo %}
+        hx-put="/tablas/grupos/{{ grupo.id_grupo }}"
+        hx-target="#row-grupo-{{ grupo.id_grupo }}"
+        hx-swap="outerHTML"
+      {% else %}
+        hx-post="/tablas/grupos"
+        hx-target="#tbody-grupos"
+        hx-swap="beforeend"
+      {% endif %}
+      hx-on::after-request="if(event.detail.successful) cerrarModal()"
+    >
+      <label>Nombre:
+        <input name="nombre_grupo" value="{{ grupo.nombre_grupo if grupo else '' }}" maxlength="50" required>
+      </label>
+      <div class="modal-footer">
+        <button type="submit" class="btn-primary">Guardar</button>
+        <button type="button" class="btn-sec" onclick="cerrarModal()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>

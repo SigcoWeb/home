@@ -1,0 +1,27 @@
+{#- Sidebar del módulo Configuración — lista plana. Opciones con UI real se filtran por permisos. -#}
+<aside class="tablas-sidebar config-sidebar">
+  <h2 class="tablas-sidebar__titulo">CONFIGURACIÓN</h2>
+  <input type="search" class="tablas-sidebar__buscador" placeholder="Buscar opción..." id="buscarOpcionConfig">
+
+  <nav class="tablas-sidebar__nav">
+    {% if permisos | puede("CONFIGURACIONES", "Usuarios") %}
+      <a href="/config/usuarios"
+         class="config-sidebar__opcion {% if opcion_activa == 'usuarios' %}config-sidebar__opcion--activa{% endif %}">
+        👤 Usuarios
+      </a>
+    {% endif %}
+    {% if permisos | puede("CONFIGURACIONES", "Permisos") %}
+      <a href="/config/permisos"
+         class="config-sidebar__opcion {% if opcion_activa == 'permisos' %}config-sidebar__opcion--activa{% endif %}">
+        🔐 Permisos
+      </a>
+    {% endif %}
+
+    <a href="#" class="config-sidebar__opcion config-sidebar__opcion--disabled">🏢 Empresa</a>
+    <a href="#" class="config-sidebar__opcion config-sidebar__opcion--disabled">💱 Moneda</a>
+    <a href="#" class="config-sidebar__opcion config-sidebar__opcion--disabled">📂 Rubros</a>
+    <a href="#" class="config-sidebar__opcion config-sidebar__opcion--disabled">🔢 Numeradores</a>
+    <a href="#" class="config-sidebar__opcion config-sidebar__opcion--disabled">⚙️ Globales</a>
+    <a href="#" class="config-sidebar__opcion config-sidebar__opcion--disabled">📁 Rutas</a>
+  </nav>
+</aside>

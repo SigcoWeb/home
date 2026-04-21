@@ -1,0 +1,45 @@
+<div class="modal-backdrop" onclick="if(event.target===this) cerrarModal()">
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <h3>{% if almacen %}Editar Almacén{% else %}Nuevo Almacén{% endif %}</h3>
+      <button type="button" class="modal-close" onclick="cerrarModal()">✕</button>
+    </div>
+    <form
+      {% if almacen %}
+        hx-put="/tablas/almacen/{{ almacen.id_almacen }}"
+        hx-target="#row-almacen-{{ almacen.id_almacen }}"
+        hx-swap="outerHTML"
+      {% else %}
+        hx-post="/tablas/almacen"
+        hx-target="#tbody-almacenes"
+        hx-swap="beforeend"
+      {% endif %}
+      hx-on::after-request="if(event.detail.successful) cerrarModal()"
+    >
+      <label>Nombre:
+        <input name="nombre_almacen" value="{{ almacen.nombre_almacen if almacen else '' }}" maxlength="50" required>
+      </label>
+      <label>Dirección:
+        <input name="direccion" value="{{ almacen.direccion if almacen and almacen.direccion else '' }}" maxlength="100">
+      </label>
+      <label>Localidad:
+        <input name="localidad" value="{{ almacen.localidad if almacen and almacen.localidad else '' }}" maxlength="100">
+      </label>
+      <label>Grupo:
+        <select name="id_grupo">
+          <option value="">-- Sin grupo --</option>
+          {% for g in grupos %}
+            <option value="{{ g.id_grupo }}"
+                    {% if almacen and almacen.id_grupo == g.id_grupo %}selected{% endif %}>
+              {{ g.nombre_grupo }}
+            </option>
+          {% endfor %}
+        </select>
+      </label>
+      <div class="modal-footer">
+        <button type="submit" class="btn-primary">Guardar</button>
+        <button type="button" class="btn-sec" onclick="cerrarModal()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>

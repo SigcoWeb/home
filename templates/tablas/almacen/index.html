@@ -1,0 +1,36 @@
+{% extends "tablas/_layout.html" %}
+{% set seccion_activa = "almacen" %}
+{% set opcion_activa = "almacenes" %}
+
+{% block titulo_opcion %}Almacenes{% endblock %}
+
+{% block contenido_tablas %}
+<div class="tablas-botonera">
+  {% if permisos | puede("TABLAS", "Almacenes", "btn_nuevo") %}
+    <button class="btn-primary"
+            hx-get="/tablas/almacen/nuevo"
+            hx-target="#modal-root"
+            hx-swap="innerHTML">
+      + Nuevo
+    </button>
+  {% endif %}
+</div>
+
+<table class="tablas-grid">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Dirección</th>
+      <th>Localidad</th>
+      <th>Grupo</th>
+      <th class="col-acciones">Acciones</th>
+    </tr>
+  </thead>
+  <tbody id="tbody-almacenes">
+    {% for a in almacenes %}
+      {% include "tablas/almacen/_row.html" %}
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,53 @@
+<form method="post"
+      action="/config/permisos/usuario/{{ usuario_seleccionado.id_usuario }}"
+      class="permisos-matriz">
+
+  <div class="permisos-header">
+    <strong>Permisos de {{ usuario_seleccionado.usuario }}</strong>
+    <small>({{ usuario_seleccionado.nombre_completo or "sin nombre" }})</small>
+  </div>
+
+  <table class="permisos-tabla">
+    <thead>
+      <tr>
+        <th>Módulo / Opción</th>
+        <th>Acceso</th>
+        <th>Nuevo</th>
+        <th>Editar</th>
+        <th>Eliminar</th>
+        <th>PDF</th>
+        <th>Excel</th>
+        <th>Guardar</th>
+        <th>Otro</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for modulo, opciones in modulos_con_opciones.items() %}
+        <tr class="permisos-fila-modulo">
+          <td colspan="9"><strong>{{ modulo.nombre }}</strong>{% if modulo.descripcion %} — {{ modulo.descripcion }}{% endif %}</td>
+        </tr>
+        {% for opcion in opciones %}
+          {% set actual = permisos_actuales.get(opcion.id_opcion) %}
+          <tr class="permisos-fila-opcion" data-opcion-id="{{ opcion.id_opcion }}">
+            <td class="permisos-opcion-nombre">&nbsp;&nbsp;&nbsp;{{ opcion.nombre }}</td>
+            <td><input type="checkbox" class="perm-acceso"  name="activo_{{ opcion.id_opcion }}"       {% if actual and actual.activo %}checked{% endif %}></td>
+            <td><input type="checkbox" class="perm-btn"     name="btn_nuevo_{{ opcion.id_opcion }}"    {% if actual and actual.btn_nuevo %}checked{% endif %}></td>
+            <td><input type="checkbox" class="perm-btn"     name="btn_editar_{{ opcion.id_opcion }}"   {% if actual and actual.btn_editar %}checked{% endif %}></td>
+            <td><input type="checkbox" class="perm-btn"     name="btn_eliminar_{{ opcion.id_opcion }}" {% if actual and actual.btn_eliminar %}checked{% endif %}></td>
+            <td><input type="checkbox" class="perm-btn"     name="btn_pdf_{{ opcion.id_opcion }}"      {% if actual and actual.btn_pdf %}checked{% endif %}></td>
+            <td><input type="checkbox" class="perm-btn"     name="btn_excel_{{ opcion.id_opcion }}"    {% if actual and actual.btn_excel %}checked{% endif %}></td>
+            <td><input type="checkbox" class="perm-btn"     name="btn_guardar_{{ opcion.id_opcion }}"  {% if actual and actual.btn_guardar %}checked{% endif %}></td>
+            <td><input type="checkbox" class="perm-btn"     name="btn_otro_{{ opcion.id_opcion }}"     {% if actual and actual.btn_otro %}checked{% endif %}></td>
+          </tr>
+        {% endfor %}
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div class="permisos-footer">
+    {% if permisos | puede("CONFIGURACIONES", "Permisos", "btn_guardar") %}
+      <button type="submit" class="btn-primary">Guardar cambios</button>
+    {% endif %}
+    <a href="/config/permisos" class="btn-sec">Cancelar</a>
+  </div>
+</form>
