@@ -60,7 +60,14 @@
     <a href="#" class="tablas-sidebar__opcion-suelta tablas-sidebar__opcion--disabled">📄 Documentos SUNAT</a>
     <a href="#" class="tablas-sidebar__opcion-suelta tablas-sidebar__opcion--disabled">💱 Tipo de Cambio</a>
     <a href="#" class="tablas-sidebar__opcion-suelta tablas-sidebar__opcion--disabled">💳 Formas de pago</a>
-    <a href="#" class="tablas-sidebar__opcion-suelta tablas-sidebar__opcion--disabled">🚛 Transportistas</a>
+    {% if permisos | puede("TABLAS", "Transportistas") %}
+      <a href="/tablas/transportistas"
+         class="tablas-sidebar__opcion-suelta {% if opcion_activa == 'transportistas' %}tablas-sidebar__opcion--activa{% endif %}">
+        🚛 Transportistas
+      </a>
+    {% else %}
+      <a href="#" class="tablas-sidebar__opcion-suelta tablas-sidebar__opcion--disabled">🚛 Transportistas</a>
+    {% endif %}
     <a href="#" class="tablas-sidebar__opcion-suelta tablas-sidebar__opcion--disabled">👤 Personal</a>
 
   </nav>

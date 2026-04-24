@@ -1,0 +1,52 @@
+<div id="submodal-vehiculo" class="submodal-overlay" onclick="if(event.target===this) cerrarSubmodalVehiculo()">
+  <div class="submodal-contenido">
+    <div class="modal-header">
+      <h3>Detalle del Vehículo</h3>
+      <button type="button" class="modal-close" onclick="cerrarSubmodalVehiculo()">✕</button>
+    </div>
+
+    <div class="tp-fila-estado">
+      <label class="toggle-switch-wrap">
+        <span>Estado:</span>
+        <span class="toggle-switch">
+          <input type="checkbox" id="vh-estado" checked>
+          <span class="toggle-slider"></span>
+        </span>
+      </label>
+    </div>
+
+    <label>Vehículo (Marca/Modelo):
+      <input id="vh-vehiculo" maxlength="100">
+    </label>
+
+    <label>Placa:
+      <input id="vh-placa" maxlength="20">
+    </label>
+
+    <div class="tp-fila-2col">
+      <label>DNI Chofer:
+        <input id="vh-dni" inputmode="numeric" maxlength="8">
+      </label>
+      <label>Licencia:
+        <input id="vh-licencia" maxlength="20">
+      </label>
+    </div>
+
+    <label>Nombre Chofer:
+      <input id="vh-nombre" maxlength="100">
+    </label>
+
+    <label>Apellidos Chofer:
+      <input id="vh-apellidos" maxlength="100">
+    </label>
+
+    <label>Nota:
+      <textarea id="vh-nota" rows="2"></textarea>
+    </label>
+
+    <div class="modal-footer">
+      <button type="button" class="btn-primary" onclick="aceptarSubmodalVehiculo()">Aceptar</button>
+      <button type="button" class="btn-sec" onclick="cerrarSubmodalVehiculo()">Cancelar</button>
+    </div>
+  </div>
+</div>

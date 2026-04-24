@@ -1,0 +1,123 @@
+<div class="modal-backdrop" onclick="if(event.target===this) cerrarModal()">
+  <div class="modal-dialog modal-transportista">
+    <div class="modal-header">
+      <h3>{% if transportista %}Editar Transportista{% else %}Nuevo Transportista{% endif %}</h3>
+      <button type="button" class="modal-close" onclick="cerrarModal()">✕</button>
+    </div>
+
+    <form onsubmit="event.preventDefault(); guardarTodo();" autocomplete="off">
+      <div class="tp-fila-estado">
+        <label class="toggle-switch-wrap">
+          <span>Estado:</span>
+          <span class="toggle-switch">
+            <input type="checkbox" id="tp-estado" {% if transportista is none or transportista.estado %}checked{% endif %}>
+            <span class="toggle-slider"></span>
+          </span>
+        </label>
+      </div>
+
+      <label>RUC:
+        <input id="tp-ruc"
+               name="ruc"
+               inputmode="numeric"
+               maxlength="11"
+               value="{{ transportista.ruc if transportista else '' }}"
+               required>
+        <small id="tp-ruc-feedback"></small>
+      </label>
+
+      <label>Razón Social / Nombre:
+        <input id="tp-nombre"
+               name="nombre"
+               maxlength="200"
+               value="{{ transportista.nombre if transportista else '' }}"
+               required>
+      </label>
+
+      <label>Dirección:
+        <input id="tp-direccion"
+               name="direccion"
+               maxlength="200"
+               value="{{ transportista.direccion if transportista and transportista.direccion else '' }}">
+      </label>
+
+      <div class="tp-fila-2col">
+        <label>Localidad:
+          <input id="tp-localidad"
+                 name="localidad"
+                 maxlength="100"
+                 value="{{ transportista.localidad if transportista and transportista.localidad else '' }}">
+        </label>
+        <label>Celular:
+          <input id="tp-celular"
+                 name="celular"
+                 maxlength="20"
+                 value="{{ transportista.celular if transportista and transportista.celular else '' }}">
+        </label>
+      </div>
+
+      <label>Correo:
+        <input id="tp-correo"
+               name="correo"
+               type="email"
+               maxlength="100"
+               value="{{ transportista.correo if transportista and transportista.correo else '' }}">
+      </label>
+
+      <div class="tp-seccion">
+        <h3>Vehículos y Choferes</h3>
+        <div class="tp-vehiculos-toolbar">
+          <button type="button" class="btn-sec" onclick="abrirSubmodalVehiculo(null)">+ Agregar Vehículo</button>
+          <button type="button" class="btn-sec" onclick="editarVehiculoSeleccionado()">Editar Vehículo</button>
+          <button type="button" class="btn-danger" onclick="quitarVehiculoSeleccionado()">Quitar Vehículo</button>
+        </div>
+
+        <table id="tabla-vehiculos" class="tablas-grid">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Vehículo</th>
+              <th>Placa</th>
+              <th>DNI</th>
+              <th>Chofer</th>
+              <th>Licencia</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <div class="modal-footer">
+        <button type="submit" id="btn-guardar-todo" class="btn-primary">Guardar Todo</button>
+        <button type="button" class="btn-sec" onclick="cerrarModal()">Cancelar</button>
+      </div>
+    </form>
+
+    {% include "tablas/transportistas/_modal_vehiculo.html" %}
+  </div>
+</div>
+
+<script>
+  window.transportistaState = {
+    id: {{ transportista.id_transportista if transportista else 'null' }},
+    vehiculos: [
+      {% for v in vehiculos %}
+      {
+        id_vehiculo: {{ v.id_vehiculo }},
+        vehiculo: {{ v.vehiculo | tojson }},
+        placa: {{ v.placa | tojson }},
+        dni_chofer: {{ (v.dni_chofer or '') | tojson }},
+        nombre_chofer: {{ (v.nombre_chofer or '') | tojson }},
+        apellidos_chofer: {{ (v.apellidos_chofer or '') | tojson }},
+        licencia: {{ (v.licencia or '') | tojson }},
+        nota: {{ (v.nota or '') | tojson }},
+        estado: {{ 'true' if v.estado else 'false' }},
+        _eliminado: false,
+        _vehiculoIndex: {{ loop.index0 }}
+      }{% if not loop.last %},{% endif %}
+      {% endfor %}
+    ],
+    vehiculoSeleccionado: null
+  };
+  if (typeof initTransportistaModal === 'function') initTransportistaModal();
+</script>
