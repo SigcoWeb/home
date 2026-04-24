@@ -24,7 +24,9 @@
               hx-delete="/config/usuarios/{{ u.id_usuario }}"
               hx-target="#row-usuario-{{ u.id_usuario }}"
               hx-swap="outerHTML"
-              hx-confirm="¿Eliminar este usuario? Se borrarán también sus accesos.">Eliminar</button>
+              data-confirmar="¿Eliminar este usuario? Se borrarán también sus accesos."
+              data-confirmar-titulo="Eliminar usuario"
+              data-confirmar-aceptar="Eliminar">Eliminar</button>
     {% endif %}
   </td>
 </tr>
