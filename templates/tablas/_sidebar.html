@@ -75,7 +75,14 @@
     {% else %}
       <a href="#" class="tablas-sidebar__opcion-suelta tablas-sidebar__opcion--disabled">🚛 Transportistas</a>
     {% endif %}
-    <a href="#" class="tablas-sidebar__opcion-suelta tablas-sidebar__opcion--disabled">👤 Personal</a>
+    {% if permisos | puede("TABLAS", "Personal") %}
+      <a href="/tablas/personal"
+         class="tablas-sidebar__opcion-suelta {% if opcion_activa == 'personal' %}tablas-sidebar__opcion--activa{% endif %}">
+        👤 Personal
+      </a>
+    {% else %}
+      <a href="#" class="tablas-sidebar__opcion-suelta tablas-sidebar__opcion--disabled">👤 Personal</a>
+    {% endif %}
 
   </nav>
 </aside>
