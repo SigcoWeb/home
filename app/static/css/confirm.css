@@ -1,0 +1,99 @@
+/* ============================================================
+ * Modal de confirmacion reusable
+ * API: await mostrarConfirmacion(mensaje, opciones)
+ * Posicion: centrado en pantalla con overlay oscuro.
+ * Autofocus en Cancelar (mas seguro para acciones destructivas).
+ * ============================================================ */
+
+#confirm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.72);
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: confirm-overlay-in 0.15s ease-out;
+}
+
+#confirm-overlay.confirm-overlay--leaving {
+  animation: confirm-overlay-out 0.15s ease-in forwards;
+}
+
+.confirm-box {
+  background: var(--tb-card-bg, #1e293b);
+  color: var(--tb-text, #e2e8f0);
+  border-radius: 12px;
+  padding: 20px 22px 16px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  animation: confirm-box-in 0.18s ease-out;
+  font-family: 'Exo 2', system-ui, sans-serif;
+}
+
+.confirm-titulo {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 0 0 8px;
+  color: var(--tb-text, #f1f5f9);
+}
+
+.confirm-mensaje {
+  font-size: 0.95rem;
+  line-height: 1.4;
+  margin: 0 0 18px;
+  color: var(--tb-text-muted, #cbd5e1);
+}
+
+.confirm-botones {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.confirm-btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 0;
+  font-size: 0.92rem;
+  font-family: inherit;
+  cursor: pointer;
+  font-weight: 500;
+  transition: transform 0.08s ease, filter 0.12s ease;
+  min-width: 90px;
+}
+
+.confirm-btn:hover { filter: brightness(1.1); }
+.confirm-btn:active { transform: translateY(1px); }
+.confirm-btn:focus-visible { outline: 2px solid #60a5fa; outline-offset: 2px; }
+
+.confirm-btn--cancel {
+  background: #334155;
+  color: #e2e8f0;
+}
+
+.confirm-btn--peligro      { background: #dc2626; color: #fff; }
+.confirm-btn--advertencia  { background: #d97706; color: #fff; }
+.confirm-btn--info         { background: #2563eb; color: #fff; }
+
+@keyframes confirm-overlay-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes confirm-overlay-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+@keyframes confirm-box-in {
+  from { opacity: 0; transform: translateY(-8px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (max-width: 420px) {
+  .confirm-box { padding: 16px 18px 14px; }
+  .confirm-titulo { font-size: 1rem; }
+  .confirm-mensaje { font-size: 0.9rem; }
+  .confirm-btn { min-width: 80px; padding: 8px 12px; }
+}

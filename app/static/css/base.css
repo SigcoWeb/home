@@ -542,3 +542,57 @@ img { max-width: 100%; display: block; }
 .btn-volver:hover {
     color: #cbd5e1;
 }
+
+/* ============================================================
+ * Dashboard — layout v3 (zW-10b, definitivo)
+ * Tarjetas amplias 280-320px, 4 columnas centradas en desktop.
+ * Hover con elevacion sutil. Responsive: 4/3/2/1 columnas.
+ * ============================================================ */
+
+.modulos-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(280px, 320px));
+    gap: 24px;
+    justify-content: center;
+    max-width: 1360px;
+    margin: 28px auto;
+    padding: 0 24px;
+}
+
+.modulo-card {
+    padding: 22px 20px;
+    min-height: 170px;
+    gap: 12px;
+}
+
+.modulo-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.1);
+    border-color: rgba(59, 130, 246, 0.35);
+}
+
+.modulo-icono,
+.modulo-card__icono {
+    width: 44px;
+    height: 44px;
+}
+
+.modulo-titulo,
+.modulo-card__titulo,
+.modulo-card h3 {
+    font-size: 0.98rem;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .modulos-grid { grid-template-columns: repeat(3, minmax(260px, 320px)); }
+}
+@media (max-width: 900px) {
+    .modulos-grid { grid-template-columns: repeat(2, minmax(240px, 1fr)); gap: 18px; }
+}
+@media (max-width: 560px) {
+    .modulos-grid { grid-template-columns: 1fr; }
+    .modulo-card { min-height: 130px; padding: 18px; }
+}
