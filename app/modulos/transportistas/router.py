@@ -7,6 +7,7 @@ from fastapi import APIRouter, Request, Depends, HTTPException
 from fastapi.responses import HTMLResponse, JSONResponse
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import selectinload
 
 from app.database import get_db
@@ -214,6 +215,19 @@ async def guardar_todo(
             "mensaje": "Guardado correctamente",
         })
 
+    except IntegrityError as e:
+        await db.rollback()
+        # UNIQUE violation por RUC duplicado (o cualquier otra UNIQUE)
+        mensaje = str(e.orig) if hasattr(e, "orig") else str(e)
+        if "sgc_transportista_ruc" in mensaje or "ruc" in mensaje.lower():
+            return JSONResponse(
+                {"ok": False, "error": f"Ya existe un transportista con el RUC {payload.ruc}"},
+                status_code=400,
+            )
+        return JSONResponse(
+            {"ok": False, "error": "Error de integridad al guardar. Verifica los datos."},
+            status_code=400,
+        )
     except HTTPException:
         await db.rollback()
         raise
