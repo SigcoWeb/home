@@ -78,6 +78,7 @@ app.include_router(auth_router)
 from app.modulos.almacen.router import router as almacen_router
 from app.modulos.catalogo.router import router as catalogo_router
 from app.modulos.transportistas.router import router as transportistas_router
+from app.modulos.tipocambio.router import router as tipocambio_router
 # Módulo UI "Configuración" (zWalter-02 + zWalter-04)
 from app.modulos.usuarios.router import router as usuarios_router
 from app.modulos.permisos.router import router as permisos_router
@@ -85,6 +86,7 @@ from app.modulos.permisos.router import router as permisos_router
 app.include_router(almacen_router)
 app.include_router(catalogo_router)
 app.include_router(transportistas_router)
+app.include_router(tipocambio_router)
 app.include_router(usuarios_router)
 app.include_router(permisos_router)
 
