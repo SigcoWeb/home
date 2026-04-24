@@ -1,0 +1,154 @@
+<div class="modal-backdrop" onclick="if(event.target===this) cerrarModal()">
+  <div class="modal-dialog modal-personal">
+    <div class="modal-header">
+      <h3>{% if empleado %}Editar Empleado{% else %}Nuevo Empleado{% endif %}</h3>
+      <button type="button" class="modal-close" onclick="cerrarModal()">✕</button>
+    </div>
+
+    <form onsubmit="event.preventDefault(); guardarPersonal();" autocomplete="off">
+
+      {# --- Bloque 1: Datos personales --- #}
+      <label>Nombre Completo:
+        <input id="pe-nombre"
+               name="nombre"
+               maxlength="200"
+               value="{{ empleado.nombre if empleado else '' }}"
+               required>
+      </label>
+
+      <label>Dirección:
+        <input id="pe-direccion"
+               name="direccion"
+               maxlength="200"
+               value="{{ empleado.direccion if empleado and empleado.direccion else '' }}">
+      </label>
+
+      <div class="pe-2col">
+        <label>Celular:
+          <input id="pe-celular"
+                 name="celular"
+                 maxlength="20"
+                 value="{{ empleado.celular if empleado and empleado.celular else '' }}">
+        </label>
+        <label>DNI:
+          <input id="pe-dni"
+                 name="dni"
+                 inputmode="numeric"
+                 maxlength="8"
+                 value="{{ empleado.dni if empleado else '' }}"
+                 required>
+        </label>
+      </div>
+
+      <div class="pe-2col">
+        <label>Fecha Ingreso:
+          <input id="pe-fecha-ingreso"
+                 name="fecha_ingreso"
+                 type="date"
+                 value="{{ empleado.fecha_ingreso.isoformat() if empleado and empleado.fecha_ingreso else '' }}"
+                 required>
+        </label>
+        <label>Fecha Cese:
+          <input id="pe-fecha-cese"
+                 name="fecha_cese"
+                 type="date"
+                 value="{{ empleado.fecha_cese.isoformat() if empleado and empleado.fecha_cese else '' }}"
+                 placeholder="— vigente —">
+        </label>
+      </div>
+
+      {# --- Bloque 2: Informacion laboral --- #}
+      <div class="pe-seccion">
+        <label>Cargo:
+          <input id="pe-cargo"
+                 name="cargo"
+                 maxlength="100"
+                 value="{{ empleado.cargo if empleado and empleado.cargo else '' }}">
+        </label>
+
+        <div class="pe-2col">
+          <label>Comisión Factura:
+            <input id="pe-comision-factura"
+                   name="comision_factura"
+                   type="number"
+                   step="0.001"
+                   min="0"
+                   value="{{ '%.3f' | format(empleado.comision_factura or 0) if empleado else '0.000' }}">
+          </label>
+          <span></span>
+        </div>
+      </div>
+
+      {# --- Bloque 3: Observacion --- #}
+      <div class="pe-seccion">
+        <label>Observación:
+          <textarea id="pe-observacion"
+                    name="observacion"
+                    rows="3">{{ empleado.observacion if empleado and empleado.observacion else '' }}</textarea>
+        </label>
+      </div>
+
+      {# --- Bloque 4: Roles --- #}
+      <div class="pe-seccion">
+        <div class="pe-toggles-row">
+          <label class="pe-toggle-item">
+            <span class="toggle-switch">
+              <input type="checkbox" id="pe-comision-producto"
+                     {% if empleado and empleado.comision_producto %}checked{% endif %}>
+              <span class="toggle-slider"></span>
+            </span>
+            <span>Comisión Producto</span>
+          </label>
+          <label class="pe-toggle-item">
+            <span class="toggle-switch">
+              <input type="checkbox" id="pe-comision-familia"
+                     {% if empleado and empleado.comision_familia %}checked{% endif %}>
+              <span class="toggle-slider"></span>
+            </span>
+            <span>Comisión Familia</span>
+          </label>
+          <label class="pe-toggle-item">
+            <span class="toggle-switch">
+              <input type="checkbox" id="pe-repartidor"
+                     {% if empleado and empleado.repartidor %}checked{% endif %}>
+              <span class="toggle-slider"></span>
+            </span>
+            <span>Repartidor</span>
+          </label>
+          <label class="pe-toggle-item">
+            <span class="toggle-switch">
+              <input type="checkbox" id="pe-mesero"
+                     {% if empleado and empleado.mesero %}checked{% endif %}>
+              <span class="toggle-slider"></span>
+            </span>
+            <span>Mesero</span>
+          </label>
+        </div>
+      </div>
+
+      {# --- Bloque 5: Estado --- #}
+      <div class="pe-seccion">
+        <label class="pe-toggle-item">
+          <span class="toggle-switch">
+            <input type="checkbox" id="pe-estado"
+                   {% if empleado is none or empleado.estado %}checked{% endif %}>
+            <span class="toggle-slider"></span>
+          </span>
+          <span>Estado (Activo / Inactivo)</span>
+        </label>
+      </div>
+
+      <div class="modal-footer">
+        <button type="submit" id="btn-guardar-pe" class="btn-primary">Guardar</button>
+        <button type="button" class="btn-sec" onclick="cerrarModal()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  window.personalState = {
+    id: {{ empleado.id_personal if empleado else 'null' }}
+  };
+  if (typeof initPersonalModal === 'function') initPersonalModal();
+</script>

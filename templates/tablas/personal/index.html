@@ -1,0 +1,43 @@
+{% extends "tablas/_layout.html" %}
+{% set seccion_activa = "personal" %}
+{% set opcion_activa = "personal" %}
+
+{% block titulo_opcion %}Personal{% endblock %}
+
+{% block contenido_tablas %}
+<div class="tablas-botonera">
+  {% if permisos | puede("TABLAS", "Personal", "btn_nuevo") %}
+    <button class="btn-primary"
+            hx-get="/tablas/personal/nuevo"
+            hx-target="#modal-root"
+            hx-swap="innerHTML">
+      + Nuevo
+    </button>
+  {% endif %}
+</div>
+
+<table class="tablas-grid">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Dni</th>
+      <th>Nombre</th>
+      <th>F. Ingreso</th>
+      <th>Estado</th>
+      <th>Usuario</th>
+      <th>Estación</th>
+      <th class="col-acciones">Acciones</th>
+    </tr>
+  </thead>
+  <tbody id="tbody-personal">
+    {% for emp in empleados %}
+      {% include "tablas/personal/_row.html" %}
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
+
+{% block extra_js %}
+{{ super() }}
+<script src="/static/js/personal.js?v=3"></script>
+{% endblock %}
