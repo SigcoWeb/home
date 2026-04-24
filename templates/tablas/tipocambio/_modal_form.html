@@ -1,0 +1,76 @@
+<div class="modal-backdrop" onclick="if(event.target===this) cerrarModal()">
+  <div class="modal-dialog modal-tipocambio">
+    <div class="modal-header">
+      <h3>{% if tipocambio %}Editar Tipo de Cambio{% else %}Nuevo Tipo de Cambio{% endif %}</h3>
+      <button type="button" class="modal-close" onclick="cerrarModal()">✕</button>
+    </div>
+
+    <form onsubmit="event.preventDefault(); guardarTipoCambio();" autocomplete="off">
+      <label>Fecha:
+        <input id="tc-fecha"
+               name="fecha_tc"
+               type="date"
+               value="{{ tipocambio.fecha_tc.isoformat() if tipocambio and tipocambio.fecha_tc else '' }}"
+               required>
+      </label>
+
+      <div class="tc-fila-2col">
+        <label>Compra:
+          <input id="tc-compra"
+                 name="compra"
+                 type="number"
+                 step="0.001"
+                 min="0"
+                 value="{{ '%.3f' | format(tipocambio.compra) if tipocambio else '' }}"
+                 required>
+        </label>
+        <label>Venta:
+          <input id="tc-venta"
+                 name="venta"
+                 type="number"
+                 step="0.001"
+                 min="0"
+                 value="{{ '%.3f' | format(tipocambio.venta) if tipocambio else '' }}"
+                 required>
+        </label>
+      </div>
+
+      <div class="tc-fila-2col">
+        <label>Compra SUNAT:
+          <input id="tc-compra-sunat"
+                 name="compra_sunat"
+                 type="number"
+                 step="0.001"
+                 min="0"
+                 value="{{ '%.3f' | format(tipocambio.compra_sunat or 0) if tipocambio else '0.000' }}">
+        </label>
+        <label>Venta SUNAT:
+          <input id="tc-venta-sunat"
+                 name="venta_sunat"
+                 type="number"
+                 step="0.001"
+                 min="0"
+                 value="{{ '%.3f' | format(tipocambio.venta_sunat or 0) if tipocambio else '0.000' }}">
+        </label>
+      </div>
+
+      <label>Nota:
+        <textarea id="tc-nota"
+                  name="nota"
+                  rows="3">{{ tipocambio.nota if tipocambio and tipocambio.nota else '' }}</textarea>
+      </label>
+
+      <div class="modal-footer">
+        <button type="submit" id="btn-guardar-tc" class="btn-primary">Guardar</button>
+        <button type="button" class="btn-sec" onclick="cerrarModal()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  window.tipocambioState = {
+    id: {{ tipocambio.id_tc if tipocambio else 'null' }}
+  };
+  if (typeof initTipoCambioModal === 'function') initTipoCambioModal();
+</script>

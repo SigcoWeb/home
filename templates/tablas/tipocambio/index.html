@@ -1,0 +1,45 @@
+{% extends "tablas/_layout.html" %}
+{% set seccion_activa = "tipocambio" %}
+{% set opcion_activa = "tipocambio" %}
+
+{% block titulo_opcion %}Tipo de Cambio{% endblock %}
+
+{% block contenido_tablas %}
+<div class="tablas-botonera">
+  {% if permisos | puede("TABLAS", "TipoCambio", "btn_nuevo") %}
+    <button class="btn-primary"
+            hx-get="/tablas/tipocambio/nuevo"
+            hx-target="#modal-root"
+            hx-swap="innerHTML">
+      + Nuevo
+    </button>
+  {% endif %}
+</div>
+
+<table class="tablas-grid">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Fecha</th>
+      <th class="col-num">Compra</th>
+      <th class="col-num">Venta</th>
+      <th class="col-num">C. SUNAT</th>
+      <th class="col-num">V. SUNAT</th>
+      <th>Nota</th>
+      <th>Usuario</th>
+      <th>Estación</th>
+      <th class="col-acciones">Acciones</th>
+    </tr>
+  </thead>
+  <tbody id="tbody-tipocambio">
+    {% for tc in tipos_cambio %}
+      {% include "tablas/tipocambio/_row.html" %}
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
+
+{% block extra_js %}
+{{ super() }}
+<script src="/static/js/tipocambio.js?v=1"></script>
+{% endblock %}
