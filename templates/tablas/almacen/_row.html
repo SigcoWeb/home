@@ -16,7 +16,9 @@
               hx-delete="/tablas/almacen/{{ a.id_almacen }}"
               hx-target="#row-almacen-{{ a.id_almacen }}"
               hx-swap="outerHTML"
-              hx-confirm="¿Eliminar este almacén?">Eliminar</button>
+              data-confirmar="¿Eliminar este almacén?"
+              data-confirmar-titulo="Eliminar almacén"
+              data-confirmar-aceptar="Eliminar">Eliminar</button>
     {% endif %}
   </td>
 </tr>
