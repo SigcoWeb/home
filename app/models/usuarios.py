@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from app.database import Base
-from app.models.empleados import Empleado  # noqa  (asegura orden de registro)
+from app.models.personal import SgcEmpleado  # noqa  (asegura orden de registro)
 
 
 class SgcModulo(Base):
@@ -51,7 +51,7 @@ class SgcUsuario(Base):
     id_sys_master = Column(Integer, nullable=True)
 
     # FK a empleados (RRHH). Nullable porque no todo usuario es empleado.
-    id_empleado = Column(Integer, ForeignKey("sgc_empleados.id_empleado"), nullable=True)
+    id_personal = Column(Integer, ForeignKey("sgc_empleados.id_personal"), nullable=True)
 
     id_usuario_creador = Column(Integer, nullable=True)
     fhcontrol = Column(DateTime, default=datetime.now)
@@ -59,7 +59,7 @@ class SgcUsuario(Base):
 
     accesos_modulos = relationship("SgcUsuarioModulo", back_populates="usuario", cascade="all, delete-orphan")
     accesos_opciones = relationship("SgcUsuarioOpcion", back_populates="usuario", cascade="all, delete-orphan")
-    empleado = relationship("Empleado")
+    empleado = relationship("SgcEmpleado")
 
 
 class SgcUsuarioModulo(Base):
