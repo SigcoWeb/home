@@ -29,7 +29,7 @@ from app.models import config_numerador             # noqa
 from app.models import config_rutas                 # noqa
 from app.models import doc_identidad                # noqa
 from app.models import docsunat                     # noqa
-from app.models import empleados                    # noqa
+from app.models import personal                     # noqa
 from app.models import empresa                      # noqa
 from app.models import entidades                    # noqa
 from app.models import forma_pago                   # noqa
@@ -79,6 +79,7 @@ from app.modulos.almacen.router import router as almacen_router
 from app.modulos.catalogo.router import router as catalogo_router
 from app.modulos.transportistas.router import router as transportistas_router
 from app.modulos.tipocambio.router import router as tipocambio_router
+from app.modulos.personal.router import router as personal_router
 # Módulo UI "Configuración" (zWalter-02 + zWalter-04)
 from app.modulos.usuarios.router import router as usuarios_router
 from app.modulos.permisos.router import router as permisos_router
@@ -87,6 +88,7 @@ app.include_router(almacen_router)
 app.include_router(catalogo_router)
 app.include_router(transportistas_router)
 app.include_router(tipocambio_router)
+app.include_router(personal_router)
 app.include_router(usuarios_router)
 app.include_router(permisos_router)
 
