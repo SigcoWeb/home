@@ -499,3 +499,25 @@
   border-color: var(--tb-danger);
   color: #fca5a5;
 }
+
+/* ============================================================
+ * Tipo de Cambio (zWalter-08) — modal simple
+ * ============================================================ */
+
+.modal-tipocambio {
+  max-width: 520px;
+  width: 92%;
+}
+
+.tc-fila-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* Alineacion derecha para columnas numericas en el listado */
+.tablas-grid th.col-num,
+.tablas-grid td.col-num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
