@@ -142,7 +142,7 @@ function abrirSubmodalVehiculo(indexExistente) {
 function editarVehiculoSeleccionado() {
   const idx = window.transportistaState.vehiculoSeleccionado;
   if (idx === null || idx === undefined) {
-    alert("Selecciona un vehiculo primero");
+    mostrarToast("Selecciona un vehiculo primero", "warning");
     return;
   }
   abrirSubmodalVehiculo(idx);
@@ -171,18 +171,18 @@ function aceptarSubmodalVehiculo() {
   };
 
   if (!datos.vehiculo || !datos.placa) {
-    alert("Vehiculo y Placa son obligatorios");
+    mostrarToast("Vehiculo y Placa son obligatorios", "warning");
     return;
   }
   if (datos.dni_chofer && !validarDniPeru(datos.dni_chofer)) {
-    alert("DNI debe tener 8 digitos");
+    mostrarToast("DNI debe tener 8 digitos", "warning");
     return;
   }
 
   // Si hay chofer (DNI, nombre o apellidos), la licencia es obligatoria
   const tieneChofer = !!(datos.dni_chofer || datos.nombre_chofer || datos.apellidos_chofer);
   if (tieneChofer && !datos.licencia) {
-    alert("Si hay chofer, la licencia es obligatoria");
+    mostrarToast("Si hay chofer, la licencia es obligatoria", "warning");
     return;
   }
 
@@ -207,7 +207,7 @@ function aceptarSubmodalVehiculo() {
 function quitarVehiculoSeleccionado() {
   const idx = window.transportistaState.vehiculoSeleccionado;
   if (idx === null || idx === undefined) {
-    alert("Selecciona un vehiculo primero");
+    mostrarToast("Selecciona un vehiculo primero", "warning");
     return;
   }
   const v = window.transportistaState.vehiculos[idx];
@@ -249,11 +249,11 @@ async function guardarTodo() {
   };
 
   if (!validarRucPeru(payload.ruc)) {
-    alert("RUC invalido");
+    mostrarToast("RUC invalido", "warning");
     return;
   }
   if (!payload.nombre) {
-    alert("Razon Social / Nombre es obligatorio");
+    mostrarToast("Razon Social / Nombre es obligatorio", "warning");
     return;
   }
 
@@ -273,7 +273,7 @@ async function guardarTodo() {
     } catch (_) {}
     if (!resp.ok || data.ok === false) {
       const msg = data.error || data.detail || ("HTTP " + resp.status);
-      alert("Error: " + (typeof msg === "string" ? msg : JSON.stringify(msg)));
+      mostrarToast(typeof msg === "string" ? msg : "Error al guardar", "error");
       btn.disabled = false;
       btn.textContent = "Guardar Todo";
       return;
@@ -281,7 +281,7 @@ async function guardarTodo() {
     cerrarModal();
     window.location.href = "/tablas/transportistas";
   } catch (err) {
-    alert("Error de red: " + err);
+    mostrarToast("Error de red. Intenta nuevamente.", "error");
     btn.disabled = false;
     btn.textContent = "Guardar Todo";
   }
@@ -289,7 +289,11 @@ async function guardarTodo() {
 
 // --- Eliminar desde el listado ---
 async function eliminarTransportista(id) {
-  if (!confirm("¿Eliminar este transportista y todos sus vehiculos?")) return;
+  const ok = await mostrarConfirmacion(
+    "¿Eliminar este transportista y todos sus vehiculos? Esta acción no se puede deshacer.",
+    { titulo: "Eliminar transportista", tipo: "peligro", textoAceptar: "Eliminar" }
+  );
+  if (!ok) return;
   try {
     const resp = await fetch("/tablas/transportistas/" + id, { method: "DELETE" });
     let data = {};
@@ -297,13 +301,13 @@ async function eliminarTransportista(id) {
       data = await resp.json();
     } catch (_) {}
     if (!resp.ok || data.ok === false) {
-      alert("Error: " + (data.error || data.detail || "HTTP " + resp.status));
+      mostrarToast(data.error || data.detail || ("Error HTTP " + resp.status), "error");
       return;
     }
     const row = document.getElementById("row-transportista-" + id);
     if (row) row.remove();
   } catch (err) {
-    alert("Error de red: " + err);
+    mostrarToast("Error de red. Intenta nuevamente.", "error");
   }
 }
 

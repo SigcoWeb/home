@@ -26,15 +26,15 @@ async function guardarTipoCambio() {
 
   // Validacion client-side
   if (!fecha) {
-    alert('La fecha es obligatoria');
+    mostrarToast('La fecha es obligatoria', 'warning');
     return;
   }
   if (!compra || parseFloat(compra) <= 0) {
-    alert('La compra debe ser mayor a cero');
+    mostrarToast('La compra debe ser mayor a cero', 'warning');
     return;
   }
   if (!venta || parseFloat(venta) <= 0) {
-    alert('La venta debe ser mayor a cero');
+    mostrarToast('La venta debe ser mayor a cero', 'warning');
     return;
   }
 
@@ -64,7 +64,7 @@ async function guardarTipoCambio() {
     } catch (_) {}
     if (!resp.ok || data.ok === false) {
       const msg = data.error || data.detail || ('HTTP ' + resp.status);
-      alert('Error: ' + (typeof msg === 'string' ? msg : JSON.stringify(msg)));
+      mostrarToast(typeof msg === 'string' ? msg : 'Error al guardar', 'error');
       btn.disabled = false;
       btn.textContent = 'Guardar';
       return;
@@ -73,7 +73,7 @@ async function guardarTipoCambio() {
     window.tipocambioState = null;
     window.location.href = '/tablas/tipocambio';
   } catch (err) {
-    alert('Error de red: ' + err);
+    mostrarToast('Error de red. Intenta nuevamente.', 'error');
     btn.disabled = false;
     btn.textContent = 'Guardar';
   }
@@ -81,7 +81,11 @@ async function guardarTipoCambio() {
 
 // --- Eliminar desde el listado ---
 async function eliminarTipoCambio(id) {
-  if (!confirm('¿Eliminar este tipo de cambio?')) return;
+  const ok = await mostrarConfirmacion(
+    '¿Eliminar este tipo de cambio?',
+    { titulo: 'Eliminar tipo de cambio', tipo: 'peligro', textoAceptar: 'Eliminar' }
+  );
+  if (!ok) return;
   try {
     const resp = await fetch('/tablas/tipocambio/' + id, { method: 'DELETE' });
     let data = {};
@@ -89,13 +93,13 @@ async function eliminarTipoCambio(id) {
       data = await resp.json();
     } catch (_) {}
     if (!resp.ok || data.ok === false) {
-      alert('Error: ' + (data.error || data.detail || 'HTTP ' + resp.status));
+      mostrarToast(data.error || data.detail || ('Error HTTP ' + resp.status), 'error');
       return;
     }
     const row = document.getElementById('row-tipocambio-' + id);
     if (row) row.remove();
   } catch (err) {
-    alert('Error de red: ' + err);
+    mostrarToast('Error de red. Intenta nuevamente.', 'error');
   }
 }
 
