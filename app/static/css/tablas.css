@@ -317,3 +317,185 @@
   padding-top: 12px;
   border-top: 1px solid #374151;
 }
+
+/* ============================================================
+ * Transportistas (zWalter-07) — modal con grilla embebida
+ * ============================================================ */
+
+.modal-transportista {
+  max-width: 900px;
+  width: 92%;
+}
+
+.tp-fila-estado {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.toggle-switch-wrap {
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 10px !important;
+  color: var(--tb-text-dim) !important;
+  font-size: 13px !important;
+}
+
+.tp-fila-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.tp-seccion {
+  border-top: 1px solid #374151;
+  padding-top: 12px;
+  margin-top: 12px;
+}
+
+.tp-seccion h3 {
+  font-family: 'Exo 2', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--tb-azul);
+  margin: 0 0 10px 0;
+}
+
+.tp-vehiculos-toolbar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+#tabla-vehiculos {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+
+#tabla-vehiculos th,
+#tabla-vehiculos td {
+  padding: 6px 10px;
+  text-align: left;
+  border-bottom: 1px solid #374151;
+  color: var(--tb-text-dim);
+}
+
+#tabla-vehiculos thead {
+  background: var(--tb-input);
+}
+
+#tabla-vehiculos tbody tr {
+  cursor: pointer;
+  transition: background 0.1s;
+}
+#tabla-vehiculos tbody tr:hover   { background: rgba(37, 99, 235, 0.18); }
+#tabla-vehiculos tbody tr.row-selected {
+  background: var(--tb-activa);
+  color: #fff;
+}
+#tabla-vehiculos tbody tr.row-selected td { color: #fff; }
+
+/* Toggle switch (estado) */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+}
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background: #475569;
+  border-radius: 24px;
+  transition: 0.2s;
+}
+.toggle-slider::before {
+  position: absolute;
+  content: "";
+  height: 18px; width: 18px;
+  left: 3px; bottom: 3px;
+  background: white;
+  border-radius: 50%;
+  transition: 0.2s;
+}
+.toggle-switch input:checked + .toggle-slider { background: #22c55e; }
+.toggle-switch input:checked + .toggle-slider::before { transform: translateX(20px); }
+
+/* Feedback de validacion RUC */
+.feedback-ok { color: #4ade80; font-size: 12px; margin-top: 4px; display: block; }
+.feedback-err { color: #f87171; font-size: 12px; margin-top: 4px; display: block; }
+.campo-valido { border-color: #22c55e !important; }
+.campo-invalido { border-color: #ef4444 !important; }
+
+/* Sub-modal de vehiculo */
+.submodal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+}
+.submodal-contenido {
+  background: #1f2937;
+  border: 1px solid #374151;
+  border-radius: 8px;
+  padding: 18px 22px;
+  max-width: 520px;
+  width: 90%;
+  color: var(--tb-text);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.submodal-contenido label {
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  color: var(--tb-text-muted);
+  gap: 4px;
+}
+.submodal-contenido input,
+.submodal-contenido textarea {
+  background: var(--tb-input);
+  border: 1px solid #374151;
+  color: var(--tb-text);
+  border-radius: 4px;
+  padding: 8px 10px;
+  font-size: 13px;
+  outline: none;
+  font-family: inherit;
+}
+.submodal-contenido input:focus,
+.submodal-contenido textarea:focus { border-color: var(--tb-border-focus); }
+
+/* Botones de accion en listado: solo iconos */
+.btn-accion-icono {
+  padding: 6px 8px;
+  background: transparent;
+  border: 1px solid #374151;
+  border-radius: 4px;
+  cursor: pointer;
+  color: var(--tb-text-dim);
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  vertical-align: middle;
+  margin-right: 4px;
+}
+.btn-accion-icono svg { width: 16px; height: 16px; display: block; }
+.btn-accion-icono:hover {
+  background: var(--tb-hover);
+  border-color: var(--tb-azul);
+  color: #fff;
+}
+.btn-accion-icono--peligro:hover {
+  background: rgba(220, 38, 38, 0.15);
+  border-color: var(--tb-danger);
+  color: #fca5a5;
+}
