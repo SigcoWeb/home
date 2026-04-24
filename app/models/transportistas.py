@@ -1,37 +1,59 @@
-from sqlalchemy import Column, Integer, String, Boolean, DateTime, Text, ForeignKey, func
+from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, Text
+from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import relationship
+from datetime import datetime
 from app.database import Base
+
 
 class SgcTransportista(Base):
     __tablename__ = "sgc_transportista"
 
-    id_transportista = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    ruc = Column(String(12), unique=True, index=True)
-    nombre = Column(String(100))
-    direccion = Column(String(100))
-    localidad = Column(String(50))
-    celular = Column(String(25))
-    correo = Column(String(100))
-    id_usuario = Column(Integer)
-    fhcontrol = Column(DateTime, default=func.now())
+    id_transportista = Column(Integer, primary_key=True, index=True)
+    ruc = Column(String(11), unique=True, nullable=False, index=True)
+    nombre = Column(String(200), nullable=False, index=True)
+    direccion = Column(String(200), nullable=True)
+    localidad = Column(String(100), nullable=True)
+    celular = Column(String(20), nullable=True)
+    correo = Column(String(100), nullable=True)
     estado = Column(Boolean, default=True)
 
-    # Relationship
-    vehiculos = relationship("SgcTransportistaVehiculo", back_populates="transportista", cascade="all, delete-orphan")
+    # Scaffolding para zW-07b (SUNAT API response)
+    metadatos_api = Column(JSONB, nullable=True)
+
+    # Auditoria
+    id_usuario = Column(Integer, nullable=True)
+    fhcontrol = Column(DateTime, default=datetime.now)
+    estacion = Column(String(20), nullable=True)
+
+    vehiculos = relationship(
+        "SgcTransportistaVehiculo",
+        back_populates="transportista",
+        cascade="all, delete-orphan",
+        lazy="selectin",
+    )
+
 
 class SgcTransportistaVehiculo(Base):
     __tablename__ = "sgc_transportista_vehiculo"
 
-    id_vehiculo = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    id_transportista = Column(Integer, ForeignKey("sgc_transportista.id_transportista"))
-    vehiculo = Column(String(50))
-    placa = Column(String(12))
-    dni_chofer = Column(String(9))
-    nombre_chofer = Column(String(50))
-    apellidos_chofer = Column(String(80))
-    licencia = Column(String(12))
-    nota = Column(Text)
+    id_vehiculo = Column(Integer, primary_key=True, index=True)
+    id_transportista = Column(
+        Integer,
+        ForeignKey("sgc_transportista.id_transportista", ondelete="CASCADE"),
+        nullable=False,
+    )
+    vehiculo = Column(String(100), nullable=False)
+    placa = Column(String(20), nullable=False)
+    dni_chofer = Column(String(8), nullable=True)
+    nombre_chofer = Column(String(100), nullable=True)
+    apellidos_chofer = Column(String(100), nullable=True)
+    licencia = Column(String(20), nullable=True)
+    nota = Column(Text, nullable=True)
     estado = Column(Boolean, default=True)
 
-    # Relationship
+    # Auditoria
+    id_usuario = Column(Integer, nullable=True)
+    fhcontrol = Column(DateTime, default=datetime.now)
+    estacion = Column(String(20), nullable=True)
+
     transportista = relationship("SgcTransportista", back_populates="vehiculos")
