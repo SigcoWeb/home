@@ -13,7 +13,9 @@
               hx-delete="/tablas/grupos/{{ g.id_grupo }}"
               hx-target="#row-grupo-{{ g.id_grupo }}"
               hx-swap="outerHTML"
-              hx-confirm="¿Eliminar este grupo?">Eliminar</button>
+              data-confirmar="¿Eliminar este grupo?"
+              data-confirmar-titulo="Eliminar grupo"
+              data-confirmar-aceptar="Eliminar">Eliminar</button>
     {% endif %}
   </td>
 </tr>
