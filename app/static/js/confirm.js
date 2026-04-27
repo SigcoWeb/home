@@ -90,9 +90,7 @@
 
       btnCancel.addEventListener('click', () => cerrar(false));
       btnAccept.addEventListener('click', () => cerrar(true));
-      overlay.addEventListener('click', (e) => {
-        if (e.target === overlay) cerrar(false);
-      });
+      // Click en overlay NO cierra el modal (zWalter-11): solo Cancelar / Aceptar / Esc.
       document.addEventListener('keydown', onKey);
     });
   }

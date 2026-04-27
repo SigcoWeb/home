@@ -103,12 +103,97 @@ async function eliminarTipoCambio(id) {
   }
 }
 
+// --- TC SUNAT (zWalter-13): banner de estado ---
+function _setBannerTcSunat(estado, mensaje) {
+  const banner = document.getElementById('banner-tc-sunat');
+  if (!banner) return;
+
+  banner.classList.remove(
+    'banner-tc-sunat--ok',
+    'banner-tc-sunat--warn',
+    'banner-tc-sunat--loading'
+  );
+
+  if (estado === null) {
+    banner.setAttribute('hidden', '');
+    return;
+  }
+
+  banner.removeAttribute('hidden');
+  banner.classList.add('banner-tc-sunat--' + estado);
+
+  const icon = banner.querySelector('.banner-tc-icon');
+  const msg = banner.querySelector('.banner-tc-mensaje');
+  if (icon) {
+    icon.textContent = estado === 'ok' ? '✓'
+                     : estado === 'warn' ? '⚠'
+                     : '…';
+  }
+  if (msg) msg.textContent = mensaje;
+}
+
+// --- Convertir fecha del input (yyyy-mm-dd) a partes dd/mm/yyyy para la API ---
+function _partesFechaParaApi(fechaIso) {
+  if (!fechaIso || fechaIso.length !== 10) return null;
+  const partes = fechaIso.split('-');
+  if (partes.length !== 3) return null;
+  return { yyyy: partes[0], mm: partes[1], dd: partes[2] };
+}
+
+// --- Llamar a la API y poblar campos compra_sunat / venta_sunat ---
+async function obtenerTcSunat(fechaIso) {
+  const p = _partesFechaParaApi(fechaIso);
+  if (!p) {
+    _setBannerTcSunat(null);
+    return;
+  }
+
+  _setBannerTcSunat('loading', 'Consultando TC SUNAT...');
+
+  try {
+    const resp = await fetch(`/tablas/tipocambio/api/sunat/${p.dd}/${p.mm}/${p.yyyy}`);
+    const data = await resp.json();
+
+    if (data.ok) {
+      const compraSunat = document.getElementById('tc-compra-sunat');
+      const ventaSunat = document.getElementById('tc-venta-sunat');
+      if (compraSunat) compraSunat.value = Number(data.compra).toFixed(3);
+      if (ventaSunat) ventaSunat.value = Number(data.venta).toFixed(3);
+
+      _setBannerTcSunat(
+        'ok',
+        `TC SUNAT obtenido: C ${Number(data.compra).toFixed(3)} / V ${Number(data.venta).toFixed(3)}`
+      );
+    } else {
+      _setBannerTcSunat('warn', 'No se pudo obtener TC SUNAT, complete manualmente');
+    }
+  } catch (err) {
+    _setBannerTcSunat('warn', 'No se pudo obtener TC SUNAT, complete manualmente');
+  }
+}
+
+// --- Hook al input de fecha: re-fetch al cambiar ---
+function _engancharFechaSunat() {
+  const fechaInput = document.getElementById('tc-fecha');
+  if (!fechaInput) return;
+  if (fechaInput.dataset.sunatHooked === '1') return;
+  fechaInput.dataset.sunatHooked = '1';
+
+  fechaInput.addEventListener('change', () => {
+    if (fechaInput.value) {
+      obtenerTcSunat(fechaInput.value);
+    }
+  });
+}
+
 // --- Init del modal ---
 function initTipoCambioModal() {
   setupUppercaseInput(document.getElementById('tc-nota'));
 
   const fecha = document.getElementById('tc-fecha');
   const compra = document.getElementById('tc-compra');
+  const state = window.tipocambioState || { id: null };
+
   if (fecha && !fecha.value) {
     // Default a hoy cuando es nuevo
     const hoy = new Date().toISOString().split('T')[0];
@@ -117,6 +202,14 @@ function initTipoCambioModal() {
   } else if (compra) {
     compra.focus();
     compra.select();
+  }
+
+  // Hook de re-fetch al cambiar la fecha
+  _engancharFechaSunat();
+
+  // Auto-fetch SOLO en modo Nuevo (no en edición)
+  if (state.id === null && fecha && fecha.value) {
+    obtenerTcSunat(fecha.value);
   }
 }
 
