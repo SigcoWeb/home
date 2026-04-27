@@ -4,6 +4,10 @@ Router del sub-modulo "Tipo de Cambio" del modulo UI Tablas (zWalter-08).
 CRUD simple, sin sub-modal ni relaciones 1-a-N.
 Constraint UNIQUE sobre fecha_tc: un registro por dia.
 """
+import re
+from datetime import datetime
+
+import httpx
 from fastapi import APIRouter, Request, Depends, HTTPException
 from fastapi.responses import HTMLResponse, JSONResponse
 from sqlalchemy import select, desc
@@ -194,3 +198,89 @@ async def eliminar(
     await db.delete(tc)
     await db.commit()
     return JSONResponse({"ok": True, "mensaje": "Tipo de cambio eliminado"})
+
+
+# ======================================================
+# API: obtener TC SUNAT desde ceatec.com.pe (zWalter-13)
+# ======================================================
+
+@router.get("/api/sunat/{dd}/{mm}/{yyyy}")
+async def obtener_tc_sunat(
+    dd: str,
+    mm: str,
+    yyyy: str,
+    current_user: SgcUsuario = Depends(
+        require_permission("TABLAS", "TipoCambio")
+    ),
+):
+    """
+    Consulta el tipo de cambio SUNAT desde ceatec.com.pe.
+
+    Path: /api/sunat/{dd}/{mm}/{yyyy}  (ej: /api/sunat/27/04/2026)
+
+    Respuestas posibles (siempre 200 salvo formato invalido = 400):
+      - {"ok": true, "compra": 3.456, "venta": 3.462, "fecha": "..."}
+      - {"ok": false, "motivo": "formato-invalido"}
+      - {"ok": false, "motivo": "no-data"}
+      - {"ok": false, "motivo": "timeout"}
+      - {"ok": false, "motivo": "error-api"}
+      - {"ok": false, "motivo": "error-red"}
+    """
+    fecha = f"{dd}/{mm}/{yyyy}"
+
+    # Validar formato dd/mm/yyyy con regex (previene SSRF / inyección de URL)
+    if not re.match(r"^\d{2}/\d{2}/\d{4}$", fecha):
+        return JSONResponse(
+            {"ok": False, "motivo": "formato-invalido"},
+            status_code=400,
+        )
+
+    # Validar que sea fecha real
+    try:
+        datetime.strptime(fecha, "%d/%m/%Y")
+    except ValueError:
+        return JSONResponse(
+            {"ok": False, "motivo": "formato-invalido"},
+            status_code=400,
+        )
+
+    url = f"https://consultardoc.ceatec.com.pe/tipo/cambio/fecha/{fecha}"
+
+    try:
+        async with httpx.AsyncClient(timeout=5.0) as cli:
+            resp = await cli.get(url)
+
+        if resp.status_code != 200:
+            return JSONResponse({"ok": False, "motivo": "error-api"})
+
+        try:
+            data = resp.json()
+        except Exception:
+            return JSONResponse({"ok": False, "motivo": "error-api"})
+
+        cambio = data.get("cambio") if isinstance(data, dict) else None
+        if not cambio or not isinstance(cambio, dict):
+            return JSONResponse({"ok": False, "motivo": "no-data"})
+
+        if not cambio.get("status"):
+            return JSONResponse({"ok": False, "motivo": "no-data"})
+
+        compra = cambio.get("compra")
+        venta = cambio.get("venta")
+
+        if compra is None or venta is None:
+            return JSONResponse({"ok": False, "motivo": "no-data"})
+
+        return JSONResponse({
+            "ok": True,
+            "compra": float(compra),
+            "venta": float(venta),
+            "fecha": cambio.get("fecha"),
+        })
+
+    except httpx.TimeoutException:
+        return JSONResponse({"ok": False, "motivo": "timeout"})
+    except httpx.RequestError:
+        return JSONResponse({"ok": False, "motivo": "error-red"})
+    except Exception:
+        return JSONResponse({"ok": False, "motivo": "error-api"})
