@@ -2,7 +2,7 @@
 {% block title %}Configuración — SIGCO Systems{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="/static/css/tablas.css?v=1">
+<link rel="stylesheet" href="/static/css/tablas.css?v=3">
 <link rel="stylesheet" href="/static/css/configuracion.css?v=1">
 <script src="https://unpkg.com/htmx.org@1.9.12"></script>
 {% endblock %}
@@ -14,9 +14,6 @@
   <main class="tablas-main">
     <header class="tablas-header">
       <h1>{% block titulo_opcion %}Seleccione una opción{% endblock %}</h1>
-      <div class="tablas-header__user">
-        Usuario: <strong>{{ request.state.nombre if request.state.nombre is defined else "—" }}</strong>
-      </div>
     </header>
 
     <section class="tablas-contenido">
