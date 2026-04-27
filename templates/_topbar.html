@@ -1,0 +1,27 @@
+{#- Topbar global (zWalter-11). No se incluye en /, /login. -#}
+{% set _topbar_nombre = (request.state.nombre if request.state is defined and request.state.nombre is defined else None)
+                        or (current_user.nombre_completo if current_user is defined and current_user else None)
+                        or (current_user.usuario if current_user is defined and current_user else 'Usuario') %}
+<header class="topbar">
+  <div class="topbar-left">
+    <button type="button" class="btn-hamburger" onclick="toggleSidebar()" aria-label="Mostrar/ocultar menú">
+      ☰
+    </button>
+    <a href="/dashboard" class="topbar-brand" aria-label="Ir al dashboard">
+      <span class="brand-sigco">Sigco</span><span class="brand-web">Web</span>
+    </a>
+  </div>
+
+  <div class="topbar-right">
+    <div class="user-dropdown" id="user-dropdown">
+      <button type="button" class="user-dropdown-toggle" onclick="toggleUserDropdown()">
+        <span class="user-icon">👤</span>
+        <span class="user-name">{{ _topbar_nombre }}</span>
+        <span class="user-caret">▾</span>
+      </button>
+      <div class="user-dropdown-menu" id="user-dropdown-menu" hidden>
+        <a href="/logout" class="user-dropdown-item">Cerrar sesión</a>
+      </div>
+    </div>
+  </div>
+</header>
