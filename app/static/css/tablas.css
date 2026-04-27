@@ -39,6 +39,23 @@
   overflow-y: auto;
   max-height: 100vh;
   flex-shrink: 0;
+  transition: width 0.2s ease, padding 0.2s ease, border-right-width 0.2s ease;
+}
+
+/* Colapso del sidebar (zWalter-11) */
+.tablas-sidebar.sidebar-colapsado {
+  width: 0;
+  padding-left: 0;
+  padding-right: 0;
+  border-right-width: 0;
+  overflow: hidden;
+}
+.tablas-sidebar.sidebar-colapsado > * {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .tablas-sidebar.sidebar-colapsado { display: none; }
 }
 
 .tablas-sidebar__titulo {
@@ -576,4 +593,83 @@
 .badge-muted {
   background: rgba(100, 116, 139, 0.15);
   color: #94a3b8;
+}
+
+/* ============================================================
+ * Textareas — heredan estilo oscuro de inputs (zWalter-12)
+ * Ámbito: dentro de modales o contenido de Tablas/Configuración.
+ * ============================================================ */
+
+.modal-dialog textarea,
+.submodal-contenido textarea,
+.tablas-contenido textarea {
+  background: var(--tb-input);
+  color: var(--tb-text);
+  border: 1px solid #374151;
+  border-radius: 4px;
+  padding: 8px 10px;
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1.4;
+  resize: vertical;
+  min-height: 60px;
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.12s, background 0.12s;
+}
+
+.modal-dialog textarea:focus,
+.submodal-contenido textarea:focus,
+.tablas-contenido textarea:focus {
+  border-color: var(--tb-border-focus);
+}
+
+.modal-dialog textarea::placeholder,
+.submodal-contenido textarea::placeholder,
+.tablas-contenido textarea::placeholder {
+  color: var(--tb-text-muted);
+  opacity: 0.7;
+}
+
+/* ============================================================
+ * Banner de TC SUNAT (zWalter-13)
+ * ============================================================ */
+
+.banner-tc-sunat {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  margin-top: 8px;
+  margin-bottom: 4px;
+  line-height: 1.3;
+  transition: opacity 0.2s ease;
+}
+
+.banner-tc-sunat--ok {
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  color: #4ade80;
+}
+
+.banner-tc-sunat--warn {
+  background: rgba(217, 119, 6, 0.15);
+  border: 1px solid rgba(217, 119, 6, 0.4);
+  color: #fbbf24;
+}
+
+.banner-tc-sunat--loading {
+  background: rgba(100, 116, 139, 0.15);
+  border: 1px solid rgba(100, 116, 139, 0.4);
+  color: #94a3b8;
+}
+
+.banner-tc-icon {
+  flex-shrink: 0;
+  font-weight: 700;
+  width: 18px;
+  text-align: center;
 }

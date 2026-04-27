@@ -256,9 +256,6 @@ img { max-width: 100%; display: block; }
     box-shadow: 4px 0 20px rgba(30,45,90,0.15);
 }
 
-.sidebar-logo { padding: 0 1.5rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 1rem; }
-.sidebar-logo img { width: 140px; }
-
 .sidebar-nav { flex: 1; display: flex; flex-direction: column; padding: 0 0.75rem; gap: 0.25rem; }
 
 .nav-item {
@@ -325,7 +322,7 @@ img { max-width: 100%; display: block; }
 /* ---- RESPONSIVE ---- */
 @media (max-width: 768px) {
     .sidebar { width: 64px; }
-    .sidebar-logo, .nav-item span { display: none; }
+    .nav-item span { display: none; }
     .nav-item { justify-content: center; padding: 0.75rem; }
     .dash-content { padding: 1rem; }
     .home-title { font-size: 1.5rem; }
@@ -595,4 +592,152 @@ img { max-width: 100%; display: block; }
 @media (max-width: 560px) {
     .modulos-grid { grid-template-columns: 1fr; }
     .modulo-card { min-height: 130px; padding: 18px; }
+}
+
+/* ============================================================
+ * Topbar global (zWalter-11)
+ * Aparece en todas las vistas excepto /, /login.
+ * ============================================================ */
+
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 52px;
+    padding: 0 16px;
+    background: #141414;
+    border-bottom: 1px solid #2a2a2a;
+    color: #e5e7eb;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    font-family: 'Inter', sans-serif;
+}
+
+.topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+}
+
+.btn-hamburger {
+    background: transparent;
+    border: 0;
+    color: #e5e7eb;
+    font-size: 1.4rem;
+    cursor: pointer;
+    padding: 4px 10px;
+    border-radius: 6px;
+    line-height: 1;
+}
+
+.btn-hamburger:hover {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+/* Brand "SigcoWeb" — outline blanco + glow diferenciado (zWalter-12) */
+.topbar-brand {
+    font-family: 'Exo 2', system-ui, sans-serif;
+    font-size: 1.4rem;
+    font-weight: 900;            /* subido de 800 a 900 */
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    line-height: 1;
+    user-select: none;
+}
+
+.topbar-brand:hover {
+    opacity: 0.92;
+}
+
+/* "Sigco" — relleno azul + outline blanco fino */
+/* "Sigco" — azul vivo + outline blanco fino */
+.brand-sigco {
+    color: #1e3a8a;              /* azul más claro/saturado */
+    -webkit-text-stroke: 0.15px #fff;   /* outline reducido */
+    text-shadow:
+        -0.5px -0.5px 0 #fff,
+         0.5px -0.5px 0 #fff,
+        -0.5px  0.5px 0 #fff,
+         0.5px  0.5px 0 #fff;
+}
+
+/* "Web" — azul vivo + outline más grueso + glow blanco */
+.brand-web {
+    color: #1e3a8a;
+    margin-left: 1px;
+    -webkit-text-stroke: 0.8px #fff;   /* outline reducido */
+    text-shadow:
+        0 0 4px rgba(255, 255, 255, 0.7),
+        0 0 10px rgba(255, 255, 255, 0.45);
+}
+
+/* Dropdown de usuario */
+.user-dropdown {
+    position: relative;
+}
+
+.user-dropdown-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: 1px solid #2a2a2a;
+    border-radius: 8px;
+    padding: 6px 12px;
+    color: #e5e7eb;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.9rem;
+}
+
+.user-dropdown-toggle:hover {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.user-icon { font-size: 1rem; }
+.user-name { max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.user-caret { font-size: 0.7rem; opacity: 0.7; }
+
+.user-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 4px);
+    right: 0;
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 8px;
+    min-width: 180px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+    z-index: 110;
+}
+
+.user-dropdown-item {
+    display: block;
+    padding: 10px 14px;
+    color: #e5e7eb;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background 0.12s ease;
+}
+
+.user-dropdown-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+@media (max-width: 600px) {
+    .user-name { display: none; }
+    .topbar-brand { font-size: 1.15rem; }
+    .brand-sigco { -webkit-text-stroke: 0.8px #fff; }
+    .brand-web {
+        -webkit-text-stroke: 1.2px #fff;
+        text-shadow:
+            0 0 4px rgba(255, 255, 255, 0.85),
+            0 0 10px rgba(255, 255, 255, 0.5);
+    }
 }
