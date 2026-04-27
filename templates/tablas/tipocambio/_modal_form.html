@@ -1,4 +1,4 @@
-<div class="modal-backdrop" onclick="if(event.target===this) cerrarModal()">
+<div class="modal-backdrop">
   <div class="modal-dialog modal-tipocambio">
     <div class="modal-header">
       <h3>{% if tipocambio %}Editar Tipo de Cambio{% else %}Nuevo Tipo de Cambio{% endif %}</h3>
@@ -52,6 +52,12 @@
                  min="0"
                  value="{{ '%.3f' | format(tipocambio.venta_sunat or 0) if tipocambio else '0.000' }}">
         </label>
+      </div>
+
+      <!-- Banner de estado del fetch a SUNAT (zWalter-13) -->
+      <div id="banner-tc-sunat" class="banner-tc-sunat" hidden>
+        <span class="banner-tc-icon"></span>
+        <span class="banner-tc-mensaje"></span>
       </div>
 
       <label>Nota:
