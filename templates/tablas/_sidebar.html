@@ -97,6 +97,14 @@
     {% else %}
       <a href="#" class="tablas-sidebar__opcion-suelta tablas-sidebar__opcion--disabled">👤 Personal</a>
     {% endif %}
+    {% if permisos | puede("TABLAS", "ClasificadorGastos") %}
+      <a href="/tablas/clasificador_gastos"
+         class="tablas-sidebar__opcion-suelta {% if opcion_activa == 'clasificador_gastos' %}tablas-sidebar__opcion--activa{% endif %}">
+        📊 Clasificador de Gastos
+      </a>
+    {% else %}
+      <a href="#" class="tablas-sidebar__opcion-suelta tablas-sidebar__opcion--disabled">📊 Clasificador de Gastos</a>
+    {% endif %}
 
   </nav>
 </aside>

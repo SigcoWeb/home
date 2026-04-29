@@ -1,0 +1,43 @@
+<div class="modal-backdrop">
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <h3>
+        {% if modo == "nuevo" %}Nuev{% if nivel == 1 %}a{% else %}a{% endif %}{% else %}Editar{% endif %}
+        {% if nivel == 1 %}Categoría{% else %}Sub-Categoría{% endif %}
+      </h3>
+      <button type="button" class="modal-close" onclick="cerrarModal()">✕</button>
+    </div>
+
+    <form onsubmit="event.preventDefault(); guardarClasificador();" autocomplete="off">
+
+      {% if nivel == 2 and id_padre %}
+        <label>Categoría:
+          <input type="text" value="{{ nombre_padre }}" disabled>
+        </label>
+      {% endif %}
+
+      <label>Nombre:
+        <input id="cg-nombre"
+               name="nombre"
+               maxlength="100"
+               value="{% if registro %}{% if nivel == 1 %}{{ registro.nombre_clagas1 }}{% else %}{{ registro.nombre_clagas2 }}{% endif %}{% endif %}"
+               required>
+      </label>
+
+      <div class="modal-footer">
+        <button type="submit" id="btn-guardar-cg" class="btn-primary">Guardar</button>
+        <button type="button" class="btn-sec" onclick="cerrarModal()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  window.clasifModalState = {
+    nivel: {{ nivel }},
+    modo: "{{ modo }}",
+    id: {% if registro %}{% if nivel == 1 %}{{ registro.id_clagas1 }}{% else %}{{ registro.id_clagas2 }}{% endif %}{% else %}null{% endif %},
+    idPadre: {% if id_padre %}{{ id_padre }}{% else %}null{% endif %}
+  };
+  if (typeof initClasificadorModal === 'function') initClasificadorModal();
+</script>
