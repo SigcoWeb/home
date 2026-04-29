@@ -66,7 +66,14 @@
     {% else %}
       <a href="#" class="tablas-sidebar__opcion-suelta tablas-sidebar__opcion--disabled">💱 Tipo de Cambio</a>
     {% endif %}
-    <a href="#" class="tablas-sidebar__opcion-suelta tablas-sidebar__opcion--disabled">💳 Formas de pago</a>
+    {% if permisos | puede("TABLAS", "FormasPago") %}
+      <a href="/tablas/forma_pago"
+         class="tablas-sidebar__opcion-suelta {% if opcion_activa == 'forma_pago' %}tablas-sidebar__opcion--activa{% endif %}">
+        💳 Formas de pago
+      </a>
+    {% else %}
+      <a href="#" class="tablas-sidebar__opcion-suelta tablas-sidebar__opcion--disabled">💳 Formas de pago</a>
+    {% endif %}
     {% if permisos | puede("TABLAS", "Transportistas") %}
       <a href="/tablas/transportistas"
          class="tablas-sidebar__opcion-suelta {% if opcion_activa == 'transportistas' %}tablas-sidebar__opcion--activa{% endif %}">

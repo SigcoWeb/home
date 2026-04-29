@@ -1,0 +1,40 @@
+{% extends "tablas/_layout.html" %}
+{% set seccion_activa = "forma_pago" %}
+{% set opcion_activa = "forma_pago" %}
+
+{% block titulo_opcion %}Formas de Pago{% endblock %}
+
+{% block contenido_tablas %}
+<div class="tablas-botonera">
+  {% if permisos | puede("TABLAS", "FormasPago", "btn_nuevo") %}
+    <button class="btn-primary"
+            hx-get="/tablas/forma_pago/nuevo"
+            hx-target="#modal-root"
+            hx-swap="innerHTML">
+      + Nuevo
+    </button>
+  {% endif %}
+</div>
+
+<table class="tablas-grid">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Descripción</th>
+      <th>Tipo</th>
+      <th class="text-right">Días</th>
+      <th class="col-acciones">Acciones</th>
+    </tr>
+  </thead>
+  <tbody id="tbody-forma-pago">
+    {% for forma in formas %}
+      {% include "tablas/forma_pago/_row.html" %}
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
+
+{% block extra_js %}
+{{ super() }}
+<script src="/static/js/forma_pago.js?v=1"></script>
+{% endblock %}

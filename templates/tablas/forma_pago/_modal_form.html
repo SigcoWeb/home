@@ -1,0 +1,89 @@
+{% set tipos = ["Contado", "Credito", "Tarjeta", "Transferencia", "Depósito", "Cheque", "Billetero"] %}
+<div class="modal-backdrop">
+  <div class="modal-dialog modal-personal">
+    <div class="modal-header">
+      <h3>{% if forma %}Editar Forma de Pago{% else %}Nueva Forma de Pago{% endif %}</h3>
+      <button type="button" class="modal-close" onclick="cerrarModal()">✕</button>
+    </div>
+
+    <form onsubmit="event.preventDefault(); guardarFormaPago();" autocomplete="off">
+
+      <label>Descripción:
+        <input id="fp-nombre"
+               name="nombre_forpag"
+               maxlength="50"
+               value="{{ forma.nombre_forpag if forma else '' }}"
+               required>
+      </label>
+
+      <div class="pe-2col">
+        <label>Tipo:
+          <select id="fp-tipo" name="tipo_forpag" required>
+            <option value="">— seleccionar —</option>
+            {% for t in tipos %}
+              <option value="{{ t }}" {% if forma and forma.tipo_forpag == t %}selected{% endif %}>{{ t }}</option>
+            {% endfor %}
+          </select>
+        </label>
+        <label>Días:
+          <input id="fp-dias"
+                 name="dias"
+                 type="number"
+                 min="0"
+                 max="365"
+                 step="1"
+                 value="{{ forma.dias if forma else 0 }}">
+        </label>
+      </div>
+
+      <div class="pe-seccion">
+        <div class="pe-toggles-row">
+          <label class="pe-toggle-item">
+            <span class="toggle-switch">
+              <input type="checkbox" id="fp-compra"
+                     {% if forma and forma.compra %}checked{% endif %}>
+              <span class="toggle-slider"></span>
+            </span>
+            <span>Compra</span>
+          </label>
+          <label class="pe-toggle-item">
+            <span class="toggle-switch">
+              <input type="checkbox" id="fp-venta"
+                     {% if forma and forma.venta %}checked{% endif %}>
+              <span class="toggle-slider"></span>
+            </span>
+            <span>Venta</span>
+          </label>
+          <label class="pe-toggle-item">
+            <span class="toggle-switch">
+              <input type="checkbox" id="fp-pv"
+                     {% if forma and forma.pv %}checked{% endif %}>
+              <span class="toggle-slider"></span>
+            </span>
+            <span>Punto Venta</span>
+          </label>
+          <label class="pe-toggle-item">
+            <span class="toggle-switch">
+              <input type="checkbox" id="fp-agenda"
+                     {% if forma and forma.agenda %}checked{% endif %}>
+              <span class="toggle-slider"></span>
+            </span>
+            <span>Agenda</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="submit" id="btn-guardar-fp" class="btn-primary">Guardar</button>
+        <button type="button" class="btn-sec" onclick="cerrarModal()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  window.formaPagoState = {
+    id: {{ forma.id_forpag if forma else 'null' }}
+  };
+  if (typeof initFormaPagoModal === 'function') initFormaPagoModal();
+</script>
