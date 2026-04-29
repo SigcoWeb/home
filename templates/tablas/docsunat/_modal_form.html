@@ -1,0 +1,102 @@
+<div class="modal-backdrop">
+  <div class="modal-dialog modal-personal">
+    <div class="modal-header">
+      <h3>{% if doc %}Editar Documento SUNAT{% else %}Nuevo Documento SUNAT{% endif %}</h3>
+      <button type="button" class="modal-close" onclick="cerrarModal()">✕</button>
+    </div>
+
+    <form onsubmit="event.preventDefault(); guardarDocSunat();" autocomplete="off">
+
+      <div class="pe-2col">
+        <label>Código:
+          <input id="ds-codigo"
+                 name="codigo_docsunat"
+                 inputmode="numeric"
+                 maxlength="2"
+                 style="font-family: monospace;"
+                 value="{{ doc.codigo_docsunat if doc else '' }}"
+                 required>
+        </label>
+        <label>Abreviado:
+          <input id="ds-abreviado"
+                 name="abreviado_docsunat"
+                 maxlength="10"
+                 value="{{ doc.abreviado_docsunat if doc and doc.abreviado_docsunat else '' }}">
+        </label>
+      </div>
+
+      <label>Nombre:
+        <input id="ds-nombre"
+               name="nombre_docsunat"
+               maxlength="200"
+               value="{{ doc.nombre_docsunat if doc else '' }}"
+               required>
+      </label>
+
+      <div class="pe-seccion">
+        <div class="pe-toggles-row">
+          <label class="pe-toggle-item">
+            <span class="toggle-switch">
+              <input type="checkbox" id="ds-flag-compra"
+                     {% if doc and doc.flag_compra %}checked{% endif %}>
+              <span class="toggle-slider"></span>
+            </span>
+            <span>Compra</span>
+          </label>
+          <label class="pe-toggle-item">
+            <span class="toggle-switch">
+              <input type="checkbox" id="ds-flag-venta"
+                     {% if doc and doc.flag_venta %}checked{% endif %}>
+              <span class="toggle-slider"></span>
+            </span>
+            <span>Venta</span>
+          </label>
+          <label class="pe-toggle-item">
+            <span class="toggle-switch">
+              <input type="checkbox" id="ds-flag-gasto"
+                     {% if doc and doc.flag_gasto %}checked{% endif %}>
+              <span class="toggle-slider"></span>
+            </span>
+            <span>Gasto</span>
+          </label>
+          <label class="pe-toggle-item">
+            <span class="toggle-switch">
+              <input type="checkbox" id="ds-flag-guia"
+                     {% if doc and doc.flag_guia %}checked{% endif %}>
+              <span class="toggle-slider"></span>
+            </span>
+            <span>Guía</span>
+          </label>
+          <label class="pe-toggle-item">
+            <span class="toggle-switch">
+              <input type="checkbox" id="ds-flag-percepcion"
+                     {% if doc and doc.flag_percepcion %}checked{% endif %}>
+              <span class="toggle-slider"></span>
+            </span>
+            <span>Percepción</span>
+          </label>
+          <label class="pe-toggle-item">
+            <span class="toggle-switch">
+              <input type="checkbox" id="ds-flag-retencion"
+                     {% if doc and doc.flag_retencion %}checked{% endif %}>
+              <span class="toggle-slider"></span>
+            </span>
+            <span>Retención</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="submit" id="btn-guardar-ds" class="btn-primary">Guardar</button>
+        <button type="button" class="btn-sec" onclick="cerrarModal()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  window.docSunatState = {
+    id: {{ doc.id_docsunat if doc else 'null' }}
+  };
+  if (typeof initDocSunatModal === 'function') initDocSunatModal();
+</script>
