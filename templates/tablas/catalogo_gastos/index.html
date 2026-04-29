@@ -1,0 +1,43 @@
+{% extends "tablas/_layout.html" %}
+{% set seccion_activa = "catalogo_gastos" %}
+{% set opcion_activa = "catalogo_gastos" %}
+
+{% block titulo_opcion %}Mantenimiento de Gastos{% endblock %}
+
+{% block contenido_tablas %}
+<div class="tablas-botonera">
+  {% if permisos | puede("TABLAS", "CatalogoGastos", "btn_nuevo") %}
+    <button class="btn-primary"
+            hx-get="/tablas/catalogo_gastos/nuevo"
+            hx-target="#modal-root"
+            hx-swap="innerHTML">
+      + Nuevo
+    </button>
+  {% endif %}
+</div>
+
+<table class="tablas-grid">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Código</th>
+      <th>Gasto</th>
+      <th>Unidad</th>
+      <th>Estado</th>
+      <th class="col-acciones">Acciones</th>
+    </tr>
+  </thead>
+  <tbody id="tbody-catalogo-gastos">
+    {% for gasto in gastos %}
+      {% include "tablas/catalogo_gastos/_row.html" %}
+    {% else %}
+      <tr><td colspan="6" class="texto-vacio">Sin gastos registrados.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
+
+{% block extra_js %}
+{{ super() }}
+<script src="/static/js/catalogo_gastos.js?v=1"></script>
+{% endblock %}

@@ -26,9 +26,16 @@
       <summary class="tablas-sidebar__seccion--disabled">💻 Catálogo de Activos</summary>
     </details>
 
-    <details class="tablas-sidebar__seccion">
-      <summary class="tablas-sidebar__seccion--disabled">💸 Catálogo de Gastos</summary>
-    </details>
+    {% if permisos | puede("TABLAS", "CatalogoGastos") %}
+      <a href="/tablas/catalogo_gastos"
+         class="tablas-sidebar__opcion-suelta {% if opcion_activa == 'catalogo_gastos' %}tablas-sidebar__opcion--activa{% endif %}">
+        💸 Catálogo de Gastos
+      </a>
+    {% else %}
+      <details class="tablas-sidebar__seccion">
+        <summary class="tablas-sidebar__seccion--disabled">💸 Catálogo de Gastos</summary>
+      </details>
+    {% endif %}
 
     {% if muestra_almacen %}
       <details class="tablas-sidebar__seccion" {% if seccion_activa == 'almacen' %}open{% endif %}>
