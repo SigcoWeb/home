@@ -81,6 +81,7 @@ from app.modulos.transportistas.router import router as transportistas_router
 from app.modulos.tipocambio.router import router as tipocambio_router
 from app.modulos.personal.router import router as personal_router
 from app.modulos.forma_pago.router import router as forma_pago_router
+from app.modulos.docsunat.router import router as docsunat_router
 # Módulo UI "Configuración" (zWalter-02 + zWalter-04)
 from app.modulos.usuarios.router import router as usuarios_router
 from app.modulos.permisos.router import router as permisos_router
@@ -91,6 +92,7 @@ app.include_router(transportistas_router)
 app.include_router(tipocambio_router)
 app.include_router(personal_router)
 app.include_router(forma_pago_router)
+app.include_router(docsunat_router)
 app.include_router(usuarios_router)
 app.include_router(permisos_router)
 
