@@ -1,0 +1,2155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SigcoWeb · Sistema de diseño</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+ * SigcoWeb — Sistema de diseño v1
+ * Tema: Stripe/Vercel · azul-celeste · gradientes vivos
+ * ============================================================ */
+
+/* ---------- Tema: Sigco (default) ---------- */
+:root,
+:root[data-theme="sigco"] {
+    --bg-base: #f0f9ff;
+    --bg-canvas: #e0f2fe;
+    --bg-surface: #ffffff;
+    --bg-elevated: #ffffff;
+    --bg-soft: rgba(14, 165, 233, 0.06);
+
+    --text-primary: #0c1d3a;
+    --text-secondary: #475569;
+    --text-muted: #94a3b8;
+    --text-inverse: #ffffff;
+
+    --border-subtle: rgba(14, 165, 233, 0.12);
+    --border-default: rgba(14, 165, 233, 0.22);
+    --border-strong: rgba(14, 165, 233, 0.4);
+    --border-focus: #0ea5e9;
+
+    --brand: #0ea5e9;
+    --brand-hover: #0284c7;
+    --brand-active: #0369a1;
+    --brand-glow: rgba(14, 165, 233, 0.35);
+
+    --gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #2563eb 50%, #6366f1 100%);
+    --gradient-soft: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 50%, #7dd3fc 100%);
+    --gradient-canvas: radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.12) 0%, transparent 50%),
+                       radial-gradient(at 100% 0%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
+                       linear-gradient(180deg, #f0f9ff 0%, #ffffff 100%);
+    --gradient-table-header: linear-gradient(135deg, #7dd3fc 0%, #38bdf8 50%, #0ea5e9 100%);
+
+    --success: #10b981;
+    --success-bg: #d1fae5;
+    --success-glow: rgba(16, 185, 129, 0.4);
+    --danger: #ef4444;
+    --danger-bg: #fee2e2;
+    --danger-glow: rgba(239, 68, 68, 0.4);
+    --warning: #f59e0b;
+    --warning-bg: #fef3c7;
+    --warning-glow: rgba(245, 158, 11, 0.4);
+    --info: #3b82f6;
+    --info-bg: #dbeafe;
+    --info-glow: rgba(59, 130, 246, 0.4);
+
+    --shadow-sm: 0 1px 2px rgba(14, 23, 38, 0.04), 0 1px 3px rgba(14, 23, 38, 0.06);
+    --shadow-md: 0 4px 6px rgba(14, 23, 38, 0.05), 0 10px 20px rgba(14, 23, 38, 0.08);
+    --shadow-lg: 0 12px 24px rgba(14, 23, 38, 0.1), 0 24px 48px rgba(14, 23, 38, 0.12);
+    --shadow-glow: 0 8px 24px var(--brand-glow);
+
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --radius-xl: 20px;
+    --radius-full: 999px;
+}
+
+/* ---------- Tema: Oscuro ---------- */
+:root[data-theme="oscuro"] {
+    --bg-base: #050816;
+    --bg-canvas: #0a0e1f;
+    --bg-surface: #111630;
+    --bg-elevated: #1a2040;
+    --bg-soft: rgba(56, 189, 248, 0.05);
+
+    --text-primary: #f1f5f9;
+    --text-secondary: #cbd5e1;
+    --text-muted: #64748b;
+    --text-inverse: #050816;
+
+    --border-subtle: rgba(255, 255, 255, 0.06);
+    --border-default: rgba(255, 255, 255, 0.12);
+    --border-strong: rgba(56, 189, 248, 0.3);
+    --border-focus: #38bdf8;
+
+    --brand: #38bdf8;
+    --brand-hover: #7dd3fc;
+    --brand-active: #0ea5e9;
+    --brand-glow: rgba(56, 189, 248, 0.45);
+
+    --gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 50%, #6366f1 100%);
+    --gradient-soft: linear-gradient(135deg, rgba(56, 189, 248, 0.15) 0%, rgba(99, 102, 241, 0.08) 100%);
+    --gradient-canvas: radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.15) 0%, transparent 50%),
+                       radial-gradient(at 100% 100%, rgba(99, 102, 241, 0.12) 0%, transparent 50%),
+                       linear-gradient(180deg, #050816 0%, #0a0e1f 100%);
+    --gradient-table-header: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #2563eb 100%);
+
+    --success: #34d399;
+    --success-bg: rgba(52, 211, 153, 0.12);
+    --success-glow: rgba(52, 211, 153, 0.5);
+    --danger: #f87171;
+    --danger-bg: rgba(248, 113, 113, 0.12);
+    --danger-glow: rgba(248, 113, 113, 0.5);
+    --warning: #fbbf24;
+    --warning-bg: rgba(251, 191, 36, 0.12);
+    --warning-glow: rgba(251, 191, 36, 0.5);
+    --info: #60a5fa;
+    --info-bg: rgba(96, 165, 250, 0.12);
+    --info-glow: rgba(96, 165, 250, 0.5);
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3), 0 10px 20px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.4), 0 24px 48px rgba(0, 0, 0, 0.5);
+    --shadow-glow: 0 8px 28px var(--brand-glow);
+}
+
+/* ---------- Tema: Claro ---------- */
+:root[data-theme="claro"] {
+    --bg-base: #fafafa;
+    --bg-canvas: #f4f4f5;
+    --bg-surface: #ffffff;
+    --bg-elevated: #ffffff;
+    --bg-soft: rgba(0, 0, 0, 0.03);
+
+    --text-primary: #18181b;
+    --text-secondary: #52525b;
+    --text-muted: #a1a1aa;
+    --text-inverse: #fafafa;
+
+    --border-subtle: rgba(0, 0, 0, 0.06);
+    --border-default: rgba(0, 0, 0, 0.12);
+    --border-strong: rgba(0, 0, 0, 0.2);
+    --border-focus: #2563eb;
+
+    --brand: #2563eb;
+    --brand-hover: #1d4ed8;
+    --brand-active: #1e40af;
+    --brand-glow: rgba(37, 99, 235, 0.3);
+
+    --gradient-primary: linear-gradient(135deg, #2563eb 0%, #3b82f6 50%, #60a5fa 100%);
+    --gradient-soft: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    --gradient-canvas: linear-gradient(180deg, #fafafa 0%, #f4f4f5 100%);
+    --gradient-table-header: linear-gradient(135deg, #f4f4f5 0%, #e4e4e7 100%);
+
+    --success: #059669;
+    --success-bg: #d1fae5;
+    --success-glow: rgba(5, 150, 105, 0.3);
+    --danger: #dc2626;
+    --danger-bg: #fee2e2;
+    --danger-glow: rgba(220, 38, 38, 0.3);
+    --warning: #d97706;
+    --warning-bg: #fef3c7;
+    --warning-glow: rgba(217, 119, 6, 0.3);
+    --info: #2563eb;
+    --info-bg: #dbeafe;
+    --info-glow: rgba(37, 99, 235, 0.3);
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.04), 0 10px 20px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.08), 0 24px 48px rgba(0, 0, 0, 0.1);
+    --shadow-glow: 0 8px 24px var(--brand-glow);
+}
+
+/* ============================================================
+ * Reset y base
+ * ============================================================ */
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text-primary);
+    background: var(--gradient-canvas);
+    min-height: 100vh;
+    transition: background 0.4s ease, color 0.4s ease;
+}
+
+code, pre {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.875em;
+}
+
+h1, h2, h3, h4 {
+    margin: 0 0 0.5em;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 1.875rem; }
+h3 { font-size: 1.25rem; }
+h4 { font-size: 1rem; font-weight: 600; }
+
+p {
+    margin: 0 0 1rem;
+    color: var(--text-secondary);
+}
+
+/* ============================================================
+ * Scrollbar personalizado
+ * ============================================================ */
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg-soft);
+    border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, var(--brand) 0%, var(--brand-active) 100%);
+    border-radius: var(--radius-full);
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, var(--brand-hover) 0%, var(--brand) 100%);
+    background-clip: padding-box;
+}
+
+/* ============================================================
+ * Topbar
+ * ============================================================ */
+
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 28px;
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border-default);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background-color: color-mix(in srgb, var(--bg-surface) 92%, transparent);
+}
+
+.brand {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 1.5rem;
+    letter-spacing: -0.04em;
+    user-select: none;
+}
+.brand-sigco {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+.brand-web {
+    color: var(--text-primary);
+}
+
+.topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Theme switcher */
+.theme-switcher {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px;
+    background: var(--bg-canvas);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-full);
+}
+.theme-btn {
+    appearance: none;
+    border: 0;
+    background: transparent;
+    color: var(--text-secondary);
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.theme-btn:hover {
+    color: var(--text-primary);
+}
+.theme-btn.active {
+    background: var(--bg-surface);
+    color: var(--brand);
+    box-shadow: var(--shadow-sm), 0 0 0 1px var(--border-default);
+}
+
+/* Sound toggle */
+.sound-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    background: var(--bg-canvas);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+.sound-toggle:hover {
+    border-color: var(--border-strong);
+    color: var(--text-primary);
+}
+.sound-toggle.active {
+    background: var(--gradient-soft);
+    color: var(--brand);
+    border-color: var(--brand);
+}
+
+/* ============================================================
+ * Layout: container + secciones
+ * ============================================================ */
+
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 48px 28px 80px;
+}
+
+.hero {
+    text-align: center;
+    padding: 32px 0 56px;
+    animation: fadeUp 0.8s ease-out;
+}
+.hero-eyebrow {
+    display: inline-block;
+    padding: 6px 14px;
+    background: var(--gradient-soft);
+    color: var(--brand);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: var(--radius-full);
+    margin-bottom: 20px;
+    border: 1px solid var(--border-default);
+}
+.hero h1 {
+    font-size: 3.25rem;
+    line-height: 1.1;
+    margin-bottom: 16px;
+}
+.hero h1 .accent {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+.hero p {
+    max-width: 640px;
+    margin: 0 auto;
+    font-size: 1.125rem;
+    color: var(--text-secondary);
+}
+
+.section {
+    margin: 80px 0;
+    animation: fadeUp 0.6s ease-out;
+}
+.section-header {
+    margin-bottom: 28px;
+}
+.section-header .label {
+    display: inline-block;
+    padding: 4px 10px;
+    background: var(--bg-soft);
+    color: var(--brand);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: var(--radius-sm);
+    margin-bottom: 12px;
+    font-family: 'JetBrains Mono', monospace;
+}
+.section-header h2 {
+    margin-bottom: 8px;
+}
+.section-header p {
+    max-width: 720px;
+    margin: 0;
+}
+
+/* Bloque demo */
+.demo-block {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+}
+.demo-block::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-strong), transparent);
+}
+
+.demo-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+}
+.demo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+}
+
+/* ============================================================
+ * Botones
+ * ============================================================ */
+
+.btn {
+    appearance: none;
+    border: 0;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 10px 18px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+    letter-spacing: -0.005em;
+}
+
+.btn:active {
+    transform: translateY(1px);
+}
+
+.btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.15);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.btn:hover::after {
+    opacity: 1;
+}
+
+/* Primary — gradient brand */
+.btn-primary {
+    background: var(--gradient-primary);
+    color: white;
+    box-shadow: var(--shadow-sm), 0 4px 14px var(--brand-glow);
+}
+.btn-primary:hover {
+    box-shadow: var(--shadow-md), 0 6px 20px var(--brand-glow);
+    transform: translateY(-1px);
+}
+
+/* Success */
+.btn-success {
+    background: var(--success);
+    color: white;
+    box-shadow: var(--shadow-sm), 0 4px 14px var(--success-glow);
+}
+.btn-success:hover {
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md), 0 6px 20px var(--success-glow);
+}
+
+/* Danger */
+.btn-danger {
+    background: var(--danger);
+    color: white;
+    box-shadow: var(--shadow-sm), 0 4px 14px var(--danger-glow);
+}
+.btn-danger:hover {
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md), 0 6px 20px var(--danger-glow);
+}
+
+/* Warning */
+.btn-warning {
+    background: var(--warning);
+    color: white;
+    box-shadow: var(--shadow-sm), 0 4px 14px var(--warning-glow);
+}
+.btn-warning:hover {
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md), 0 6px 20px var(--warning-glow);
+}
+
+/* Info */
+.btn-info {
+    background: var(--info);
+    color: white;
+    box-shadow: var(--shadow-sm), 0 4px 14px var(--info-glow);
+}
+.btn-info:hover {
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md), 0 6px 20px var(--info-glow);
+}
+
+/* Secondary */
+.btn-secondary {
+    background: var(--bg-canvas);
+    color: var(--text-primary);
+    border: 1px solid var(--border-default);
+}
+.btn-secondary:hover {
+    background: var(--bg-soft);
+    border-color: var(--border-strong);
+    transform: translateY(-1px);
+}
+
+/* Ghost */
+.btn-ghost {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid transparent;
+}
+.btn-ghost:hover {
+    background: var(--bg-soft);
+    color: var(--text-primary);
+}
+
+/* Sizes */
+.btn-sm {
+    padding: 6px 12px;
+    font-size: 13px;
+    border-radius: var(--radius-sm);
+}
+.btn-lg {
+    padding: 14px 24px;
+    font-size: 15px;
+    border-radius: var(--radius-lg);
+}
+
+/* Icon-only */
+.btn-icon {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border-radius: var(--radius-md);
+}
+.btn-icon svg {
+    width: 18px;
+    height: 18px;
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+/* ============================================================
+ * Form inputs
+ * ============================================================ */
+
+.form-grupo {
+    margin-bottom: 20px;
+}
+.form-grupo label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+    letter-spacing: -0.005em;
+}
+
+.input,
+.select,
+.textarea {
+    width: 100%;
+    padding: 10px 14px;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--text-primary);
+    background: var(--bg-surface);
+    border: 1.5px solid var(--border-default);
+    border-radius: var(--radius-md);
+    transition: all 0.2s ease;
+    outline: none;
+}
+.input:hover,
+.select:hover,
+.textarea:hover {
+    border-color: var(--border-strong);
+}
+.input:focus,
+.select:focus,
+.textarea:focus {
+    border-color: var(--border-focus);
+    box-shadow: 0 0 0 4px var(--brand-glow);
+}
+.input::placeholder,
+.textarea::placeholder {
+    color: var(--text-muted);
+}
+
+.textarea {
+    resize: vertical;
+    min-height: 80px;
+    font-family: inherit;
+}
+
+.input-with-icon {
+    position: relative;
+}
+.input-with-icon .input {
+    padding-left: 38px;
+}
+.input-with-icon .icon-prefix {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    pointer-events: none;
+}
+.input-with-icon .icon-prefix svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* Toggle switch */
+.toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    user-select: none;
+}
+.toggle input {
+    appearance: none;
+    position: relative;
+    width: 44px;
+    height: 24px;
+    background: var(--bg-canvas);
+    border: 1.5px solid var(--border-default);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    margin: 0;
+    flex-shrink: 0;
+}
+.toggle input::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 2px;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    background: white;
+    border-radius: 50%;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: var(--shadow-sm);
+}
+.toggle input:checked {
+    background: var(--gradient-primary);
+    border-color: transparent;
+    box-shadow: 0 0 0 4px var(--brand-glow);
+}
+.toggle input:checked::before {
+    left: calc(100% - 20px);
+}
+.toggle span {
+    font-size: 14px;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+/* Checkbox */
+.checkbox {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+}
+.checkbox input {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: var(--bg-surface);
+    border: 1.5px solid var(--border-default);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+    margin: 0;
+    flex-shrink: 0;
+}
+.checkbox input:hover {
+    border-color: var(--border-strong);
+}
+.checkbox input:checked {
+    background: var(--gradient-primary);
+    border-color: transparent;
+}
+.checkbox input:checked::after {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+.checkbox span {
+    font-size: 14px;
+    color: var(--text-primary);
+}
+
+/* ============================================================
+ * Tabla
+ * ============================================================ */
+
+.tabla-wrap {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.tabla {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.tabla thead th {
+    background: var(--gradient-table-header);
+    color: white;
+    text-align: left;
+    padding: 14px 18px;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    border-bottom: 2px solid var(--brand);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+:root[data-theme="claro"] .tabla thead th {
+    color: var(--text-primary);
+    text-shadow: none;
+    background: var(--gradient-table-header);
+}
+
+.tabla tbody td {
+    padding: 14px 18px;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border-subtle);
+    transition: background 0.15s ease;
+}
+
+.tabla tbody tr {
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+.tabla tbody tr:hover td {
+    background: var(--bg-soft);
+}
+.tabla tbody tr.selected td {
+    background: var(--gradient-soft);
+    color: var(--brand-active);
+    font-weight: 600;
+}
+:root[data-theme="oscuro"] .tabla tbody tr.selected td {
+    background: rgba(56, 189, 248, 0.15);
+    color: var(--brand-hover);
+}
+
+.tabla tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.col-code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.col-acciones {
+    text-align: right;
+    width: 100px;
+}
+
+/* Badges */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: var(--radius-full);
+    letter-spacing: 0.01em;
+}
+.badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+}
+.badge-success {
+    background: var(--success-bg);
+    color: var(--success);
+}
+.badge-danger {
+    background: var(--danger-bg);
+    color: var(--danger);
+}
+.badge-warning {
+    background: var(--warning-bg);
+    color: var(--warning);
+}
+.badge-info {
+    background: var(--info-bg);
+    color: var(--info);
+}
+.badge-muted {
+    background: var(--bg-soft);
+    color: var(--text-muted);
+}
+.badge-muted::before {
+    background: var(--text-muted);
+}
+
+/* ============================================================
+ * Tooltips (CSS-only con data-tooltip)
+ * ============================================================ */
+
+[data-tooltip] {
+    position: relative;
+}
+[data-tooltip]::before,
+[data-tooltip]::after {
+    position: absolute;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 200;
+}
+[data-tooltip]::before {
+    content: attr(data-tooltip);
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    background: var(--text-primary);
+    color: var(--bg-surface);
+    padding: 6px 10px;
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    box-shadow: var(--shadow-md);
+}
+[data-tooltip]::after {
+    content: '';
+    bottom: calc(100% + 2px);
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: var(--text-primary);
+}
+[data-tooltip]:hover::before,
+[data-tooltip]:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+[data-tooltip]:hover::after {
+    transform: translateX(-50%);
+}
+
+/* ============================================================
+ * Tarjetas
+ * ============================================================ */
+
+.card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+}
+.card:hover {
+    border-color: var(--border-strong);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--gradient-primary);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+.card:hover::before {
+    opacity: 1;
+}
+
+.card-metric {
+    background: var(--gradient-soft);
+    border: 1px solid var(--border-default);
+}
+.card-metric .label {
+    font-size: 13px;
+    color: var(--text-secondary);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+}
+.card-metric .value {
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    letter-spacing: -0.03em;
+}
+.card-metric .trend {
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--success);
+    font-weight: 600;
+}
+
+/* ============================================================
+ * Toast notifications
+ * ============================================================ */
+
+#toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 420px;
+    width: 100%;
+    pointer-events: none;
+}
+
+.toast {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px 14px 14px;
+    background: var(--bg-elevated);
+    border: 1.5px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    pointer-events: auto;
+    animation: toastIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
+}
+.toast.leaving {
+    animation: toastOut 0.3s ease-in forwards;
+}
+.toast::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+}
+.toast-success { border-color: var(--success); }
+.toast-success::before { background: var(--success); }
+
+.toast-danger { border-color: var(--danger); }
+.toast-danger::before { background: var(--danger); }
+
+.toast-warning { border-color: var(--warning); }
+.toast-warning::before { background: var(--warning); }
+
+.toast-info { border-color: var(--info); }
+.toast-info::before { background: var(--info); }
+
+.toast-icon {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-left: 4px;
+}
+.toast-success .toast-icon { background: var(--success-bg); color: var(--success); }
+.toast-danger .toast-icon { background: var(--danger-bg); color: var(--danger); }
+.toast-warning .toast-icon { background: var(--warning-bg); color: var(--warning); }
+.toast-info .toast-icon { background: var(--info-bg); color: var(--info); }
+.toast-icon svg { width: 20px; height: 20px; }
+
+.toast-body {
+    flex: 1;
+    min-width: 0;
+}
+.toast-title {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+}
+.toast-msg {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+.toast-close {
+    flex-shrink: 0;
+    background: transparent;
+    border: 0;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: var(--radius-sm);
+    transition: all 0.15s ease;
+}
+.toast-close:hover {
+    background: var(--bg-soft);
+    color: var(--text-primary);
+}
+.toast-close svg { width: 16px; height: 16px; }
+
+/* Progress bar */
+.toast-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    background: currentColor;
+    opacity: 0.4;
+    animation: toastProgress 4s linear forwards;
+    transform-origin: left;
+}
+
+@keyframes toastIn {
+    0% { opacity: 0; transform: translateX(120%) scale(0.9); }
+    60% { transform: translateX(-4%) scale(1.02); }
+    100% { opacity: 1; transform: translateX(0) scale(1); }
+}
+@keyframes toastOut {
+    to { opacity: 0; transform: translateX(120%) scale(0.95); }
+}
+@keyframes toastProgress {
+    from { transform: scaleX(1); }
+    to { transform: scaleX(0); }
+}
+
+/* ============================================================
+ * Modal (grande, cierre obligatorio)
+ * ============================================================ */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 8000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: overlayIn 0.25s ease-out;
+    cursor: default;
+}
+.modal-overlay.leaving {
+    animation: overlayOut 0.2s ease-in forwards;
+}
+
+.modal-dialog {
+    background: var(--bg-elevated);
+    border: 1.5px solid var(--border-strong);
+    border-radius: var(--radius-xl);
+    max-width: 480px;
+    width: 100%;
+    box-shadow: var(--shadow-lg), 0 0 80px var(--brand-glow);
+    animation: modalIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow: hidden;
+    position: relative;
+}
+.modal-overlay.leaving .modal-dialog {
+    animation: modalOut 0.25s ease-in forwards;
+}
+
+.modal-dialog::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+}
+.modal-danger::before { background: var(--danger); }
+.modal-warning::before { background: var(--warning); }
+.modal-info::before { background: var(--info); }
+
+.modal-header {
+    padding: 28px 28px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.modal-icon-wrap {
+    flex-shrink: 0;
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: iconPulse 0.6s ease-out;
+}
+.modal-danger .modal-icon-wrap {
+    background: var(--danger-bg);
+    color: var(--danger);
+}
+.modal-warning .modal-icon-wrap {
+    background: var(--warning-bg);
+    color: var(--warning);
+}
+.modal-info .modal-icon-wrap {
+    background: var(--info-bg);
+    color: var(--info);
+}
+.modal-icon-wrap svg {
+    width: 32px;
+    height: 32px;
+}
+
+.modal-title-wrap {
+    flex: 1;
+}
+.modal-title {
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 4px 0 8px;
+    letter-spacing: -0.02em;
+}
+.modal-msg {
+    color: var(--text-secondary);
+    font-size: 15px;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.modal-body-extra {
+    padding: 16px 28px 0;
+}
+
+.modal-footer {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    padding: 24px 28px 28px;
+    border-top: 1px solid var(--border-subtle);
+    margin-top: 24px;
+}
+
+@keyframes overlayIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+@keyframes overlayOut {
+    to { opacity: 0; }
+}
+@keyframes modalIn {
+    0% { opacity: 0; transform: scale(0.85) translateY(20px); }
+    60% { transform: scale(1.02) translateY(-4px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes modalOut {
+    to { opacity: 0; transform: scale(0.92) translateY(10px); }
+}
+@keyframes iconPulse {
+    0% { transform: scale(0); }
+    60% { transform: scale(1.15); }
+    100% { transform: scale(1); }
+}
+
+/* ============================================================
+ * Scrollbar preview
+ * ============================================================ */
+
+.scroll-demo {
+    height: 200px;
+    overflow: auto;
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    background: var(--bg-surface);
+}
+.scroll-demo-wide {
+    overflow-x: auto;
+    overflow-y: hidden;
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    background: var(--bg-surface);
+    white-space: nowrap;
+}
+
+/* ============================================================
+ * Animations
+ * ============================================================ */
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+.skeleton {
+    background: linear-gradient(
+        90deg,
+        var(--bg-soft) 0%,
+        var(--bg-canvas) 50%,
+        var(--bg-soft) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.8s ease-in-out infinite;
+    border-radius: var(--radius-md);
+}
+
+/* ============================================================
+ * Paleta de colores grid
+ * ============================================================ */
+
+.palette-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+}
+.palette-chip {
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--bg-surface);
+}
+.palette-swatch {
+    height: 80px;
+    position: relative;
+}
+.palette-info {
+    padding: 10px 12px;
+}
+.palette-info .name {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+}
+.palette-info .hex {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+/* ============================================================
+ * Sidebar mockup
+ * ============================================================ */
+
+.app-shell {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--bg-surface);
+    box-shadow: var(--shadow-md);
+    min-height: 360px;
+}
+
+.sidebar-mock {
+    background: var(--bg-canvas);
+    border-right: 1px solid var(--border-default);
+    padding: 16px 12px;
+}
+.sidebar-mock h4 {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    padding: 0 8px;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    margin-bottom: 2px;
+}
+.sidebar-item:hover {
+    background: var(--bg-soft);
+    color: var(--text-primary);
+}
+.sidebar-item.active {
+    background: var(--gradient-primary);
+    color: white;
+    box-shadow: var(--shadow-sm), 0 4px 12px var(--brand-glow);
+}
+.sidebar-item svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.main-mock {
+    padding: 28px;
+}
+.main-mock h3 {
+    margin-bottom: 4px;
+}
+.main-mock .subtitle {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 24px;
+}
+
+/* ============================================================
+ * Footer del mockup
+ * ============================================================ */
+
+.footnote {
+    text-align: center;
+    padding: 40px 0 0;
+    color: var(--text-muted);
+    font-size: 13px;
+}
+.footnote code {
+    background: var(--bg-soft);
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+}
+
+/* ============================================================
+ * Responsive
+ * ============================================================ */
+
+@media (max-width: 720px) {
+    .hero h1 { font-size: 2.25rem; }
+    .container { padding: 32px 20px; }
+    .topbar { padding: 12px 16px; flex-wrap: wrap; gap: 8px; }
+    .demo-block { padding: 20px; }
+    .app-shell { grid-template-columns: 1fr; }
+    .sidebar-mock { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     TOPBAR
+============================================================ -->
+<div class="topbar">
+    <div class="brand">
+        <span class="brand-sigco">Sigco</span><span class="brand-web">Web</span>
+    </div>
+    <div class="topbar-actions">
+        <button class="sound-toggle" id="sound-toggle" onclick="toggleSound()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+                <path id="sound-on-path" d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07" style="display:none"/>
+                <line id="sound-off-line1" x1="23" y1="9" x2="17" y2="15"/>
+                <line id="sound-off-line2" x1="17" y1="9" x2="23" y2="15"/>
+            </svg>
+            <span id="sound-label">Sonido off</span>
+        </button>
+        <div class="theme-switcher">
+            <button class="theme-btn" data-theme="oscuro" onclick="setTheme('oscuro')">Oscuro</button>
+            <button class="theme-btn" data-theme="claro" onclick="setTheme('claro')">Claro</button>
+            <button class="theme-btn active" data-theme="sigco" onclick="setTheme('sigco')">Sigco</button>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================
+     CONTENIDO
+============================================================ -->
+<div class="container">
+
+    <!-- HERO -->
+    <div class="hero">
+        <span class="hero-eyebrow">Sistema de diseño · v1.0</span>
+        <h1>Una experiencia que <span class="accent">se siente.</span></h1>
+        <p>Vista previa de los componentes que reemplazan los alerts, confirms y modales del navegador. Probá cada componente, cambiá entre los 3 temas y verificá el comportamiento de las animaciones.</p>
+    </div>
+
+    <!-- =========================================
+         PALETA
+    ========================================= -->
+    <section class="section">
+        <div class="section-header">
+            <div class="label">01 · Paleta</div>
+            <h2>Colores del tema activo</h2>
+            <p>Cada tema redefine las variables CSS. El cambio es instantáneo, sin recarga.</p>
+        </div>
+        <div class="palette-grid" id="palette-grid">
+            <!-- chips generados por JS -->
+        </div>
+    </section>
+
+    <!-- =========================================
+         BOTONES
+    ========================================= -->
+    <section class="section">
+        <div class="section-header">
+            <div class="label">02 · Botones</div>
+            <h2>Acciones con identidad propia</h2>
+            <p>Cada función tiene su color. Hover eleva, click hunde, gradient en primarios.</p>
+        </div>
+        <div class="demo-block">
+            <h4 style="margin-bottom: 16px; color: var(--text-secondary); text-transform: uppercase; font-size: 11px; letter-spacing: 0.08em;">Por función</h4>
+            <div class="demo-row">
+                <button class="btn btn-primary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M12 5v14M5 12h14"/></svg>
+                    Nuevo
+                </button>
+                <button class="btn btn-success">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M5 13l4 4L19 7"/></svg>
+                    Guardar
+                </button>
+                <button class="btn btn-info">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                    Editar
+                </button>
+                <button class="btn btn-warning">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                    Atención
+                </button>
+                <button class="btn btn-danger">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+                    Eliminar
+                </button>
+                <button class="btn btn-secondary">Cancelar</button>
+                <button class="btn btn-ghost">Ver más</button>
+            </div>
+
+            <h4 style="margin: 28px 0 16px; color: var(--text-secondary); text-transform: uppercase; font-size: 11px; letter-spacing: 0.08em;">Tamaños</h4>
+            <div class="demo-row">
+                <button class="btn btn-primary btn-sm">Pequeño</button>
+                <button class="btn btn-primary">Medio</button>
+                <button class="btn btn-primary btn-lg">Grande</button>
+                <button class="btn btn-info btn-icon" data-tooltip="Editar registro">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                </button>
+                <button class="btn btn-danger btn-icon" data-tooltip="Eliminar">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+                </button>
+                <button class="btn btn-primary" disabled>Deshabilitado</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================
+         INPUTS
+    ========================================= -->
+    <section class="section">
+        <div class="section-header">
+            <div class="label">03 · Inputs</div>
+            <h2>Formularios con tacto</h2>
+            <p>Border-radius generoso, glow azul en foco, toggles con bounce.</p>
+        </div>
+        <div class="demo-block">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
+                <div class="form-grupo">
+                    <label>Razón social</label>
+                    <input type="text" class="input" placeholder="LORETO GLOBAL INVERSIONES E.I.R.L." value="LORETO GLOBAL INVERSIONES E.I.R.L.">
+                </div>
+                <div class="form-grupo">
+                    <label>RUC</label>
+                    <div class="input-with-icon">
+                        <span class="icon-prefix">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                        </span>
+                        <input type="text" class="input" placeholder="20604101761">
+                    </div>
+                </div>
+                <div class="form-grupo">
+                    <label>Tipo de pago</label>
+                    <select class="select">
+                        <option>Contado</option>
+                        <option>Crédito</option>
+                        <option>Tarjeta</option>
+                        <option>Transferencia</option>
+                    </select>
+                </div>
+                <div class="form-grupo">
+                    <label>Días de crédito</label>
+                    <input type="number" class="input" value="30" min="0">
+                </div>
+                <div class="form-grupo" style="grid-column: 1 / -1;">
+                    <label>Observaciones</label>
+                    <textarea class="textarea" rows="3" placeholder="Notas internas para el módulo de tesorería..."></textarea>
+                </div>
+            </div>
+
+            <div style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border-subtle); display: flex; flex-wrap: wrap; gap: 24px;">
+                <label class="toggle">
+                    <input type="checkbox" checked>
+                    <span>Estado activo</span>
+                </label>
+                <label class="toggle">
+                    <input type="checkbox" checked>
+                    <span>Aplica a compras</span>
+                </label>
+                <label class="toggle">
+                    <input type="checkbox">
+                    <span>Aplica a punto de venta</span>
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox" checked>
+                    <span>Acepto los términos</span>
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox">
+                    <span>Recibir notificaciones</span>
+                </label>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================
+         TABLA
+    ========================================= -->
+    <section class="section">
+        <div class="section-header">
+            <div class="label">04 · Tablas</div>
+            <h2>Listados que se leen</h2>
+            <p>Header con gradient. Fila seleccionada con highlight. Hover sutil. Líneas definidas.</p>
+        </div>
+
+        <div class="demo-block" style="padding: 0; overflow: hidden;">
+            <div class="tabla-wrap" style="border: 0; border-radius: 0; box-shadow: none;">
+                <table class="tabla">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Código</th>
+                            <th>Razón social</th>
+                            <th>RUC</th>
+                            <th>Estado</th>
+                            <th class="col-acciones">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td><span class="col-code">P001</span></td>
+                            <td>LORETO GLOBAL INVERSIONES E.I.R.L.</td>
+                            <td><span class="col-code">20604101761</span></td>
+                            <td><span class="badge badge-success">Activo</span></td>
+                            <td class="col-acciones">
+                                <button class="btn btn-info btn-icon btn-sm" data-tooltip="Editar">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                </button>
+                                <button class="btn btn-danger btn-icon btn-sm" data-tooltip="Eliminar">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6"/></svg>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="selected">
+                            <td>2</td>
+                            <td><span class="col-code">P002</span></td>
+                            <td>TECH COMPANY S.A.C.</td>
+                            <td><span class="col-code">20528169393</span></td>
+                            <td><span class="badge badge-success">Activo</span></td>
+                            <td class="col-acciones">
+                                <button class="btn btn-info btn-icon btn-sm" data-tooltip="Editar">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                </button>
+                                <button class="btn btn-danger btn-icon btn-sm" data-tooltip="Eliminar">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6"/></svg>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td><span class="col-code">P003</span></td>
+                            <td>EPIC IMPORT Y EXPORT S.A.C.</td>
+                            <td><span class="col-code">20610474005</span></td>
+                            <td><span class="badge badge-warning">Pendiente</span></td>
+                            <td class="col-acciones">
+                                <button class="btn btn-info btn-icon btn-sm" data-tooltip="Editar">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                </button>
+                                <button class="btn btn-danger btn-icon btn-sm" data-tooltip="Eliminar">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6"/></svg>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td><span class="col-code">P004</span></td>
+                            <td>COMERCIAL GAVIOTA E.I.R.L.</td>
+                            <td><span class="col-code">20493490924</span></td>
+                            <td><span class="badge badge-muted">Inactivo</span></td>
+                            <td class="col-acciones">
+                                <button class="btn btn-info btn-icon btn-sm" data-tooltip="Editar">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                </button>
+                                <button class="btn btn-danger btn-icon btn-sm" data-tooltip="Eliminar">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6"/></svg>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================
+         TOASTS
+    ========================================= -->
+    <section class="section">
+        <div class="section-header">
+            <div class="label">05 · Toasts</div>
+            <h2>Notificaciones que no estorban</h2>
+            <p>Entran desde la derecha con un bounce sutil. Auto-cierre con barra de progreso. Click en × para descartar. Ideal para feedback no crítico.</p>
+        </div>
+        <div class="demo-block">
+            <div class="demo-row">
+                <button class="btn btn-success" onclick="demoToast('success')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    Disparar success
+                </button>
+                <button class="btn btn-danger" onclick="demoToast('danger')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                    Disparar error
+                </button>
+                <button class="btn btn-warning" onclick="demoToast('warning')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/></svg>
+                    Disparar warning
+                </button>
+                <button class="btn btn-info" onclick="demoToast('info')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                    Disparar info
+                </button>
+                <button class="btn btn-secondary" onclick="demoToastAll()">Disparar los 4 en cadena</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================
+         MODALES
+    ========================================= -->
+    <section class="section">
+        <div class="section-header">
+            <div class="label">06 · Modales</div>
+            <h2>Decisiones que importan</h2>
+            <p>Grande, centrado, con icono pulsante y glow azul. Cierre <strong style="color: var(--text-primary)">obligatorio</strong> via botón o Esc. <strong style="color: var(--text-primary)">El click fuera NO cierra</strong> — Walter lo pidió, lo defendemos.</p>
+        </div>
+        <div class="demo-block">
+            <div class="demo-row">
+                <button class="btn btn-danger" onclick="demoModal('danger')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6"/></svg>
+                    Confirmar eliminación
+                </button>
+                <button class="btn btn-warning" onclick="demoModal('warning')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>
+                    Advertencia
+                </button>
+                <button class="btn btn-info" onclick="demoModal('info')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/></svg>
+                    Información
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================
+         TARJETAS / MÉTRICAS
+    ========================================= -->
+    <section class="section">
+        <div class="section-header">
+            <div class="label">07 · Tarjetas y métricas</div>
+            <h2>Datos con presencia</h2>
+            <p>Cards con borde superior que aparece en hover. Métricas con número en gradient.</p>
+        </div>
+        <div class="demo-grid">
+            <div class="card card-metric">
+                <div class="label">Ventas del mes</div>
+                <div class="value">S/ 47,580</div>
+                <div class="trend">↑ 12.4% vs mes anterior</div>
+            </div>
+            <div class="card card-metric">
+                <div class="label">Clientes activos</div>
+                <div class="value">1,247</div>
+                <div class="trend">↑ 8.1% vs mes anterior</div>
+            </div>
+            <div class="card card-metric">
+                <div class="label">Tickets emitidos</div>
+                <div class="value">3,891</div>
+                <div class="trend">↑ 24.7% vs mes anterior</div>
+            </div>
+            <div class="card card-metric">
+                <div class="label">Margen bruto</div>
+                <div class="value">34.2%</div>
+                <div class="trend">↑ 2.1pp vs mes anterior</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================
+         TOOLTIPS
+    ========================================= -->
+    <section class="section">
+        <div class="section-header">
+            <div class="label">08 · Tooltips</div>
+            <h2>Información al pasar</h2>
+            <p>CSS-only. Aparecen con fade y leve desplazamiento. Hover sobre cualquiera de estos elementos:</p>
+        </div>
+        <div class="demo-block">
+            <div class="demo-row">
+                <span data-tooltip="Información de ayuda" style="padding: 10px; cursor: help; border: 1px dashed var(--border-default); border-radius: var(--radius-md);">Hover sobre mí</span>
+                <button class="btn btn-secondary btn-icon" data-tooltip="Recargar la lista">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+                </button>
+                <button class="btn btn-secondary btn-icon" data-tooltip="Exportar a PDF">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                </button>
+                <button class="btn btn-secondary btn-icon" data-tooltip="Exportar a Excel">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                </button>
+                <span class="badge badge-info" data-tooltip="Click para ver detalle">Plus Jakarta Sans</span>
+                <span class="badge badge-success" data-tooltip="Versión activa">v1.0.0</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================
+         SCROLLBARS
+    ========================================= -->
+    <section class="section">
+        <div class="section-header">
+            <div class="label">09 · Scrollbars</div>
+            <h2>Hasta las barras estilizadas</h2>
+            <p>Scrollbar vertical y horizontal con gradient. Notá las del navegador a la derecha de esta página.</p>
+        </div>
+        <div class="demo-block">
+            <h4 style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 10px;">Vertical</h4>
+            <div class="scroll-demo">
+                <p>Las barras se notan pero no estorban. Color gradient del tema activo, redondeo full, hover más claro. Soportadas en Chrome, Edge, Safari y Firefox moderno.</p>
+                <p>SigcoWeb apunta a un look consistente desde el primer pixel: tipografía Plus Jakarta Sans, monoespaciada JetBrains Mono para códigos, paleta azul-celeste, gradientes sutiles en headers de tabla y métricas.</p>
+                <p>La idea es que cada interacción tenga "alma": botones que reaccionan al hover, modales que se abren con bounce, scrollbar que se ve premium.</p>
+                <p>Esto no es solo estética: es percepción de calidad. Un cliente que ve un sistema con detalles cuidados confía más en él.</p>
+                <p>Comparate vos mismo cambiando entre Oscuro, Claro y Sigco arriba. Los tres temas mantienen jerarquía visual, contraste y legibilidad.</p>
+            </div>
+
+            <h4 style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin: 24px 0 10px;">Horizontal</h4>
+            <div class="scroll-demo-wide">
+                Mantenimiento de datos · Catálogo de productos · Catálogo de servicios · Catálogo de insumos · Catálogo de activos · Catálogo de gastos · Almacén · Agenda de clientes · Cajas y bancos · Agenda de proveedores · Documentos SUNAT · Tipo de cambio · Formas de pago · Transportistas · Personal · Usuarios · Permisos
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================
+         APP SHELL PREVIEW
+    ========================================= -->
+    <section class="section">
+        <div class="section-header">
+            <div class="label">10 · Layout completo</div>
+            <h2>Cómo se ve todo junto</h2>
+            <p>Sidebar + main area + topbar. El sidebar usa fondos sutiles, item activo con gradient brand.</p>
+        </div>
+        <div class="app-shell">
+            <aside class="sidebar-mock">
+                <h4>Tablas</h4>
+                <div class="sidebar-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                    Catálogo de productos
+                </div>
+                <div class="sidebar-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10"/></svg>
+                    Catálogo de servicios
+                </div>
+                <div class="sidebar-item active">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M20 8v6M23 11h-6"/></svg>
+                    Agenda de proveedores
+                </div>
+                <div class="sidebar-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/></svg>
+                    Documentos SUNAT
+                </div>
+                <div class="sidebar-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+                    Tipo de cambio
+                </div>
+                <div class="sidebar-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                    Formas de pago
+                </div>
+            </aside>
+            <main class="main-mock">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                    <div>
+                        <h3>Agenda de proveedores</h3>
+                        <div class="subtitle">4 registros · última actualización hace 2 minutos</div>
+                    </div>
+                    <button class="btn btn-primary">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M12 5v14M5 12h14"/></svg>
+                        Nuevo proveedor
+                    </button>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 20px;">
+                    <div class="card card-metric" style="padding: 14px 16px;">
+                        <div class="label" style="font-size: 11px;">Total proveedores</div>
+                        <div class="value" style="font-size: 1.5rem;">4</div>
+                    </div>
+                    <div class="card card-metric" style="padding: 14px 16px;">
+                        <div class="label" style="font-size: 11px;">Activos</div>
+                        <div class="value" style="font-size: 1.5rem;">3</div>
+                    </div>
+                    <div class="card card-metric" style="padding: 14px 16px;">
+                        <div class="label" style="font-size: 11px;">Deuda total</div>
+                        <div class="value" style="font-size: 1.5rem;">S/ 0</div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </section>
+
+    <div class="footnote">
+        <p>SigcoWeb · Sistema de diseño v1 · Cambiá entre <code>Oscuro</code>, <code>Claro</code> y <code>Sigco</code> arriba a la derecha.</p>
+    </div>
+
+</div>
+
+<!-- ============================================================
+     CONTENEDORES DE TOAST Y MODAL (poblados via JS)
+============================================================ -->
+<div id="toast-container"></div>
+<div id="modal-root"></div>
+
+<!-- ============================================================
+     SCRIPTS
+============================================================ -->
+<script>
+// ========== Theme switcher ==========
+function setTheme(name) {
+    document.documentElement.setAttribute('data-theme', name);
+    document.querySelectorAll('.theme-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.theme === name);
+    });
+    try { localStorage.setItem('sigco-theme', name); } catch (e) {}
+    renderPalette();
+}
+
+(function initTheme() {
+    let saved = 'sigco';
+    try { saved = localStorage.getItem('sigco-theme') || 'sigco'; } catch (e) {}
+    document.documentElement.setAttribute('data-theme', saved);
+    document.querySelectorAll('.theme-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.theme === saved);
+    });
+})();
+
+// ========== Sound system ==========
+let soundEnabled = false;
+let audioCtx = null;
+
+function toggleSound() {
+    soundEnabled = !soundEnabled;
+    const btn = document.getElementById('sound-toggle');
+    const label = document.getElementById('sound-label');
+    const onPath = document.getElementById('sound-on-path');
+    const offL1 = document.getElementById('sound-off-line1');
+    const offL2 = document.getElementById('sound-off-line2');
+
+    btn.classList.toggle('active', soundEnabled);
+    label.textContent = soundEnabled ? 'Sonido on' : 'Sonido off';
+    onPath.style.display = soundEnabled ? '' : 'none';
+    offL1.style.display = soundEnabled ? 'none' : '';
+    offL2.style.display = soundEnabled ? 'none' : '';
+
+    if (soundEnabled && !audioCtx) {
+        try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) {}
+    }
+    if (soundEnabled) playSound('success');
+}
+
+function playSound(kind) {
+    if (!soundEnabled || !audioCtx) return;
+    const freqs = { success: [600, 900], danger: [400, 250], warning: [500, 500], info: [700, 700] };
+    const f = freqs[kind] || [600, 800];
+    const now = audioCtx.currentTime;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(f[0], now);
+    osc.frequency.exponentialRampToValueAtTime(f[1], now + 0.12);
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.exponentialRampToValueAtTime(0.15, now + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.18);
+    osc.start(now);
+    osc.stop(now + 0.2);
+}
+
+// ========== Toast system ==========
+const TOAST_ICONS = {
+    success: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>',
+    danger: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>',
+    warning: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+    info: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>'
+};
+
+const TOAST_TITLES = {
+    success: 'Operación exitosa',
+    danger: 'Error al procesar',
+    warning: 'Atención requerida',
+    info: 'Información'
+};
+
+const TOAST_SAMPLES = {
+    success: 'Forma de pago "TRANSFERENCIA" guardada correctamente.',
+    danger: 'Ya existe un proveedor con el RUC 20604101761.',
+    warning: 'La fecha de cese no puede ser anterior a la fecha de ingreso.',
+    info: 'TC SUNAT obtenido: C 3.467 / V 3.478'
+};
+
+function mostrarToast(tipo, mensaje, titulo) {
+    const container = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+    toast.className = 'toast toast-' + tipo;
+    toast.innerHTML = `
+        <div class="toast-icon">${TOAST_ICONS[tipo]}</div>
+        <div class="toast-body">
+            <div class="toast-title">${titulo || TOAST_TITLES[tipo]}</div>
+            <div class="toast-msg">${mensaje}</div>
+        </div>
+        <button class="toast-close" aria-label="Cerrar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+        <div class="toast-progress"></div>
+    `;
+    container.appendChild(toast);
+    playSound(tipo);
+
+    const close = () => {
+        if (toast.classList.contains('leaving')) return;
+        toast.classList.add('leaving');
+        setTimeout(() => toast.remove(), 320);
+    };
+    toast.querySelector('.toast-close').addEventListener('click', close);
+    setTimeout(close, 4000);
+}
+
+function demoToast(tipo) {
+    mostrarToast(tipo, TOAST_SAMPLES[tipo]);
+}
+
+function demoToastAll() {
+    let i = 0;
+    const tipos = ['success', 'info', 'warning', 'danger'];
+    const tick = () => {
+        if (i >= tipos.length) return;
+        demoToast(tipos[i]);
+        i++;
+        setTimeout(tick, 700);
+    };
+    tick();
+}
+
+// ========== Modal system ==========
+const MODAL_CONFIG = {
+    danger: {
+        titulo: 'Eliminar registro',
+        mensaje: '¿Eliminar el transportista "LORETO GLOBAL INVERSIONES E.I.R.L." y todos sus vehículos? Esta acción no se puede deshacer.',
+        confirmar: 'Eliminar',
+        btnClass: 'btn-danger',
+        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>'
+    },
+    warning: {
+        titulo: 'Advertencia',
+        mensaje: 'Tiene 3 sub-categorías asociadas. Elimínalas primero antes de continuar.',
+        confirmar: 'Entendido',
+        btnClass: 'btn-warning',
+        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>'
+    },
+    info: {
+        titulo: 'Cambios sin guardar',
+        mensaje: 'Tenés cambios sin guardar en el formulario. ¿Querés continuar sin guardarlos?',
+        confirmar: 'Continuar',
+        btnClass: 'btn-info',
+        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>'
+    }
+};
+
+function mostrarConfirmacion(tipo) {
+    const cfg = MODAL_CONFIG[tipo];
+    const root = document.getElementById('modal-root');
+    root.innerHTML = `
+        <div class="modal-overlay" id="modal-overlay">
+            <div class="modal-dialog modal-${tipo}" role="dialog" aria-modal="true">
+                <div class="modal-header">
+                    <div class="modal-icon-wrap">${cfg.icon}</div>
+                    <div class="modal-title-wrap">
+                        <div class="modal-title">${cfg.titulo}</div>
+                        <p class="modal-msg">${cfg.mensaje}</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" onclick="cerrarModal()">Cancelar</button>
+                    <button class="btn ${cfg.btnClass}" onclick="cerrarModal()">${cfg.confirmar}</button>
+                </div>
+            </div>
+        </div>
+    `;
+    playSound(tipo === 'danger' ? 'danger' : tipo === 'warning' ? 'warning' : 'info');
+
+    document.addEventListener('keydown', onEsc);
+}
+
+function onEsc(e) {
+    if (e.key === 'Escape') cerrarModal();
+}
+
+function cerrarModal() {
+    const overlay = document.getElementById('modal-overlay');
+    if (!overlay) return;
+    overlay.classList.add('leaving');
+    document.removeEventListener('keydown', onEsc);
+    setTimeout(() => {
+        document.getElementById('modal-root').innerHTML = '';
+    }, 280);
+}
+
+function demoModal(tipo) {
+    mostrarConfirmacion(tipo);
+}
+
+// ========== Paleta dinámica ==========
+const PALETTE_KEYS = [
+    { name: 'Brand', var: '--brand' },
+    { name: 'Brand hover', var: '--brand-hover' },
+    { name: 'Background base', var: '--bg-base' },
+    { name: 'Background surface', var: '--bg-surface' },
+    { name: 'Text primary', var: '--text-primary' },
+    { name: 'Text secondary', var: '--text-secondary' },
+    { name: 'Border default', var: '--border-default' },
+    { name: 'Success', var: '--success' },
+    { name: 'Danger', var: '--danger' },
+    { name: 'Warning', var: '--warning' },
+    { name: 'Info', var: '--info' }
+];
+
+function renderPalette() {
+    const grid = document.getElementById('palette-grid');
+    if (!grid) return;
+    const cs = getComputedStyle(document.documentElement);
+    grid.innerHTML = PALETTE_KEYS.map(k => {
+        const val = cs.getPropertyValue(k.var).trim();
+        return `
+            <div class="palette-chip">
+                <div class="palette-swatch" style="background: ${val};"></div>
+                <div class="palette-info">
+                    <div class="name">${k.name}</div>
+                    <div class="hex">${val}</div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+window.addEventListener('load', renderPalette);
+</script>
+
+</body>
+</html>
