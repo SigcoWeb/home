@@ -835,7 +835,148 @@ p {
     width: 100px;
 }
 
-/* Badges */
+/* ============================================================
+ * Tabla estilo Walter (densa, líneas verticales, totales)
+ * ============================================================ */
+
+.tabla-walter-wrap {
+    overflow-x: auto;
+    background: var(--bg-surface);
+}
+
+.tabla-walter {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    min-width: 1100px;
+}
+
+.tabla-walter thead th {
+    background: linear-gradient(180deg, #cfe7fb 0%, #97c8ee 100%);
+    color: #0c1d3a;
+    font-weight: 700;
+    text-align: left;
+    padding: 11px 12px;
+    border: 1px solid #6ba8d6;
+    font-size: 12px;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+}
+:root[data-theme="oscuro"] .tabla-walter thead th {
+    background: linear-gradient(180deg, #1e40af 0%, #1e3a8a 100%);
+    color: #e0f2fe;
+    border-color: #1e3a8a;
+}
+
+.tabla-walter tbody td {
+    padding: 10px 12px;
+    color: var(--text-primary);
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-surface);
+    transition: background 0.15s ease;
+    white-space: nowrap;
+}
+
+.tabla-walter tbody tr:hover td {
+    background: var(--bg-soft);
+}
+
+/* Fila seleccionada — azul intenso con texto blanco (como POS de Walter) */
+.tabla-walter tbody tr.tw-selected td {
+    background: #3b82f6;
+    color: #ffffff;
+    font-weight: 600;
+    border-color: #2563eb;
+}
+.tabla-walter tbody tr.tw-selected:hover td {
+    background: #2563eb;
+}
+
+.tw-num {
+    text-align: center;
+    width: 36px;
+    background: var(--bg-canvas) !important;
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+}
+.tabla-walter tbody tr.tw-selected td.tw-num {
+    background: #2563eb !important;
+    color: #ffffff;
+}
+
+.tw-right {
+    text-align: right;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+}
+
+/* Footer estilo Walter — totales destacados */
+.tw-footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    padding: 20px 24px;
+    background: var(--bg-canvas);
+    border-top: 1px solid var(--border-default);
+}
+
+.tw-footer-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.tw-footer-right {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: stretch;
+}
+.tw-totals-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 12px;
+    font-size: 14px;
+}
+.tw-totals-row span {
+    color: var(--text-secondary);
+}
+.tw-totals-row strong {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.tw-totals-grand {
+    margin-top: 8px;
+    padding: 12px;
+    background: var(--bg-surface);
+    border: 2px solid #3b82f6;
+    border-radius: var(--radius-md);
+    font-size: 16px;
+}
+.tw-totals-grand span {
+    color: #3b82f6;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+.tw-totals-grand strong {
+    color: #3b82f6;
+    font-size: 1.25rem;
+    font-weight: 800;
+}
+
+@media (max-width: 720px) {
+    .tw-footer {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}
+
+
 .badge {
     display: inline-flex;
     align-items: center;
@@ -1296,26 +1437,46 @@ p {
 }
 
 /* ============================================================
- * Paleta de colores grid
+ * Paleta clickeable: brand picker
  * ============================================================ */
 
 .palette-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
     gap: 12px;
 }
-.palette-chip {
-    border: 1px solid var(--border-default);
+.palette-chip-btn {
+    appearance: none;
+    border: 1.5px solid var(--border-default);
     border-radius: var(--radius-md);
     overflow: hidden;
     background: var(--bg-surface);
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+    text-align: left;
+}
+.palette-chip-btn:hover {
+    border-color: var(--border-strong);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+.palette-chip-btn.active {
+    border-color: var(--brand);
+    box-shadow: 0 0 0 3px var(--brand-glow), var(--shadow-md);
+    transform: translateY(-2px);
 }
 .palette-swatch {
     height: 80px;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .palette-info {
     padding: 10px 12px;
+    background: var(--bg-surface);
 }
 .palette-info .name {
     font-size: 12px;
@@ -1465,7 +1626,7 @@ p {
     <div class="hero">
         <span class="hero-eyebrow">Sistema de diseño · v1.0</span>
         <h1>Una experiencia que <span class="accent">se siente.</span></h1>
-        <p>Vista previa de los componentes que reemplazan los alerts, confirms y modales del navegador. Probá cada componente, cambiá entre los 3 temas y verificá el comportamiento de las animaciones.</p>
+        <p>Vista previa de los componentes que reemplazan los alerts, confirms y modales del navegador. Prueba cada componente, cambia entre los 3 temas y verifica el comportamiento de las animaciones.</p>
     </div>
 
     <!-- =========================================
@@ -1474,11 +1635,17 @@ p {
     <section class="section">
         <div class="section-header">
             <div class="label">01 · Paleta</div>
-            <h2>Colores del tema activo</h2>
-            <p>Cada tema redefine las variables CSS. El cambio es instantáneo, sin recarga.</p>
+            <h2>Elige el color principal</h2>
+            <p>Haz click en un color para aplicarlo como brand del sistema. Los botones, toggles, gradientes y headers de tabla se actualizan al instante. Combina con cualquiera de los 3 temas.</p>
         </div>
         <div class="palette-grid" id="palette-grid">
             <!-- chips generados por JS -->
+        </div>
+        <div style="text-align: center; margin-top: 16px;">
+            <button class="btn btn-ghost btn-sm" onclick="resetBrand()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="23 4 23 10 17 10"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10"/></svg>
+                Restablecer brand por defecto del tema
+            </button>
         </div>
     </section>
 
@@ -1608,10 +1775,11 @@ p {
     <section class="section">
         <div class="section-header">
             <div class="label">04 · Tablas</div>
-            <h2>Listados que se leen</h2>
-            <p>Header con gradient. Fila seleccionada con highlight. Hover sutil. Líneas definidas.</p>
+            <h2>Dos estilos para evaluar</h2>
+            <p>Mismo motor visual, dos personalidades. Compara y elige cuál se adapta mejor al ERP.</p>
         </div>
 
+        <h4 style="margin-bottom: 12px; color: var(--text-secondary); text-transform: uppercase; font-size: 11px; letter-spacing: 0.08em;">Variante A — Estilo SigcoWeb (gradient + minimalista)</h4>
         <div class="demo-block" style="padding: 0; overflow: hidden;">
             <div class="tabla-wrap" style="border: 0; border-radius: 0; box-shadow: none;">
                 <table class="tabla">
@@ -1688,6 +1856,135 @@ p {
                         </tr>
                     </tbody>
                 </table>
+            </div>
+        </div>
+
+        <h4 style="margin: 32px 0 12px; color: var(--text-secondary); text-transform: uppercase; font-size: 11px; letter-spacing: 0.08em;">Variante B — Estilo Walter (densidad alta, líneas verticales, totales destacados)</h4>
+        <div class="demo-block" style="padding: 0; overflow: hidden;">
+            <div class="tabla-walter-wrap">
+                <table class="tabla-walter">
+                    <thead>
+                        <tr>
+                            <th class="tw-num">#</th>
+                            <th>Código</th>
+                            <th>Producto</th>
+                            <th>Und.</th>
+                            <th class="tw-right">Cant.</th>
+                            <th class="tw-right">Precio</th>
+                            <th class="tw-right">SubTotal</th>
+                            <th class="tw-right">IGV</th>
+                            <th class="tw-right">Renta</th>
+                            <th class="tw-right">ICBPER</th>
+                            <th class="tw-right">Total</th>
+                            <th class="tw-right">Bonif.</th>
+                            <th>Fecha Venc.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="tw-selected">
+                            <td class="tw-num">1</td>
+                            <td>1232-002</td>
+                            <td>ARROZ SUPERIOR DORADO 1 KG</td>
+                            <td>PQT*1KG</td>
+                            <td class="tw-right">50.000</td>
+                            <td class="tw-right">2.5000</td>
+                            <td class="tw-right">125.00</td>
+                            <td class="tw-right">0.00</td>
+                            <td class="tw-right">0.00</td>
+                            <td class="tw-right">0.00</td>
+                            <td class="tw-right">125.00</td>
+                            <td class="tw-right">—</td>
+                            <td>—/—/——</td>
+                        </tr>
+                        <tr>
+                            <td class="tw-num">2</td>
+                            <td>1232-003</td>
+                            <td>LECHE GLORIA CHICA</td>
+                            <td>UND</td>
+                            <td class="tw-right">84.000</td>
+                            <td class="tw-right">2.2000</td>
+                            <td class="tw-right">184.80</td>
+                            <td class="tw-right">0.00</td>
+                            <td class="tw-right">0.00</td>
+                            <td class="tw-right">0.00</td>
+                            <td class="tw-right">184.80</td>
+                            <td class="tw-right">—</td>
+                            <td>—/—/——</td>
+                        </tr>
+                        <tr>
+                            <td class="tw-num">3</td>
+                            <td>1232-001</td>
+                            <td>GALLETA MORENO 50GR X6</td>
+                            <td>CAJA*6PQT</td>
+                            <td class="tw-right">1.000</td>
+                            <td class="tw-right">172.0000</td>
+                            <td class="tw-right">172.00</td>
+                            <td class="tw-right">0.00</td>
+                            <td class="tw-right">0.00</td>
+                            <td class="tw-right">0.00</td>
+                            <td class="tw-right">172.00</td>
+                            <td class="tw-right">—</td>
+                            <td>—/—/——</td>
+                        </tr>
+                        <tr>
+                            <td class="tw-num">4</td>
+                            <td>1232-003</td>
+                            <td>LECHE GLORIA CHICA</td>
+                            <td>CJA*24UN</td>
+                            <td class="tw-right">1.000</td>
+                            <td class="tw-right">52.8000</td>
+                            <td class="tw-right">52.80</td>
+                            <td class="tw-right">0.00</td>
+                            <td class="tw-right">0.00</td>
+                            <td class="tw-right">0.00</td>
+                            <td class="tw-right">52.80</td>
+                            <td class="tw-right">—</td>
+                            <td>—/—/——</td>
+                        </tr>
+                        <tr>
+                            <td class="tw-num">5</td>
+                            <td>1232-001</td>
+                            <td>GALLETA MORENO 50GR X6</td>
+                            <td>PQTE*6</td>
+                            <td class="tw-right">1.000</td>
+                            <td class="tw-right">28.8000</td>
+                            <td class="tw-right">28.80</td>
+                            <td class="tw-right">0.00</td>
+                            <td class="tw-right">0.00</td>
+                            <td class="tw-right">0.00</td>
+                            <td class="tw-right">28.80</td>
+                            <td class="tw-right">—</td>
+                            <td>—/—/——</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Footer con totales (estilo Walter) -->
+            <div class="tw-footer">
+                <div class="tw-footer-left">
+                    <div class="tw-footer-label">Tipo de Aplicación IGV:</div>
+                    <select class="select" style="max-width: 220px;">
+                        <option>0 - Sin IGV</option>
+                        <option>1 - Gravado</option>
+                        <option>2 - Exonerado</option>
+                    </select>
+                    <label class="checkbox" style="margin-top: 10px;">
+                        <input type="checkbox">
+                        <span>Activar Percepción</span>
+                    </label>
+                </div>
+                <div class="tw-footer-right">
+                    <div class="tw-totals-row"><span>Sub Total:</span><strong>563.40</strong></div>
+                    <div class="tw-totals-row"><span>I.G.V.:</span><strong>0.00</strong></div>
+                    <div class="tw-totals-row"><span>Renta:</span><strong>0.00</strong></div>
+                    <div class="tw-totals-row"><span>ICBPER:</span><strong>0.00</strong></div>
+                    <div class="tw-totals-row"><span>Percepción:</span><strong>0.00</strong></div>
+                    <div class="tw-totals-row tw-totals-grand">
+                        <span>TOTAL GENERAL:</span>
+                        <strong>563.40</strong>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -1818,7 +2115,7 @@ p {
         <div class="section-header">
             <div class="label">09 · Scrollbars</div>
             <h2>Hasta las barras estilizadas</h2>
-            <p>Scrollbar vertical y horizontal con gradient. Notá las del navegador a la derecha de esta página.</p>
+            <p>Scrollbar vertical y horizontal con gradient. Observa las del navegador a la derecha de esta página.</p>
         </div>
         <div class="demo-block">
             <h4 style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 10px;">Vertical</h4>
@@ -1827,7 +2124,7 @@ p {
                 <p>SigcoWeb apunta a un look consistente desde el primer pixel: tipografía Plus Jakarta Sans, monoespaciada JetBrains Mono para códigos, paleta azul-celeste, gradientes sutiles en headers de tabla y métricas.</p>
                 <p>La idea es que cada interacción tenga "alma": botones que reaccionan al hover, modales que se abren con bounce, scrollbar que se ve premium.</p>
                 <p>Esto no es solo estética: es percepción de calidad. Un cliente que ve un sistema con detalles cuidados confía más en él.</p>
-                <p>Comparate vos mismo cambiando entre Oscuro, Claro y Sigco arriba. Los tres temas mantienen jerarquía visual, contraste y legibilidad.</p>
+                <p>Compáralo tú mismo cambiando entre Oscuro, Claro y Sigco arriba. Los tres temas mantienen jerarquía visual, contraste y legibilidad.</p>
             </div>
 
             <h4 style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin: 24px 0 10px;">Horizontal</h4>
@@ -1905,7 +2202,7 @@ p {
     </section>
 
     <div class="footnote">
-        <p>SigcoWeb · Sistema de diseño v1 · Cambiá entre <code>Oscuro</code>, <code>Claro</code> y <code>Sigco</code> arriba a la derecha.</p>
+        <p>SigcoWeb · Sistema de diseño v1 · Cambia entre <code>Oscuro</code>, <code>Claro</code> y <code>Sigco</code> arriba a la derecha.</p>
     </div>
 
 </div>
@@ -2065,7 +2362,7 @@ const MODAL_CONFIG = {
     },
     info: {
         titulo: 'Cambios sin guardar',
-        mensaje: 'Tenés cambios sin guardar en el formulario. ¿Querés continuar sin guardarlos?',
+        mensaje: 'Hay cambios sin guardar en el formulario. ¿Desea continuar sin guardarlos?',
         confirmar: 'Continuar',
         btnClass: 'btn-info',
         icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>'
@@ -2115,36 +2412,76 @@ function demoModal(tipo) {
     mostrarConfirmacion(tipo);
 }
 
-// ========== Paleta dinámica ==========
-const PALETTE_KEYS = [
-    { name: 'Brand', var: '--brand' },
-    { name: 'Brand hover', var: '--brand-hover' },
-    { name: 'Background base', var: '--bg-base' },
-    { name: 'Background surface', var: '--bg-surface' },
-    { name: 'Text primary', var: '--text-primary' },
-    { name: 'Text secondary', var: '--text-secondary' },
-    { name: 'Border default', var: '--border-default' },
-    { name: 'Success', var: '--success' },
-    { name: 'Danger', var: '--danger' },
-    { name: 'Warning', var: '--warning' },
-    { name: 'Info', var: '--info' }
+// ========== Paleta clickeable: brand candidates ==========
+const BRAND_CANDIDATES = [
+    { name: 'Celeste',  base: '#0ea5e9', hover: '#0284c7', active: '#0369a1', light: '#7dd3fc' },
+    { name: 'Azul royal',  base: '#2563eb', hover: '#1d4ed8', active: '#1e40af', light: '#93c5fd' },
+    { name: 'Cian',     base: '#06b6d4', hover: '#0891b2', active: '#0e7490', light: '#67e8f9' },
+    { name: 'Teal',     base: '#14b8a6', hover: '#0d9488', active: '#0f766e', light: '#5eead4' },
+    { name: 'Indigo',   base: '#6366f1', hover: '#4f46e5', active: '#4338ca', light: '#a5b4fc' },
+    { name: 'Violeta',  base: '#8b5cf6', hover: '#7c3aed', active: '#6d28d9', light: '#c4b5fd' },
+    { name: 'Rosa',     base: '#ec4899', hover: '#db2777', active: '#be185d', light: '#f9a8d4' },
+    { name: 'Esmeralda', base: '#10b981', hover: '#059669', active: '#047857', light: '#6ee7b7' },
+    { name: 'Naranja',  base: '#f97316', hover: '#ea580c', active: '#c2410c', light: '#fdba74' },
+    { name: 'Ámbar',    base: '#f59e0b', hover: '#d97706', active: '#b45309', light: '#fcd34d' }
 ];
+
+let activeBrandIdx = -1; // -1 = usar default del tema
+
+function hexToRgba(hex, alpha) {
+    const h = hex.replace('#', '');
+    const r = parseInt(h.substring(0, 2), 16);
+    const g = parseInt(h.substring(2, 4), 16);
+    const b = parseInt(h.substring(4, 6), 16);
+    return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + alpha + ')';
+}
+
+function aplicarBrand(idx) {
+    if (idx === -1) {
+        // limpiar overrides — vuelve al brand del tema actual
+        const props = ['--brand', '--brand-hover', '--brand-active', '--brand-glow',
+                       '--gradient-primary', '--gradient-table-header', '--border-focus'];
+        props.forEach(p => document.documentElement.style.removeProperty(p));
+        activeBrandIdx = -1;
+        renderPalette();
+        return;
+    }
+    const c = BRAND_CANDIDATES[idx];
+    const r = document.documentElement.style;
+    r.setProperty('--brand', c.base);
+    r.setProperty('--brand-hover', c.hover);
+    r.setProperty('--brand-active', c.active);
+    r.setProperty('--brand-glow', hexToRgba(c.base, 0.35));
+    r.setProperty('--border-focus', c.base);
+    r.setProperty('--gradient-primary',
+        'linear-gradient(135deg, ' + c.base + ' 0%, ' + c.hover + ' 50%, ' + c.active + ' 100%)');
+    r.setProperty('--gradient-table-header',
+        'linear-gradient(135deg, ' + c.light + ' 0%, ' + c.base + ' 50%, ' + c.active + ' 100%)');
+    activeBrandIdx = idx;
+    renderPalette();
+}
+
+function resetBrand() {
+    aplicarBrand(-1);
+}
 
 function renderPalette() {
     const grid = document.getElementById('palette-grid');
     if (!grid) return;
-    const cs = getComputedStyle(document.documentElement);
-    grid.innerHTML = PALETTE_KEYS.map(k => {
-        const val = cs.getPropertyValue(k.var).trim();
-        return `
-            <div class="palette-chip">
-                <div class="palette-swatch" style="background: ${val};"></div>
-                <div class="palette-info">
-                    <div class="name">${k.name}</div>
-                    <div class="hex">${val}</div>
-                </div>
-            </div>
-        `;
+    grid.innerHTML = BRAND_CANDIDATES.map(function(c, i) {
+        const isActive = i === activeBrandIdx;
+        return '' +
+            '<button class="palette-chip-btn ' + (isActive ? 'active' : '') + '" ' +
+                    'onclick="aplicarBrand(' + i + ')" ' +
+                    'aria-label="Aplicar color ' + c.name + '">' +
+                '<div class="palette-swatch" style="background: linear-gradient(135deg, ' + c.base + ' 0%, ' + c.active + ' 100%);">' +
+                    (isActive ? '<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" width="24" height="24" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));"><polyline points="20 6 9 17 4 12"/></svg>' : '') +
+                '</div>' +
+                '<div class="palette-info">' +
+                    '<div class="name">' + c.name + '</div>' +
+                    '<div class="hex">' + c.base + '</div>' +
+                '</div>' +
+            '</button>';
     }).join('');
 }
 
