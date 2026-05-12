@@ -796,6 +796,51 @@ p {
     color: var(--brand-hover);
 }
 
+/* Banner indicador de tema activo */
+.cfg-theme-banner {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 16px 22px 0;
+    padding: 12px 14px;
+    background: var(--gradient-soft);
+    border: 1.5px solid var(--border-strong);
+    border-radius: var(--radius-md);
+}
+.cfg-theme-banner-icon {
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--bg-surface);
+    color: var(--brand);
+    border: 1.5px solid var(--brand);
+}
+.cfg-theme-banner-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+    min-width: 0;
+}
+.cfg-theme-banner-text strong {
+    font-size: 13px;
+    color: var(--text-primary);
+    font-weight: 700;
+}
+.cfg-theme-banner-text span:not(:first-child) {
+    font-size: 11.5px;
+    color: var(--text-secondary);
+    line-height: 1.35;
+}
+#cfg-theme-label {
+    color: var(--brand);
+    text-transform: capitalize;
+}
+
 /* ============================================================
  * DENSIDADES — afectan TODO el sistema globalmente
  * ============================================================ */
@@ -2926,6 +2971,20 @@ body.tabla-sigco-zebra .tabla tbody tr:nth-child(even) td {
 
     <div class="config-panel-body">
 
+        <!-- Indicador de tema activo -->
+        <div class="cfg-theme-banner">
+            <div class="cfg-theme-banner-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                    <circle cx="12" cy="12" r="4"/>
+                    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+                </svg>
+            </div>
+            <div class="cfg-theme-banner-text">
+                <strong>Configurando tema: <span id="cfg-theme-label">Sigco</span></strong>
+                <span>Los colores y tabla son por tema. Forma y animaciones son globales.</span>
+            </div>
+        </div>
+
         <!-- BOTONES -->
         <div class="config-section">
             <h4 class="config-section-title">Botones</h4>
@@ -3127,7 +3186,7 @@ body.tabla-sigco-zebra .tabla tbody tr:nth-child(even) td {
 <div class="modal-overlay" id="export-overlay" style="display: none;">
     <div class="export-modal">
         <h3>Configuración exportada</h3>
-        <p>Copia este bloque y pégalo en <code>app/static/css/base.css</code> de SigcoWeb.</p>
+        <p>Copia este bloque y pégalo en <code>app/static/css/base.css</code> de SigcoWeb. <strong>Repite el proceso cambiando de tema</strong> para obtener los bloques de Oscuro, Claro y Sigco.</p>
         <pre id="export-code"></pre>
         <div class="export-actions">
             <button class="btn btn-secondary" onclick="cerrarExport()">Cerrar</button>
@@ -3151,6 +3210,11 @@ function setTheme(name) {
     });
     try { localStorage.setItem('sigco-theme', name); } catch (e) {}
     renderPalette();
+    // Sincronizar panel de config con la cfg del nuevo tema
+    if (typeof syncControles === 'function') {
+        syncControles();
+        aplicarCfg();
+    }
 }
 
 (function initTheme() {
@@ -3354,7 +3418,57 @@ function demoModal(tipo) {
 
 // ========== Panel de configuración ==========
 
+// Defaults nativos de los color pickers por tema (referencia visual cuando no hay override)
+const COLOR_DEFAULTS_BY_THEME = {
+    sigco: {
+        primary:   { bg: '#0ea5e9', text: '#ffffff', border: '#0ea5e9' },
+        success:   { bg: '#10b981', text: '#ffffff', border: '#10b981' },
+        info:      { bg: '#3b82f6', text: '#ffffff', border: '#3b82f6' },
+        warning:   { bg: '#f59e0b', text: '#ffffff', border: '#f59e0b' },
+        danger:    { bg: '#ef4444', text: '#ffffff', border: '#ef4444' },
+        secondary: { bg: '#f1f5f9', text: '#0c1d3a', border: '#cbd5e1' }
+    },
+    oscuro: {
+        primary:   { bg: '#38bdf8', text: '#050816', border: '#38bdf8' },
+        success:   { bg: '#34d399', text: '#050816', border: '#34d399' },
+        info:      { bg: '#60a5fa', text: '#050816', border: '#60a5fa' },
+        warning:   { bg: '#fbbf24', text: '#050816', border: '#fbbf24' },
+        danger:    { bg: '#f87171', text: '#050816', border: '#f87171' },
+        secondary: { bg: '#1a2040', text: '#f1f5f9', border: '#374151' }
+    },
+    claro: {
+        primary:   { bg: '#2563eb', text: '#ffffff', border: '#2563eb' },
+        success:   { bg: '#059669', text: '#ffffff', border: '#059669' },
+        info:      { bg: '#2563eb', text: '#ffffff', border: '#2563eb' },
+        warning:   { bg: '#d97706', text: '#ffffff', border: '#d97706' },
+        danger:    { bg: '#dc2626', text: '#ffffff', border: '#dc2626' },
+        secondary: { bg: '#fafafa', text: '#18181b', border: '#d4d4d8' }
+    }
+};
+
+const TABLA_BORDER_DEFAULTS_BY_THEME = {
+    sigco:  '#6ba8d6',
+    oscuro: '#1e40af',
+    claro:  '#94a3b8'
+};
+
+function nuevoThemeCfg(theme) {
+    return {
+        btnColors: {
+            primary:   { bg: null, text: null, border: null },
+            success:   { bg: null, text: null, border: null },
+            info:      { bg: null, text: null, border: null },
+            warning:   { bg: null, text: null, border: null },
+            danger:    { bg: null, text: null, border: null },
+            secondary: { bg: null, text: null, border: null }
+        },
+        tablaZebra: false,
+        tablaBorderColor: TABLA_BORDER_DEFAULTS_BY_THEME[theme]
+    };
+}
+
 const CFG_DEFAULTS = {
+    // ===== Global (forma, aplica a los 3 temas) =====
     btnRadius: 10,
     btnBorderWidth: 0,
     btnBorderColor: '#0ea5e9',
@@ -3362,20 +3476,24 @@ const CFG_DEFAULTS = {
     btnHover: 'elevate',
     inputRadius: 10,
     inputBorderWidth: 2,
-    tablaZebra: false,
-    tablaBorderColor: '#6ba8d6',
     cardRadius: 14,
     animations: 'full',
-    // Colores por tipo de botón (null = usar default del tema)
-    btnColors: {
-        primary:   { bg: null, text: null, border: null },
-        success:   { bg: null, text: null, border: null },
-        info:      { bg: null, text: null, border: null },
-        warning:   { bg: null, text: null, border: null },
-        danger:    { bg: null, text: null, border: null },
-        secondary: { bg: null, text: null, border: null }
+    // ===== Por tema (colores y tabla) =====
+    themes: {
+        sigco:  nuevoThemeCfg('sigco'),
+        oscuro: nuevoThemeCfg('oscuro'),
+        claro:  nuevoThemeCfg('claro')
     }
 };
+
+function getActiveTheme() {
+    return document.documentElement.getAttribute('data-theme') || 'sigco';
+}
+function currentThemeCfg() {
+    const t = getActiveTheme();
+    if (!sigcoCfg.themes[t]) sigcoCfg.themes[t] = nuevoThemeCfg(t);
+    return sigcoCfg.themes[t];
+}
 
 let sigcoCfg = Object.assign({}, CFG_DEFAULTS);
 
@@ -3405,18 +3523,22 @@ function setSegmented(segId, btn) {
 
 function aplicarCfg() {
     const r = document.documentElement.style;
+    // Global (forma)
     r.setProperty('--cfg-btn-radius', sigcoCfg.btnRadius + 'px');
     r.setProperty('--cfg-btn-border-width', sigcoCfg.btnBorderWidth + 'px');
     r.setProperty('--cfg-btn-border-color', sigcoCfg.btnBorderWidth > 0 ? sigcoCfg.btnBorderColor : 'transparent');
     r.setProperty('--cfg-input-radius', sigcoCfg.inputRadius + 'px');
     r.setProperty('--cfg-input-border-width', sigcoCfg.inputBorderWidth + 'px');
     r.setProperty('--cfg-card-radius', sigcoCfg.cardRadius + 'px');
-    r.setProperty('--cfg-tabla-border-color', sigcoCfg.tablaBorderColor);
 
-    // Colores por tipo de botón
+    // Por tema
+    const tc = currentThemeCfg();
+    r.setProperty('--cfg-tabla-border-color', tc.tablaBorderColor);
+
+    // Colores por tipo de botón (del tema activo)
     const tipos = ['primary', 'success', 'info', 'warning', 'danger', 'secondary'];
     tipos.forEach(function(t) {
-        const c = sigcoCfg.btnColors[t] || {};
+        const c = tc.btnColors[t] || {};
         ['bg', 'text', 'border'].forEach(function(prop) {
             const varName = '--cfg-btn-' + t + '-' + prop;
             if (c[prop]) {
@@ -3440,7 +3562,7 @@ function aplicarCfg() {
     if (sigcoCfg.animations === 'reduced') b.classList.add('anim-reduced');
     if (sigcoCfg.animations === 'none') b.classList.add('anim-none');
 
-    b.classList.toggle('tabla-sigco-zebra', sigcoCfg.tablaZebra);
+    b.classList.toggle('tabla-sigco-zebra', tc.tablaZebra);
 
     persistCfg();
 }
@@ -3452,7 +3574,23 @@ function persistCfg() {
 function loadCfg() {
     try {
         const raw = localStorage.getItem('sigco-cfg');
-        if (raw) sigcoCfg = Object.assign({}, CFG_DEFAULTS, JSON.parse(raw));
+        if (raw) {
+            const parsed = JSON.parse(raw);
+            // Si el schema viejo no tiene 'themes', no rompemos: usamos defaults
+            sigcoCfg = Object.assign({}, CFG_DEFAULTS, parsed);
+            if (!sigcoCfg.themes || typeof sigcoCfg.themes !== 'object') {
+                sigcoCfg.themes = {
+                    sigco:  nuevoThemeCfg('sigco'),
+                    oscuro: nuevoThemeCfg('oscuro'),
+                    claro:  nuevoThemeCfg('claro')
+                };
+            } else {
+                // Asegurar que existan los 3 temas
+                ['sigco', 'oscuro', 'claro'].forEach(function(t) {
+                    if (!sigcoCfg.themes[t]) sigcoCfg.themes[t] = nuevoThemeCfg(t);
+                });
+            }
+        }
     } catch (e) {}
     syncControles();
     aplicarCfg();
@@ -3483,10 +3621,6 @@ function syncControles() {
     setSegmented('seg-input-border-width',
         document.querySelectorAll('#seg-input-border-width button')[inputBwMap[sigcoCfg.inputBorderWidth]]);
 
-    document.getElementById('cfg-tabla-zebra').checked = sigcoCfg.tablaZebra;
-    document.getElementById('cfg-tabla-border-color').value = sigcoCfg.tablaBorderColor;
-    document.getElementById('hex-tabla-border-color').textContent = sigcoCfg.tablaBorderColor;
-
     document.getElementById('cfg-card-radius').value = sigcoCfg.cardRadius;
     document.getElementById('badge-card-radius').textContent = sigcoCfg.cardRadius + 'px';
 
@@ -3494,12 +3628,27 @@ function syncControles() {
     setSegmented('seg-animations',
         document.querySelectorAll('#seg-animations button')[animMap[sigcoCfg.animations]]);
 
-    // Colores por tipo de botón
+    // ===== Por tema (lee del tema activo) =====
+    const theme = getActiveTheme();
+    const tc = currentThemeCfg();
+
+    // Indicador "tema configurando"
+    const themeLabel = document.getElementById('cfg-theme-label');
+    if (themeLabel) {
+        themeLabel.textContent = theme.charAt(0).toUpperCase() + theme.slice(1);
+    }
+
+    // Tabla
+    document.getElementById('cfg-tabla-zebra').checked = tc.tablaZebra;
+    document.getElementById('cfg-tabla-border-color').value = tc.tablaBorderColor;
+    document.getElementById('hex-tabla-border-color').textContent = tc.tablaBorderColor;
+
+    // Color pickers por tipo (refleja override del tema o el default nativo)
+    const defaults = COLOR_DEFAULTS_BY_THEME[theme] || COLOR_DEFAULTS_BY_THEME.sigco;
     document.querySelectorAll('.btn-colors-row input[type="color"]').forEach(function(inp) {
         const t = inp.dataset.tipo, p = inp.dataset.prop;
-        if (sigcoCfg.btnColors[t] && sigcoCfg.btnColors[t][p]) {
-            inp.value = sigcoCfg.btnColors[t][p];
-        }
+        const ov = (tc.btnColors[t] || {})[p];
+        inp.value = ov || defaults[t][p];
     });
 }
 
@@ -3541,11 +3690,11 @@ function onInputBorderWidth(v, btn) {
     aplicarCfg();
 }
 function onTablaZebra(v) {
-    sigcoCfg.tablaZebra = v;
+    currentThemeCfg().tablaZebra = v;
     aplicarCfg();
 }
 function onTablaBorderColor(v) {
-    sigcoCfg.tablaBorderColor = v;
+    currentThemeCfg().tablaBorderColor = v;
     document.getElementById('hex-tabla-border-color').textContent = v;
     aplicarCfg();
 }
@@ -3560,33 +3709,29 @@ function onAnimations(v, btn) {
     aplicarCfg();
 }
 
-// Colores por tipo de botón
+// Colores por tipo de botón (POR TEMA)
 function onBtnColor(tipo, prop, value) {
-    if (!sigcoCfg.btnColors[tipo]) sigcoCfg.btnColors[tipo] = { bg: null, text: null, border: null };
-    sigcoCfg.btnColors[tipo][prop] = value;
+    const tc = currentThemeCfg();
+    if (!tc.btnColors[tipo]) tc.btnColors[tipo] = { bg: null, text: null, border: null };
+    tc.btnColors[tipo][prop] = value;
     aplicarCfg();
 }
 
 function resetBtnColors() {
+    const theme = getActiveTheme();
+    const tc = currentThemeCfg();
     const tipos = ['primary', 'success', 'info', 'warning', 'danger', 'secondary'];
     tipos.forEach(function(t) {
-        sigcoCfg.btnColors[t] = { bg: null, text: null, border: null };
+        tc.btnColors[t] = { bg: null, text: null, border: null };
     });
-    // Resetear los inputs visuales a sus valores default
-    const defaults = {
-        primary:   { bg: '#0ea5e9', text: '#ffffff', border: '#0ea5e9' },
-        success:   { bg: '#10b981', text: '#ffffff', border: '#10b981' },
-        info:      { bg: '#3b82f6', text: '#ffffff', border: '#3b82f6' },
-        warning:   { bg: '#f59e0b', text: '#ffffff', border: '#f59e0b' },
-        danger:    { bg: '#ef4444', text: '#ffffff', border: '#ef4444' },
-        secondary: { bg: '#f1f5f9', text: '#0c1d3a', border: '#cbd5e1' }
-    };
+    // Sincronizar los inputs visuales a los defaults del tema actual
+    const defaults = COLOR_DEFAULTS_BY_THEME[theme] || COLOR_DEFAULTS_BY_THEME.sigco;
     document.querySelectorAll('.btn-colors-row input[type="color"]').forEach(function(inp) {
         const t = inp.dataset.tipo, p = inp.dataset.prop;
         if (defaults[t] && defaults[t][p]) inp.value = defaults[t][p];
     });
     aplicarCfg();
-    mostrarToast('info', 'Colores de botones restablecidos al default del tema.', 'Listo');
+    mostrarToast('info', 'Colores del tema "' + theme + '" restablecidos al default.', 'Listo');
 }
 
 function resetConfig() {
@@ -3616,51 +3761,60 @@ function copiarExport() {
 
 function generarCssExport() {
     const c = sigcoCfg;
-    const theme = document.documentElement.getAttribute('data-theme') || 'sigco';
+    const theme = getActiveTheme();
+    const tc = currentThemeCfg();
     const density = document.documentElement.getAttribute('data-density') || 'comfortable';
     const brand = getComputedStyle(document.documentElement).getPropertyValue('--brand').trim();
+    const themeUpper = theme.charAt(0).toUpperCase() + theme.slice(1);
 
     let css = '/* ============================================================\n';
     css += ' * SigcoWeb · Configuración exportada\n';
-    css += ' * Tema: ' + theme + ' · Densidad: ' + density + ' · Brand: ' + brand + '\n';
+    css += ' * Tema actual: ' + themeUpper + ' · Densidad: ' + density + ' · Brand: ' + brand + '\n';
     css += ' * Generado: ' + new Date().toLocaleString('es-PE') + '\n';
+    css += ' *\n';
+    css += ' * IMPORTANTE: este bloque es para el tema "' + theme + '".\n';
+    css += ' * Para los otros temas, cambia desde el topbar y exporta de nuevo.\n';
+    css += ' * Cada tema tendrá su propio bloque :root[data-theme="..."].\n';
     css += ' * ============================================================ */\n\n';
+
+    // ===== GLOBALES (forma) — aplican a los 3 temas =====
+    css += '/* Forma (global — aplica a los 3 temas) */\n';
     css += ':root {\n';
-    css += '    /* Botones — forma */\n';
     css += '    --cfg-btn-radius: ' + c.btnRadius + 'px;\n';
     css += '    --cfg-btn-border-width: ' + c.btnBorderWidth + 'px;\n';
     css += '    --cfg-btn-border-color: ' + (c.btnBorderWidth > 0 ? c.btnBorderColor : 'transparent') + ';\n';
+    css += '    --cfg-input-radius: ' + c.inputRadius + 'px;\n';
+    css += '    --cfg-input-border-width: ' + c.inputBorderWidth + 'px;\n';
+    css += '    --cfg-card-radius: ' + c.cardRadius + 'px;\n';
+    css += '}\n\n';
 
-    // Colores por tipo (solo si fueron personalizados)
+    // ===== POR TEMA (colores y tabla) =====
     const tipos = ['primary', 'success', 'info', 'warning', 'danger', 'secondary'];
     let hasCustomColors = false;
     tipos.forEach(function(t) {
-        const tc = c.btnColors[t] || {};
-        if (tc.bg || tc.text || tc.border) hasCustomColors = true;
+        const tcCol = tc.btnColors[t] || {};
+        if (tcCol.bg || tcCol.text || tcCol.border) hasCustomColors = true;
     });
+
+    css += '/* Específico del tema "' + theme + '" */\n';
+    css += ':root[data-theme="' + theme + '"] {\n';
+    css += '    --cfg-tabla-border-color: ' + tc.tablaBorderColor + ';\n';
     if (hasCustomColors) {
-        css += '\n    /* Botones — colores personalizados por tipo */\n';
+        css += '\n    /* Colores personalizados por tipo de botón */\n';
         tipos.forEach(function(t) {
-            const tc = c.btnColors[t] || {};
-            if (tc.bg)     css += '    --cfg-btn-' + t + '-bg: ' + tc.bg + ';\n';
-            if (tc.text)   css += '    --cfg-btn-' + t + '-text: ' + tc.text + ';\n';
-            if (tc.border) css += '    --cfg-btn-' + t + '-border: ' + tc.border + ';\n';
+            const tcCol = tc.btnColors[t] || {};
+            if (tcCol.bg)     css += '    --cfg-btn-' + t + '-bg: ' + tcCol.bg + ';\n';
+            if (tcCol.text)   css += '    --cfg-btn-' + t + '-text: ' + tcCol.text + ';\n';
+            if (tcCol.border) css += '    --cfg-btn-' + t + '-border: ' + tcCol.border + ';\n';
         });
     }
-
-    css += '\n    /* Inputs */\n';
-    css += '    --cfg-input-radius: ' + c.inputRadius + 'px;\n';
-    css += '    --cfg-input-border-width: ' + c.inputBorderWidth + 'px;\n';
-    css += '\n    /* Cards y modales */\n';
-    css += '    --cfg-card-radius: ' + c.cardRadius + 'px;\n';
-    css += '\n    /* Tabla Walter */\n';
-    css += '    --cfg-tabla-border-color: ' + c.tablaBorderColor + ';\n';
     css += '}\n\n';
-    css += '/* Comportamiento de botones */\n';
+
+    // ===== Comportamiento de botones (global) =====
+    css += '/* Comportamiento (global) */\n';
     if (c.btnShadow === 'none') {
         css += '.btn-primary, .btn-success, .btn-danger, .btn-warning, .btn-info { box-shadow: none !important; }\n';
     } else if (c.btnShadow === 'strong') {
-        css += '/* Sombra dramática: glow más intenso */\n';
         css += '.btn-primary { box-shadow: var(--shadow-md), 0 8px 28px var(--brand-glow), 0 0 0 1px var(--brand-glow); }\n';
         css += '.btn-success { box-shadow: var(--shadow-md), 0 8px 28px var(--success-glow), 0 0 0 1px var(--success-glow); }\n';
         css += '.btn-danger { box-shadow: var(--shadow-md), 0 8px 28px var(--danger-glow), 0 0 0 1px var(--danger-glow); }\n';
@@ -3670,15 +3824,19 @@ function generarCssExport() {
     if (c.btnHover === 'none') {
         css += '.btn:hover { transform: none !important; }\n';
     }
-    if (c.tablaZebra) {
-        css += '\n/* Zebra en tabla SigcoWeb */\n';
-        css += '.tabla tbody tr:nth-child(even) td { background: var(--bg-soft); }\n';
+
+    // ===== Tabla zebra (por tema) =====
+    if (tc.tablaZebra) {
+        css += '\n/* Zebra en tabla SigcoWeb — solo tema "' + theme + '" */\n';
+        css += ':root[data-theme="' + theme + '"] .tabla tbody tr:nth-child(even) td { background: var(--bg-soft); }\n';
     }
+
+    // ===== Animaciones (global) =====
     if (c.animations === 'reduced') {
-        css += '\n/* Animaciones reducidas */\n';
+        css += '\n/* Animaciones reducidas (global) */\n';
         css += '* { transition-duration: 0.08s !important; animation-duration: 0.15s !important; }\n';
     } else if (c.animations === 'none') {
-        css += '\n/* Animaciones desactivadas */\n';
+        css += '\n/* Animaciones desactivadas (global) */\n';
         css += '*, *::before, *::after { transition: none !important; animation: none !important; }\n';
     }
 
