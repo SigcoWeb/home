@@ -29,10 +29,12 @@
     --text-muted: #94a3b8;
     --text-inverse: #ffffff;
 
-    --border-subtle: rgba(14, 165, 233, 0.12);
-    --border-default: rgba(14, 165, 233, 0.22);
-    --border-strong: rgba(14, 165, 233, 0.4);
+    --border-subtle: rgba(14, 165, 233, 0.22);
+    --border-default: rgba(14, 165, 233, 0.38);
+    --border-strong: rgba(14, 165, 233, 0.6);
     --border-focus: #0ea5e9;
+    --border-walter: #6ba8d6;
+    --tabla-walter-zebra: rgba(14, 165, 233, 0.06);
 
     --brand: #0ea5e9;
     --brand-hover: #0284c7;
@@ -84,10 +86,12 @@
     --text-muted: #64748b;
     --text-inverse: #050816;
 
-    --border-subtle: rgba(255, 255, 255, 0.06);
-    --border-default: rgba(255, 255, 255, 0.12);
-    --border-strong: rgba(56, 189, 248, 0.3);
+    --border-subtle: rgba(255, 255, 255, 0.14);
+    --border-default: rgba(56, 189, 248, 0.3);
+    --border-strong: rgba(56, 189, 248, 0.5);
     --border-focus: #38bdf8;
+    --border-walter: #1e40af;
+    --tabla-walter-zebra: rgba(56, 189, 248, 0.06);
 
     --brand: #38bdf8;
     --brand-hover: #7dd3fc;
@@ -133,10 +137,12 @@
     --text-muted: #a1a1aa;
     --text-inverse: #fafafa;
 
-    --border-subtle: rgba(0, 0, 0, 0.06);
-    --border-default: rgba(0, 0, 0, 0.12);
-    --border-strong: rgba(0, 0, 0, 0.2);
+    --border-subtle: rgba(0, 0, 0, 0.12);
+    --border-default: rgba(0, 0, 0, 0.22);
+    --border-strong: rgba(0, 0, 0, 0.35);
     --border-focus: #2563eb;
+    --border-walter: #94a3b8;
+    --tabla-walter-zebra: rgba(0, 0, 0, 0.035);
 
     --brand: #2563eb;
     --brand-hover: #1d4ed8;
@@ -338,6 +344,152 @@ p {
     color: var(--brand);
     border-color: var(--brand);
 }
+
+/* Density selector */
+.density-select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: var(--bg-canvas);
+    border: 2px solid var(--border-default);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 7px 32px 7px 14px;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230ea5e9' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 14px;
+    transition: all 0.2s ease;
+}
+.density-select:hover {
+    border-color: var(--border-strong);
+}
+.density-select:focus {
+    outline: none;
+    border-color: var(--brand);
+    box-shadow: 0 0 0 3px var(--brand-glow);
+}
+:root[data-theme="oscuro"] .density-select {
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2338bdf8' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+}
+:root[data-theme="claro"] .density-select {
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+}
+
+/* ============================================================
+ * DENSIDADES — afectan TODO el sistema globalmente
+ * ============================================================ */
+
+/* COMPACTO */
+:root[data-density="compact"] body {
+    font-size: 13px;
+}
+:root[data-density="compact"] .hero { padding: 24px 0 40px; }
+:root[data-density="compact"] .hero h1 { font-size: 2.5rem; }
+:root[data-density="compact"] .hero p { font-size: 1rem; }
+:root[data-density="compact"] .section { margin: 56px 0; }
+:root[data-density="compact"] h2 { font-size: 1.5rem; }
+
+:root[data-density="compact"] .btn {
+    padding: 7px 14px;
+    font-size: 13px;
+}
+:root[data-density="compact"] .btn-sm {
+    padding: 4px 9px;
+    font-size: 11px;
+}
+:root[data-density="compact"] .btn-lg {
+    padding: 11px 22px;
+    font-size: 14px;
+}
+:root[data-density="compact"] .btn-icon {
+    width: 30px;
+    height: 30px;
+}
+
+:root[data-density="compact"] .input,
+:root[data-density="compact"] .select,
+:root[data-density="compact"] .textarea {
+    padding: 7px 12px;
+    font-size: 13px;
+}
+
+:root[data-density="compact"] .tabla tbody td {
+    padding: 9px 14px;
+    font-size: 13px;
+}
+:root[data-density="compact"] .tabla thead th {
+    padding: 10px 14px;
+    font-size: 12px;
+}
+:root[data-density="compact"] .tabla-walter tbody td,
+:root[data-density="compact"] .tabla-walter thead th {
+    padding: 7px 9px;
+    font-size: 11.5px;
+}
+
+:root[data-density="compact"] .card { padding: 18px; }
+:root[data-density="compact"] .demo-block { padding: 22px; }
+:root[data-density="compact"] .card-metric .value { font-size: 1.625rem; }
+
+/* AMPLIO */
+:root[data-density="spacious"] body {
+    font-size: 17px;
+}
+:root[data-density="spacious"] .hero { padding: 56px 0 80px; }
+:root[data-density="spacious"] .hero h1 { font-size: 4rem; }
+:root[data-density="spacious"] .hero p { font-size: 1.25rem; }
+:root[data-density="spacious"] .section { margin: 104px 0; }
+:root[data-density="spacious"] h2 { font-size: 2.25rem; }
+
+:root[data-density="spacious"] .btn {
+    padding: 14px 24px;
+    font-size: 16px;
+}
+:root[data-density="spacious"] .btn-sm {
+    padding: 8px 14px;
+    font-size: 13px;
+}
+:root[data-density="spacious"] .btn-lg {
+    padding: 18px 36px;
+    font-size: 19px;
+}
+:root[data-density="spacious"] .btn-icon {
+    width: 44px;
+    height: 44px;
+}
+:root[data-density="spacious"] .btn-icon svg {
+    width: 22px;
+    height: 22px;
+}
+
+:root[data-density="spacious"] .input,
+:root[data-density="spacious"] .select,
+:root[data-density="spacious"] .textarea {
+    padding: 14px 18px;
+    font-size: 16px;
+}
+
+:root[data-density="spacious"] .tabla tbody td {
+    padding: 18px 22px;
+    font-size: 15px;
+}
+:root[data-density="spacious"] .tabla thead th {
+    padding: 18px 22px;
+    font-size: 14px;
+}
+:root[data-density="spacious"] .tabla-walter tbody td,
+:root[data-density="spacious"] .tabla-walter thead th {
+    padding: 14px 16px;
+    font-size: 14px;
+}
+
+:root[data-density="spacious"] .card { padding: 32px; }
+:root[data-density="spacious"] .demo-block { padding: 40px; }
+:root[data-density="spacious"] .card-metric .value { font-size: 2.5rem; }
 
 /* ============================================================
  * Layout: container + secciones
@@ -636,7 +788,7 @@ p {
     font-size: 14px;
     color: var(--text-primary);
     background: var(--bg-surface);
-    border: 1.5px solid var(--border-default);
+    border: 2px solid var(--border-default);
     border-radius: var(--radius-md);
     transition: all 0.2s ease;
     outline: none;
@@ -655,6 +807,25 @@ p {
 .input::placeholder,
 .textarea::placeholder {
     color: var(--text-muted);
+}
+
+/* Select con appearance custom (flecha visible siempre) */
+.select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding-right: 38px;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230ea5e9' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+}
+:root[data-theme="oscuro"] .select {
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2338bdf8' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+}
+:root[data-theme="claro"] .select {
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
 }
 
 .textarea {
@@ -845,7 +1016,11 @@ p {
 
 .col-acciones {
     text-align: right;
-    width: 100px;
+    white-space: nowrap;
+    width: 120px;
+}
+.col-acciones .btn + .btn {
+    margin-left: 6px;
 }
 
 /* ============================================================
@@ -855,6 +1030,8 @@ p {
 .tabla-walter-wrap {
     overflow-x: auto;
     background: var(--bg-surface);
+    border: 2px solid var(--border-walter);
+    border-bottom: 0;
 }
 
 .tabla-walter {
@@ -870,7 +1047,7 @@ p {
     font-weight: 700;
     text-align: left;
     padding: 11px 12px;
-    border: 1px solid #6ba8d6;
+    border: 1px solid var(--border-walter);
     font-size: 12px;
     letter-spacing: 0.01em;
     white-space: nowrap;
@@ -878,31 +1055,28 @@ p {
 :root[data-theme="oscuro"] .tabla-walter thead th {
     background: linear-gradient(180deg, #1e40af 0%, #1e3a8a 100%);
     color: #e0f2fe;
-    border-color: #1e3a8a;
+    border-color: var(--border-walter);
 }
 
 .tabla-walter tbody td {
     padding: 10px 12px;
     color: var(--text-primary);
-    border: 1px solid var(--border-subtle);
+    border: 1px solid var(--border-walter);
     background: var(--bg-surface);
-    transition: background 0.15s ease;
     white-space: nowrap;
 }
 
-.tabla-walter tbody tr:hover td {
-    background: var(--bg-soft);
+/* Zebra fijo (no hover) */
+.tabla-walter tbody tr:nth-child(even) td {
+    background: var(--tabla-walter-zebra);
 }
 
-/* Fila seleccionada — azul intenso con texto blanco (como POS de Walter) */
+/* Fila seleccionada — azul intenso con texto blanco (POS de Walter) */
 .tabla-walter tbody tr.tw-selected td {
-    background: #3b82f6;
+    background: #3b82f6 !important;
     color: #ffffff;
     font-weight: 600;
     border-color: #2563eb;
-}
-.tabla-walter tbody tr.tw-selected:hover td {
-    background: #2563eb;
 }
 
 .tw-num {
@@ -917,6 +1091,9 @@ p {
     background: #2563eb !important;
     color: #ffffff;
 }
+.tabla-walter tbody tr:nth-child(even) td.tw-num {
+    background: var(--bg-canvas) !important;
+}
 
 .tw-right {
     text-align: right;
@@ -924,14 +1101,15 @@ p {
     font-size: 12.5px;
 }
 
-/* Footer estilo Walter — totales destacados */
+/* Footer estilo Walter — totales destacados, compactos */
 .tw-footer {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 32px;
-    padding: 20px 24px;
+    padding: 18px 22px;
     background: var(--bg-canvas);
-    border-top: 1px solid var(--border-default);
+    border: 2px solid var(--border-walter);
+    border-top: 1px solid var(--border-walter);
 }
 
 .tw-footer-label {
@@ -944,15 +1122,16 @@ p {
 .tw-footer-right {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 0;
     align-items: stretch;
 }
 .tw-totals-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 4px 12px;
-    font-size: 14px;
+    padding: 3px 14px;
+    font-size: 13.5px;
+    line-height: 1.4;
 }
 .tw-totals-row span {
     color: var(--text-secondary);
@@ -964,12 +1143,12 @@ p {
 }
 
 .tw-totals-grand {
-    margin-top: 8px;
-    padding: 12px;
+    margin-top: 10px;
+    padding: 10px 14px;
     background: var(--bg-surface);
     border: 2px solid #3b82f6;
     border-radius: var(--radius-md);
-    font-size: 16px;
+    font-size: 15px;
 }
 .tw-totals-grand span {
     color: #3b82f6;
@@ -978,7 +1157,7 @@ p {
 }
 .tw-totals-grand strong {
     color: #3b82f6;
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     font-weight: 800;
 }
 
@@ -1613,6 +1792,11 @@ p {
         <span class="brand-sigco">Sigco</span><span class="brand-web">Web</span>
     </div>
     <div class="topbar-actions">
+        <select class="density-select" id="density-select" onchange="setDensity(this.value)" aria-label="Tamaño de la interfaz">
+            <option value="compact">Compacto</option>
+            <option value="comfortable" selected>Cómodo</option>
+            <option value="spacious">Amplio</option>
+        </select>
         <button class="sound-toggle" id="sound-toggle" onclick="toggleSound()">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
                 <path d="M11 5L6 9H2v6h4l5 4V5z"/>
@@ -2247,6 +2431,20 @@ function setTheme(name) {
     document.querySelectorAll('.theme-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.theme === saved);
     });
+})();
+
+// ========== Density switcher ==========
+function setDensity(name) {
+    document.documentElement.setAttribute('data-density', name);
+    try { localStorage.setItem('sigco-density', name); } catch (e) {}
+}
+
+(function initDensity() {
+    let saved = 'comfortable';
+    try { saved = localStorage.getItem('sigco-density') || 'comfortable'; } catch (e) {}
+    document.documentElement.setAttribute('data-density', saved);
+    const sel = document.getElementById('density-select');
+    if (sel) sel.value = saved;
 })();
 
 // ========== Sound system ==========
