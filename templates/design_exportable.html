@@ -715,6 +715,87 @@ p {
     justify-content: flex-end;
 }
 
+/* Grilla colores por tipo de botón */
+.btn-colors-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.btn-colors-header {
+    display: grid;
+    grid-template-columns: 1fr 40px 40px 40px;
+    gap: 8px;
+    padding: 0 4px 6px;
+    border-bottom: 1px solid var(--border-subtle);
+}
+.btn-colors-header span {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    text-align: center;
+}
+.btn-colors-header span:first-child {
+    text-align: left;
+}
+.btn-colors-row {
+    display: grid;
+    grid-template-columns: 1fr 40px 40px 40px;
+    gap: 8px;
+    align-items: center;
+}
+.btn-colors-row .preview {
+    display: flex;
+    justify-content: flex-start;
+}
+.btn-colors-row .preview .btn {
+    pointer-events: none;
+    font-size: 12px;
+    padding: 6px 12px;
+}
+.btn-colors-row input[type="color"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 36px;
+    height: 32px;
+    border: 1.5px solid var(--border-default);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    background: transparent;
+    padding: 0;
+    overflow: hidden;
+}
+.btn-colors-row input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+.btn-colors-row input[type="color"]::-webkit-color-swatch {
+    border: 0;
+    border-radius: 4px;
+}
+.btn-colors-row input[type="color"]:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.config-link {
+    appearance: none;
+    background: transparent;
+    border: 0;
+    color: var(--brand);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 0;
+    cursor: pointer;
+    margin-top: 8px;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+.config-link:hover {
+    color: var(--brand-hover);
+}
+
 /* ============================================================
  * DENSIDADES — afectan TODO el sistema globalmente
  * ============================================================ */
@@ -976,9 +1057,12 @@ p {
 
 /* Primary — gradient brand */
 .btn-primary {
-    background: var(--gradient-primary);
-    color: white;
+    background: var(--cfg-btn-primary-bg, var(--gradient-primary));
+    color: var(--cfg-btn-primary-text, white);
     box-shadow: var(--shadow-sm), 0 4px 14px var(--brand-glow);
+}
+.btn-primary {
+    border-color: var(--cfg-btn-primary-border, var(--cfg-btn-border-color));
 }
 .btn-primary:hover {
     box-shadow: var(--shadow-md), 0 6px 20px var(--brand-glow);
@@ -987,8 +1071,9 @@ p {
 
 /* Success */
 .btn-success {
-    background: var(--success);
-    color: white;
+    background: var(--cfg-btn-success-bg, var(--success));
+    color: var(--cfg-btn-success-text, white);
+    border-color: var(--cfg-btn-success-border, var(--cfg-btn-border-color));
     box-shadow: var(--shadow-sm), 0 4px 14px var(--success-glow);
 }
 .btn-success:hover {
@@ -999,8 +1084,9 @@ p {
 
 /* Danger */
 .btn-danger {
-    background: var(--danger);
-    color: white;
+    background: var(--cfg-btn-danger-bg, var(--danger));
+    color: var(--cfg-btn-danger-text, white);
+    border-color: var(--cfg-btn-danger-border, var(--cfg-btn-border-color));
     box-shadow: var(--shadow-sm), 0 4px 14px var(--danger-glow);
 }
 .btn-danger:hover {
@@ -1011,8 +1097,9 @@ p {
 
 /* Warning */
 .btn-warning {
-    background: var(--warning);
-    color: white;
+    background: var(--cfg-btn-warning-bg, var(--warning));
+    color: var(--cfg-btn-warning-text, white);
+    border-color: var(--cfg-btn-warning-border, var(--cfg-btn-border-color));
     box-shadow: var(--shadow-sm), 0 4px 14px var(--warning-glow);
 }
 .btn-warning:hover {
@@ -1023,8 +1110,9 @@ p {
 
 /* Info */
 .btn-info {
-    background: var(--info);
-    color: white;
+    background: var(--cfg-btn-info-bg, var(--info));
+    color: var(--cfg-btn-info-text, white);
+    border-color: var(--cfg-btn-info-border, var(--cfg-btn-border-color));
     box-shadow: var(--shadow-sm), 0 4px 14px var(--info-glow);
 }
 .btn-info:hover {
@@ -1035,9 +1123,13 @@ p {
 
 /* Secondary */
 .btn-secondary {
-    background: var(--bg-canvas);
-    color: var(--text-primary);
-    border: 1px solid var(--border-default);
+    background: var(--cfg-btn-secondary-bg, var(--bg-canvas));
+    color: var(--cfg-btn-secondary-text, var(--text-primary));
+    border-color: var(--cfg-btn-secondary-border, var(--border-default));
+}
+.btn-secondary {
+    border-width: max(1px, var(--cfg-btn-border-width));
+    border-style: solid;
 }
 .btn-secondary:hover {
     background: var(--bg-soft);
@@ -2885,6 +2977,67 @@ body.tabla-sigco-zebra .tabla tbody tr:nth-child(even) td {
             </div>
         </div>
 
+        <!-- COLORES POR TIPO DE BOTÓN -->
+        <div class="config-section">
+            <h4 class="config-section-title">Colores por tipo de botón</h4>
+            <p style="margin: 0 0 10px; font-size: 11.5px; color: var(--text-muted);">
+                El cuadrito de cada columna abre el selector de color. El primero se ve "vacío" cuando usa el default del tema.
+            </p>
+
+            <div class="btn-colors-grid">
+                <div class="btn-colors-header">
+                    <span>Tipo</span>
+                    <span>Fondo</span>
+                    <span>Texto</span>
+                    <span>Borde</span>
+                </div>
+
+                <div class="btn-colors-row">
+                    <div class="preview"><button class="btn btn-primary btn-sm">Nuevo</button></div>
+                    <input type="color" data-tipo="primary" data-prop="bg" value="#0ea5e9" oninput="onBtnColor('primary','bg',this.value)">
+                    <input type="color" data-tipo="primary" data-prop="text" value="#ffffff" oninput="onBtnColor('primary','text',this.value)">
+                    <input type="color" data-tipo="primary" data-prop="border" value="#0ea5e9" oninput="onBtnColor('primary','border',this.value)">
+                </div>
+
+                <div class="btn-colors-row">
+                    <div class="preview"><button class="btn btn-success btn-sm">Guardar</button></div>
+                    <input type="color" data-tipo="success" data-prop="bg" value="#10b981" oninput="onBtnColor('success','bg',this.value)">
+                    <input type="color" data-tipo="success" data-prop="text" value="#ffffff" oninput="onBtnColor('success','text',this.value)">
+                    <input type="color" data-tipo="success" data-prop="border" value="#10b981" oninput="onBtnColor('success','border',this.value)">
+                </div>
+
+                <div class="btn-colors-row">
+                    <div class="preview"><button class="btn btn-info btn-sm">Editar</button></div>
+                    <input type="color" data-tipo="info" data-prop="bg" value="#3b82f6" oninput="onBtnColor('info','bg',this.value)">
+                    <input type="color" data-tipo="info" data-prop="text" value="#ffffff" oninput="onBtnColor('info','text',this.value)">
+                    <input type="color" data-tipo="info" data-prop="border" value="#3b82f6" oninput="onBtnColor('info','border',this.value)">
+                </div>
+
+                <div class="btn-colors-row">
+                    <div class="preview"><button class="btn btn-warning btn-sm">Atención</button></div>
+                    <input type="color" data-tipo="warning" data-prop="bg" value="#f59e0b" oninput="onBtnColor('warning','bg',this.value)">
+                    <input type="color" data-tipo="warning" data-prop="text" value="#ffffff" oninput="onBtnColor('warning','text',this.value)">
+                    <input type="color" data-tipo="warning" data-prop="border" value="#f59e0b" oninput="onBtnColor('warning','border',this.value)">
+                </div>
+
+                <div class="btn-colors-row">
+                    <div class="preview"><button class="btn btn-danger btn-sm">Eliminar</button></div>
+                    <input type="color" data-tipo="danger" data-prop="bg" value="#ef4444" oninput="onBtnColor('danger','bg',this.value)">
+                    <input type="color" data-tipo="danger" data-prop="text" value="#ffffff" oninput="onBtnColor('danger','text',this.value)">
+                    <input type="color" data-tipo="danger" data-prop="border" value="#ef4444" oninput="onBtnColor('danger','border',this.value)">
+                </div>
+
+                <div class="btn-colors-row">
+                    <div class="preview"><button class="btn btn-secondary btn-sm">Cancelar</button></div>
+                    <input type="color" data-tipo="secondary" data-prop="bg" value="#f1f5f9" oninput="onBtnColor('secondary','bg',this.value)">
+                    <input type="color" data-tipo="secondary" data-prop="text" value="#0c1d3a" oninput="onBtnColor('secondary','text',this.value)">
+                    <input type="color" data-tipo="secondary" data-prop="border" value="#cbd5e1" oninput="onBtnColor('secondary','border',this.value)">
+                </div>
+            </div>
+
+            <button class="config-link" onclick="resetBtnColors()">Restablecer colores de botones al default del tema</button>
+        </div>
+
         <!-- INPUTS -->
         <div class="config-section">
             <h4 class="config-section-title">Inputs</h4>
@@ -3212,7 +3365,16 @@ const CFG_DEFAULTS = {
     tablaZebra: false,
     tablaBorderColor: '#6ba8d6',
     cardRadius: 14,
-    animations: 'full'
+    animations: 'full',
+    // Colores por tipo de botón (null = usar default del tema)
+    btnColors: {
+        primary:   { bg: null, text: null, border: null },
+        success:   { bg: null, text: null, border: null },
+        info:      { bg: null, text: null, border: null },
+        warning:   { bg: null, text: null, border: null },
+        danger:    { bg: null, text: null, border: null },
+        secondary: { bg: null, text: null, border: null }
+    }
 };
 
 let sigcoCfg = Object.assign({}, CFG_DEFAULTS);
@@ -3250,6 +3412,20 @@ function aplicarCfg() {
     r.setProperty('--cfg-input-border-width', sigcoCfg.inputBorderWidth + 'px');
     r.setProperty('--cfg-card-radius', sigcoCfg.cardRadius + 'px');
     r.setProperty('--cfg-tabla-border-color', sigcoCfg.tablaBorderColor);
+
+    // Colores por tipo de botón
+    const tipos = ['primary', 'success', 'info', 'warning', 'danger', 'secondary'];
+    tipos.forEach(function(t) {
+        const c = sigcoCfg.btnColors[t] || {};
+        ['bg', 'text', 'border'].forEach(function(prop) {
+            const varName = '--cfg-btn-' + t + '-' + prop;
+            if (c[prop]) {
+                r.setProperty(varName, c[prop]);
+            } else {
+                r.removeProperty(varName);
+            }
+        });
+    });
 
     // Clases body
     const b = document.body;
@@ -3317,6 +3493,14 @@ function syncControles() {
     const animMap = { full: 0, reduced: 1, none: 2 };
     setSegmented('seg-animations',
         document.querySelectorAll('#seg-animations button')[animMap[sigcoCfg.animations]]);
+
+    // Colores por tipo de botón
+    document.querySelectorAll('.btn-colors-row input[type="color"]').forEach(function(inp) {
+        const t = inp.dataset.tipo, p = inp.dataset.prop;
+        if (sigcoCfg.btnColors[t] && sigcoCfg.btnColors[t][p]) {
+            inp.value = sigcoCfg.btnColors[t][p];
+        }
+    });
 }
 
 // Handlers
@@ -3376,6 +3560,35 @@ function onAnimations(v, btn) {
     aplicarCfg();
 }
 
+// Colores por tipo de botón
+function onBtnColor(tipo, prop, value) {
+    if (!sigcoCfg.btnColors[tipo]) sigcoCfg.btnColors[tipo] = { bg: null, text: null, border: null };
+    sigcoCfg.btnColors[tipo][prop] = value;
+    aplicarCfg();
+}
+
+function resetBtnColors() {
+    const tipos = ['primary', 'success', 'info', 'warning', 'danger', 'secondary'];
+    tipos.forEach(function(t) {
+        sigcoCfg.btnColors[t] = { bg: null, text: null, border: null };
+    });
+    // Resetear los inputs visuales a sus valores default
+    const defaults = {
+        primary:   { bg: '#0ea5e9', text: '#ffffff', border: '#0ea5e9' },
+        success:   { bg: '#10b981', text: '#ffffff', border: '#10b981' },
+        info:      { bg: '#3b82f6', text: '#ffffff', border: '#3b82f6' },
+        warning:   { bg: '#f59e0b', text: '#ffffff', border: '#f59e0b' },
+        danger:    { bg: '#ef4444', text: '#ffffff', border: '#ef4444' },
+        secondary: { bg: '#f1f5f9', text: '#0c1d3a', border: '#cbd5e1' }
+    };
+    document.querySelectorAll('.btn-colors-row input[type="color"]').forEach(function(inp) {
+        const t = inp.dataset.tipo, p = inp.dataset.prop;
+        if (defaults[t] && defaults[t][p]) inp.value = defaults[t][p];
+    });
+    aplicarCfg();
+    mostrarToast('info', 'Colores de botones restablecidos al default del tema.', 'Listo');
+}
+
 function resetConfig() {
     sigcoCfg = Object.assign({}, CFG_DEFAULTS);
     syncControles();
@@ -3413,10 +3626,28 @@ function generarCssExport() {
     css += ' * Generado: ' + new Date().toLocaleString('es-PE') + '\n';
     css += ' * ============================================================ */\n\n';
     css += ':root {\n';
-    css += '    /* Botones */\n';
+    css += '    /* Botones — forma */\n';
     css += '    --cfg-btn-radius: ' + c.btnRadius + 'px;\n';
     css += '    --cfg-btn-border-width: ' + c.btnBorderWidth + 'px;\n';
     css += '    --cfg-btn-border-color: ' + (c.btnBorderWidth > 0 ? c.btnBorderColor : 'transparent') + ';\n';
+
+    // Colores por tipo (solo si fueron personalizados)
+    const tipos = ['primary', 'success', 'info', 'warning', 'danger', 'secondary'];
+    let hasCustomColors = false;
+    tipos.forEach(function(t) {
+        const tc = c.btnColors[t] || {};
+        if (tc.bg || tc.text || tc.border) hasCustomColors = true;
+    });
+    if (hasCustomColors) {
+        css += '\n    /* Botones — colores personalizados por tipo */\n';
+        tipos.forEach(function(t) {
+            const tc = c.btnColors[t] || {};
+            if (tc.bg)     css += '    --cfg-btn-' + t + '-bg: ' + tc.bg + ';\n';
+            if (tc.text)   css += '    --cfg-btn-' + t + '-text: ' + tc.text + ';\n';
+            if (tc.border) css += '    --cfg-btn-' + t + '-border: ' + tc.border + ';\n';
+        });
+    }
+
     css += '\n    /* Inputs */\n';
     css += '    --cfg-input-radius: ' + c.inputRadius + 'px;\n';
     css += '    --cfg-input-border-width: ' + c.inputBorderWidth + 'px;\n';
@@ -3427,10 +3658,14 @@ function generarCssExport() {
     css += '}\n\n';
     css += '/* Comportamiento de botones */\n';
     if (c.btnShadow === 'none') {
-        css += 'body { --btn-shadow-mode: none; }\n';
         css += '.btn-primary, .btn-success, .btn-danger, .btn-warning, .btn-info { box-shadow: none !important; }\n';
     } else if (c.btnShadow === 'strong') {
-        css += '/* Sombra dramática activa */\n';
+        css += '/* Sombra dramática: glow más intenso */\n';
+        css += '.btn-primary { box-shadow: var(--shadow-md), 0 8px 28px var(--brand-glow), 0 0 0 1px var(--brand-glow); }\n';
+        css += '.btn-success { box-shadow: var(--shadow-md), 0 8px 28px var(--success-glow), 0 0 0 1px var(--success-glow); }\n';
+        css += '.btn-danger { box-shadow: var(--shadow-md), 0 8px 28px var(--danger-glow), 0 0 0 1px var(--danger-glow); }\n';
+        css += '.btn-warning { box-shadow: var(--shadow-md), 0 8px 28px var(--warning-glow), 0 0 0 1px var(--warning-glow); }\n';
+        css += '.btn-info { box-shadow: var(--shadow-md), 0 8px 28px var(--info-glow), 0 0 0 1px var(--info-glow); }\n';
     }
     if (c.btnHover === 'none') {
         css += '.btn:hover { transform: none !important; }\n';
@@ -3440,9 +3675,11 @@ function generarCssExport() {
         css += '.tabla tbody tr:nth-child(even) td { background: var(--bg-soft); }\n';
     }
     if (c.animations === 'reduced') {
-        css += '\n* { transition-duration: 0.08s !important; animation-duration: 0.15s !important; }\n';
+        css += '\n/* Animaciones reducidas */\n';
+        css += '* { transition-duration: 0.08s !important; animation-duration: 0.15s !important; }\n';
     } else if (c.animations === 'none') {
-        css += '\n*, *::before, *::after { transition: none !important; animation: none !important; }\n';
+        css += '\n/* Animaciones desactivadas */\n';
+        css += '*, *::before, *::after { transition: none !important; animation: none !important; }\n';
     }
 
     return css;
