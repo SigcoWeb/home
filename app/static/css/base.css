@@ -862,6 +862,11 @@ img { max-width: 100%; display: block; }
 /* ============================================================
  * Inputs / Selects / Textareas (zWalter-18)
  * ============================================================ */
+
+.input {
+    padding: 12px 14px;
+} 
+
 .input,
 input[type="text"],
 input[type="number"],
