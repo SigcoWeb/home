@@ -9,7 +9,8 @@
     <form onsubmit="event.preventDefault(); guardarFormaPago();" autocomplete="off">
 
       <label>Descripción:
-        <input id="fp-nombre"
+        <input class="sigco-input"
+               id="fp-nombre"
                name="nombre_forpag"
                maxlength="50"
                value="{{ forma.nombre_forpag if forma else '' }}"
@@ -18,7 +19,7 @@
 
       <div class="pe-2col">
         <label>Tipo:
-          <select id="fp-tipo" name="tipo_forpag" required>
+          <select class="sigco-input" id="fp-tipo" name="tipo_forpag" required>
             <option value="">— seleccionar —</option>
             {% for t in tipos %}
               <option value="{{ t }}" {% if forma and forma.tipo_forpag == t %}selected{% endif %}>{{ t }}</option>
@@ -26,7 +27,8 @@
           </select>
         </label>
         <label>Días:
-          <input id="fp-dias"
+          <input class="sigco-input"
+                 id="fp-dias"
                  name="dias"
                  type="number"
                  min="0"
