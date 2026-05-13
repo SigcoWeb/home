@@ -17,16 +17,16 @@
       hx-on::after-request="if(event.detail.successful) cerrarModal()"
     >
       <label>Nombre:
-        <input name="nombre_almacen" value="{{ almacen.nombre_almacen if almacen else '' }}" maxlength="50" required>
+        <input class="sigco-input" name="nombre_almacen" value="{{ almacen.nombre_almacen if almacen else '' }}" maxlength="50" required>
       </label>
       <label>Dirección:
-        <input name="direccion" value="{{ almacen.direccion if almacen and almacen.direccion else '' }}" maxlength="100">
+        <input class="sigco-input" name="direccion" value="{{ almacen.direccion if almacen and almacen.direccion else '' }}" maxlength="100">
       </label>
       <label>Localidad:
-        <input name="localidad" value="{{ almacen.localidad if almacen and almacen.localidad else '' }}" maxlength="100">
+        <input class="sigco-input" name="localidad" value="{{ almacen.localidad if almacen and almacen.localidad else '' }}" maxlength="100">
       </label>
       <label>Grupo:
-        <select name="id_grupo">
+        <select class="sigco-input" name="id_grupo">
           <option value="">-- Sin grupo --</option>
           {% for g in grupos %}
             <option value="{{ g.id_grupo }}"
