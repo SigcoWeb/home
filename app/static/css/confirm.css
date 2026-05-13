@@ -1,14 +1,15 @@
 /* ============================================================
- * Modal de confirmacion reusable
+ * Modal de confirmacion reusable (zWalter-18)
  * API: await mostrarConfirmacion(mensaje, opciones)
- * Posicion: centrado en pantalla con overlay oscuro.
- * Autofocus en Cancelar (mas seguro para acciones destructivas).
+ * Cierre obligatorio (Esc o botón). NO cierra al click fuera.
+ * Autofocus en Cancelar (más seguro para acciones destructivas).
  * ============================================================ */
 
 #confirm-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.72);
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(2px);
   z-index: 9998;
   display: flex;
   align-items: center;
@@ -22,29 +23,31 @@
 }
 
 .confirm-box {
-  background: var(--tb-card-bg, #1e293b);
-  color: var(--tb-text, #e2e8f0);
-  border-radius: 12px;
-  padding: 20px 22px 16px;
+  background: var(--bg-elevated, #ffffff);
+  color: var(--text-primary, #1a1a2e);
+  border: 1px solid var(--border-default, #e2e8f0);
+  border-radius: var(--radius-lg, 14px);
+  padding: 22px 24px 18px;
   width: 100%;
-  max-width: 420px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  max-width: 440px;
+  box-shadow: var(--shadow-lg, 0 20px 60px rgba(0, 0, 0, 0.3));
   animation: confirm-box-in 0.18s ease-out;
-  font-family: 'Exo 2', system-ui, sans-serif;
+  font-family: var(--font-display, 'Plus Jakarta Sans', system-ui, sans-serif);
 }
 
 .confirm-titulo {
-  font-size: 1.05rem;
-  font-weight: 600;
+  font-size: 1.1rem;
+  font-weight: 700;
   margin: 0 0 8px;
-  color: var(--tb-text, #f1f5f9);
+  color: var(--text-primary, #1a1a2e);
+  letter-spacing: -0.01em;
 }
 
 .confirm-mensaje {
   font-size: 0.95rem;
-  line-height: 1.4;
-  margin: 0 0 18px;
-  color: var(--tb-text-muted, #cbd5e1);
+  line-height: 1.5;
+  margin: 0 0 20px;
+  color: var(--text-secondary, #475569);
 }
 
 .confirm-botones {
@@ -54,29 +57,37 @@
 }
 
 .confirm-btn {
-  padding: 8px 16px;
-  border-radius: 8px;
+  padding: 9px 18px;
+  border-radius: var(--radius-md, 10px);
   border: 0;
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   font-family: inherit;
   cursor: pointer;
-  font-weight: 500;
-  transition: transform 0.08s ease, filter 0.12s ease;
+  font-weight: 600;
+  transition: transform 0.08s ease, filter 0.12s ease, background 0.12s ease;
   min-width: 90px;
+  color: #ffffff;
 }
 
-.confirm-btn:hover { filter: brightness(1.1); }
+.confirm-btn:hover { filter: brightness(1.08); transform: translateY(-1px); }
 .confirm-btn:active { transform: translateY(1px); }
-.confirm-btn:focus-visible { outline: 2px solid #60a5fa; outline-offset: 2px; }
+.confirm-btn:focus-visible { outline: 2px solid var(--brand, #60a5fa); outline-offset: 2px; }
 
+/* Cancelar — rojo outline (igual que .btn-sec / .btn-secundario) */
 .confirm-btn--cancel {
-  background: #334155;
-  color: #e2e8f0;
+  background: transparent;
+  color: var(--danger, #dc2626);
+  border: 2px solid var(--danger, #dc2626);
+  padding: 7px 16px;
+}
+.confirm-btn--cancel:hover {
+  background: var(--danger-bg, #fee2e2);
+  filter: none;
 }
 
-.confirm-btn--peligro      { background: #dc2626; color: #fff; }
-.confirm-btn--advertencia  { background: #d97706; color: #fff; }
-.confirm-btn--info         { background: #2563eb; color: #fff; }
+.confirm-btn--peligro     { background: var(--danger, #dc2626);   color: #fff; box-shadow: 0 4px 14px var(--danger-glow, rgba(220,38,38,0.4)); }
+.confirm-btn--advertencia { background: var(--warning, #d97706);  color: #fff; box-shadow: 0 4px 14px var(--warning-glow, rgba(217,119,6,0.4)); }
+.confirm-btn--info        { background: var(--info, #2563eb);     color: #fff; box-shadow: 0 4px 14px var(--info-glow, rgba(37,99,235,0.4)); }
 
 @keyframes confirm-overlay-in {
   from { opacity: 0; }
@@ -92,8 +103,8 @@
 }
 
 @media (max-width: 420px) {
-  .confirm-box { padding: 16px 18px 14px; }
+  .confirm-box { padding: 18px 20px 14px; }
   .confirm-titulo { font-size: 1rem; }
   .confirm-mensaje { font-size: 0.9rem; }
-  .confirm-btn { min-width: 80px; padding: 8px 12px; }
+  .confirm-btn { min-width: 80px; padding: 8px 14px; }
 }

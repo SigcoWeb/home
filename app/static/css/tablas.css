@@ -1,40 +1,22 @@
 /* =============================================
-   sigcoWeb — módulo Tablas (zWalter-01)
-   Paleta dark, paridad con Walter desktop.
+   sigcoWeb — módulo Tablas
+   Estilo Walter (zWalter-18) sobre sistema de tokens (tokens.css).
+   Las variables --tb-* legacy se redefinen por tema en tokens.css.
    ============================================= */
-
-:root {
-  --tb-bg:            #0a0a0a;
-  --tb-bg-alt:        #141414;
-  --tb-panel:         #1a1a1a;
-  --tb-input:         #111;
-  --tb-border:        #2a2a2a;
-  --tb-border-focus:  #2563eb;
-  --tb-azul:          #3b82f6;
-  --tb-azul-strong:   #2563eb;
-  --tb-azul-hover:    #1d4ed8;
-  --tb-activa:        #1e40af;
-  --tb-hover:         #1e293b;
-  --tb-text:          #e5e7eb;
-  --tb-text-dim:      #cbd5e1;
-  --tb-text-muted:    #94a3b8;
-  --tb-danger:        #dc2626;
-  --tb-danger-hover:  #b91c1c;
-}
 
 .tablas-wrap {
   display: flex;
-  min-height: 100vh;
-  background: var(--tb-bg);
-  color: var(--tb-text);
-  font-family: 'Inter', system-ui, sans-serif;
+  min-height: calc(100vh - 52px);
+  background: var(--bg-base);
+  color: var(--text-primary);
+  font-family: inherit;
 }
 
 /* ============ SIDEBAR ============ */
 .tablas-sidebar {
   width: 260px;
-  background: var(--tb-panel);
-  border-right: 1px solid var(--tb-border);
+  background: var(--bg-surface);
+  border-right: 1px solid var(--border-subtle);
   padding: 16px 8px;
   overflow-y: auto;
   max-height: 100vh;
@@ -42,7 +24,6 @@
   transition: width 0.2s ease, padding 0.2s ease, border-right-width 0.2s ease;
 }
 
-/* Colapso del sidebar (zWalter-11) */
 .tablas-sidebar.sidebar-colapsado {
   width: 0;
   padding-left: 0;
@@ -59,27 +40,29 @@
 }
 
 .tablas-sidebar__titulo {
-  color: var(--tb-azul);
+  color: var(--brand);
   font-weight: 700;
-  font-size: 18px;
+  font-size: 16px;
   text-align: center;
   margin-bottom: 12px;
-  letter-spacing: 1px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 .tablas-sidebar__buscador {
   width: 100%;
-  background: var(--tb-input);
-  border: 1px solid var(--tb-border);
-  color: var(--tb-text);
+  background: var(--bg-base);
+  border: 1px solid var(--border-default);
+  color: var(--text-primary);
   padding: 8px 12px;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   outline: none;
   margin-bottom: 12px;
   font-size: 13px;
 }
 .tablas-sidebar__buscador:focus {
-  border-color: var(--tb-border-focus);
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px var(--brand-glow);
 }
 
 .tablas-sidebar__nav {
@@ -90,16 +73,16 @@
 
 .tablas-sidebar__seccion {
   background: transparent;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
 }
 .tablas-sidebar__seccion > summary {
   cursor: pointer;
   padding: 8px 12px;
-  color: var(--tb-azul);
+  color: var(--brand);
   font-weight: 700;
   font-size: 13px;
   list-style: none;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   user-select: none;
 }
 .tablas-sidebar__seccion > summary::-webkit-details-marker { display: none; }
@@ -114,38 +97,38 @@
   content: "▼";
 }
 .tablas-sidebar__seccion > summary:hover {
-  background: var(--tb-hover);
+  background: var(--bg-soft);
 }
 
 .tablas-sidebar__opcion,
 .tablas-sidebar__opcion-suelta {
   display: block;
   padding: 6px 12px 6px 28px;
-  color: var(--tb-text-dim);
+  color: var(--text-secondary);
   font-size: 13px;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   text-decoration: none;
 }
 .tablas-sidebar__opcion-suelta {
   padding-left: 12px;
-  color: var(--tb-azul);
+  color: var(--brand);
   font-weight: 600;
 }
 .tablas-sidebar__seccion--disabled,
 .tablas-sidebar__opcion--disabled {
-  color: var(--tb-text-muted) !important;
+  color: var(--text-muted) !important;
   opacity: 0.55;
   cursor: not-allowed !important;
   pointer-events: none;
 }
 .tablas-sidebar__opcion:hover,
 .tablas-sidebar__opcion-suelta:hover {
-  background: var(--tb-hover);
-  color: #fff;
+  background: var(--bg-soft);
+  color: var(--text-primary);
 }
 .tablas-sidebar__opcion--activa {
-  background: var(--tb-activa);
-  color: #fff;
+  background: var(--brand);
+  color: var(--text-inverse);
 }
 
 /* ============ MAIN ============ */
@@ -160,18 +143,19 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 24px;
-  background: var(--tb-panel);
-  border-bottom: 1px solid var(--tb-border);
+  padding: 14px 24px;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-subtle);
 }
 .tablas-header h1 {
   font-size: 18px;
-  font-weight: 600;
-  color: var(--tb-text);
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
 }
 .tablas-header__user {
   font-size: 13px;
-  color: var(--tb-text-muted);
+  color: var(--text-muted);
 }
 
 .tablas-contenido {
@@ -185,120 +169,156 @@
   margin-bottom: 16px;
 }
 
-/* ============ TABLA ============ */
+/* ============================================================
+ * Tabla listado — estilo Walter (POS clásico) en los 3 temas
+ * Header gradient celeste · bordes celeste · zebra · hover · selected
+ * ============================================================ */
 .tablas-grid {
   width: 100%;
   border-collapse: collapse;
-  background: var(--tb-bg);
-  border: 1px solid var(--tb-border);
-  border-radius: 4px;
-  overflow: hidden;
   font-size: 13px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-walter);
+  border-radius: var(--radius-md);
+  overflow: hidden;
 }
-.tablas-grid thead {
-  background: var(--tb-input);
-}
-.tablas-grid th {
+
+.tablas-grid thead th {
+  background: var(--gradient-table-header);
+  color: var(--text-primary);
+  font-weight: 700;
   text-align: left;
-  padding: 10px 12px;
-  font-weight: 600;
-  color: var(--tb-text);
-  border-bottom: 1px solid var(--tb-border);
+  padding: 12px 14px;
+  border: 1px solid var(--border-walter);
+  font-size: 12.5px;
+  letter-spacing: 0.02em;
 }
-.tablas-grid td {
-  padding: 8px 12px;
-  border-bottom: 1px solid var(--tb-border);
-  color: var(--tb-text-dim);
+:root[data-theme="oscuro"] .tablas-grid thead th {
+  color: #e0f2fe;
 }
-.tablas-grid tbody tr:nth-child(even) {
-  background: var(--tb-bg-alt);
+
+.tablas-grid tbody td {
+  padding: 10px 14px;
+  color: var(--text-primary);
+  border: 1px solid var(--border-walter);
+  background: var(--bg-surface);
+  transition: background 0.12s ease;
 }
-.tablas-grid tbody tr:hover {
-  background: var(--tb-activa);
-  color: #fff;
+
+/* Zebra fijo en filas pares (NO en hover) */
+.tablas-grid tbody tr:nth-child(even) td {
+  background: var(--tabla-zebra);
 }
+
+/* Hover: distinto del zebra y del fondo normal */
 .tablas-grid tbody tr:hover td {
-  color: #fff;
+  background: var(--tabla-hover);
 }
-.tablas-grid .col-acciones {
-  width: 160px;
+
+/* Fila seleccionada (azul intenso, texto blanco bold) */
+.tablas-grid tbody tr.selected td,
+.tablas-grid tbody tr.row-selected td {
+  background: #3b82f6;
+  color: #ffffff;
+  font-weight: 600;
+  border-color: #2563eb;
+}
+
+/* Columna de acciones */
+.tablas-grid .col-acciones,
+.tablas-grid td.col-acciones {
+  width: 130px;
   text-align: right;
   white-space: nowrap;
 }
 
-/* ============ BOTONES ============ */
-.btn-primary, .btn-sec, .btn-danger {
-  border: none;
-  border-radius: 4px;
-  padding: 8px 16px;
-  font-size: 13px;
+/* Alineación derecha para columnas numéricas */
+.tablas-grid th.col-num,
+.tablas-grid td.col-num,
+.tablas-grid .text-right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Botón icono (Editar/Eliminar) — pequeño, cuadrado, no rompe la tabla */
+.btn-accion-icono {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border-radius: var(--radius-sm);
+  background: var(--bg-canvas);
+  color: var(--info);
+  border: 1px solid var(--border-default);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  font-weight: 500;
-  color: #fff;
-  transition: background 0.12s ease;
+  transition: all 0.15s ease;
+  vertical-align: middle;
+  margin-left: 4px;
 }
-.btn-primary {
-  background: var(--tb-azul-strong);
+.btn-accion-icono:first-child { margin-left: 0; }
+.btn-accion-icono svg { width: 15px; height: 15px; display: block; }
+.btn-accion-icono:hover {
+  background: var(--info);
+  color: #ffffff;
+  border-color: var(--info);
+  transform: translateY(-1px);
 }
-.btn-primary:hover {
-  background: var(--tb-azul-hover);
-}
-.btn-sec {
-  background: #374151;
-}
-.btn-sec:hover {
-  background: #475569;
-}
-.btn-danger {
-  background: var(--tb-danger);
-  padding: 8px 14px;
-}
-.btn-danger:hover {
-  background: var(--tb-danger-hover);
+.btn-accion-icono--peligro { color: var(--danger); }
+.btn-accion-icono--peligro:hover {
+  background: var(--danger);
+  color: #ffffff;
+  border-color: var(--danger);
 }
 
 /* ============ MODAL ============ */
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.65);
+  background: rgba(15, 23, 42, 0.55);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
 }
 .modal-dialog {
-  background: #1f2937;
-  border: 1px solid #374151;
-  border-radius: 8px;
-  padding: 20px 24px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: 22px 24px;
   min-width: 400px;
   max-width: 480px;
   width: 90%;
-  color: var(--tb-text);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-lg);
 }
 .modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 16px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #374151;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-subtle);
 }
 .modal-header h3 {
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
 }
 .modal-close {
   background: transparent;
   border: none;
-  color: var(--tb-text-muted);
-  font-size: 18px;
+  color: var(--text-muted);
+  font-size: 20px;
   cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+  transition: color 0.15s;
 }
 .modal-close:hover {
-  color: #fff;
+  color: var(--text-primary);
 }
 .modal-dialog form {
   display: flex;
@@ -309,76 +329,56 @@
   display: flex;
   flex-direction: column;
   font-size: 12px;
-  color: var(--tb-text-muted);
+  color: var(--text-secondary);
   gap: 4px;
-}
-.modal-dialog input,
-.modal-dialog select {
-  background: var(--tb-input);
-  border: 1px solid #374151;
-  color: var(--tb-text);
-  border-radius: 4px;
-  padding: 8px 10px;
-  font-size: 13px;
-  outline: none;
-}
-.modal-dialog input:focus,
-.modal-dialog select:focus {
-  border-color: var(--tb-border-focus);
+  font-weight: 600;
 }
 .modal-footer {
   display: flex;
   justify-content: flex-end;
-  gap: 8px;
+  gap: 10px;
   margin-top: 8px;
-  padding-top: 12px;
-  border-top: 1px solid #374151;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-subtle);
 }
 
 /* ============================================================
  * Transportistas (zWalter-07) — modal con grilla embebida
  * ============================================================ */
-
 .modal-transportista {
   max-width: 900px;
   width: 92%;
 }
-
 .tp-fila-estado {
   display: flex;
   align-items: center;
   gap: 12px;
   margin-bottom: 6px;
 }
-
 .toggle-switch-wrap {
   flex-direction: row !important;
   align-items: center !important;
   gap: 10px !important;
-  color: var(--tb-text-dim) !important;
+  color: var(--text-secondary) !important;
   font-size: 13px !important;
 }
-
 .tp-fila-2col {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
 }
-
 .tp-seccion {
-  border-top: 1px solid #374151;
+  border-top: 1px solid var(--border-subtle);
   padding-top: 12px;
   margin-top: 12px;
 }
-
 .tp-seccion h3 {
-  font-family: 'Exo 2', sans-serif;
+  font-family: inherit;
   font-size: 14px;
-  font-weight: 600;
-  color: var(--tb-azul);
+  font-weight: 700;
+  color: var(--brand);
   margin: 0 0 10px 0;
 }
-
 .tp-vehiculos-toolbar {
   display: flex;
   gap: 8px;
@@ -390,30 +390,38 @@
   width: 100%;
   border-collapse: collapse;
   font-size: 12.5px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-walter);
+  border-radius: var(--radius-md);
+  overflow: hidden;
 }
-
 #tabla-vehiculos th,
 #tabla-vehiculos td {
-  padding: 6px 10px;
+  padding: 8px 10px;
   text-align: left;
-  border-bottom: 1px solid #374151;
-  color: var(--tb-text-dim);
+  border: 1px solid var(--border-walter);
+  color: var(--text-primary);
 }
-
-#tabla-vehiculos thead {
-  background: var(--tb-input);
+#tabla-vehiculos thead th {
+  background: var(--gradient-table-header);
+  font-weight: 700;
+  color: var(--text-primary);
 }
-
 #tabla-vehiculos tbody tr {
   cursor: pointer;
   transition: background 0.1s;
 }
-#tabla-vehiculos tbody tr:hover   { background: rgba(37, 99, 235, 0.18); }
-#tabla-vehiculos tbody tr.row-selected {
-  background: var(--tb-activa);
-  color: #fff;
+#tabla-vehiculos tbody tr:nth-child(even) td {
+  background: var(--tabla-zebra);
 }
-#tabla-vehiculos tbody tr.row-selected td { color: #fff; }
+#tabla-vehiculos tbody tr:hover td {
+  background: var(--tabla-hover);
+}
+#tabla-vehiculos tbody tr.row-selected td {
+  background: #3b82f6;
+  color: #ffffff;
+  font-weight: 600;
+}
 
 /* Toggle switch (estado) */
 .toggle-switch {
@@ -427,7 +435,7 @@
   position: absolute;
   cursor: pointer;
   inset: 0;
-  background: #475569;
+  background: var(--border-default);
   border-radius: 24px;
   transition: 0.2s;
 }
@@ -436,38 +444,39 @@
   content: "";
   height: 18px; width: 18px;
   left: 3px; bottom: 3px;
-  background: white;
+  background: #ffffff;
   border-radius: 50%;
   transition: 0.2s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
 }
-.toggle-switch input:checked + .toggle-slider { background: #22c55e; }
+.toggle-switch input:checked + .toggle-slider { background: var(--success); }
 .toggle-switch input:checked + .toggle-slider::before { transform: translateX(20px); }
 
-/* Feedback de validacion RUC */
-.feedback-ok { color: #4ade80; font-size: 12px; margin-top: 4px; display: block; }
-.feedback-err { color: #f87171; font-size: 12px; margin-top: 4px; display: block; }
-.campo-valido { border-color: #22c55e !important; }
-.campo-invalido { border-color: #ef4444 !important; }
+/* Feedback de validación RUC */
+.feedback-ok { color: var(--success); font-size: 12px; margin-top: 4px; display: block; }
+.feedback-err { color: var(--danger); font-size: 12px; margin-top: 4px; display: block; }
+.campo-valido { border-color: var(--success) !important; }
+.campo-invalido { border-color: var(--danger) !important; }
 
-/* Sub-modal de vehiculo */
+/* Sub-modal de vehículo */
 .submodal-overlay {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(15, 23, 42, 0.6);
   z-index: 2000;
   align-items: center;
   justify-content: center;
 }
 .submodal-contenido {
-  background: #1f2937;
-  border: 1px solid #374151;
-  border-radius: 8px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
   padding: 18px 22px;
   max-width: 520px;
   width: 90%;
-  color: var(--tb-text);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-lg);
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -476,90 +485,41 @@
   display: flex;
   flex-direction: column;
   font-size: 12px;
-  color: var(--tb-text-muted);
+  color: var(--text-secondary);
   gap: 4px;
-}
-.submodal-contenido input,
-.submodal-contenido textarea {
-  background: var(--tb-input);
-  border: 1px solid #374151;
-  color: var(--tb-text);
-  border-radius: 4px;
-  padding: 8px 10px;
-  font-size: 13px;
-  outline: none;
-  font-family: inherit;
-}
-.submodal-contenido input:focus,
-.submodal-contenido textarea:focus { border-color: var(--tb-border-focus); }
-
-/* Botones de accion en listado: solo iconos */
-.btn-accion-icono {
-  padding: 6px 8px;
-  background: transparent;
-  border: 1px solid #374151;
-  border-radius: 4px;
-  cursor: pointer;
-  color: var(--tb-text-dim);
-  transition: background 0.15s, border-color 0.15s, color 0.15s;
-  vertical-align: middle;
-  margin-right: 4px;
-}
-.btn-accion-icono svg { width: 16px; height: 16px; display: block; }
-.btn-accion-icono:hover {
-  background: var(--tb-hover);
-  border-color: var(--tb-azul);
-  color: #fff;
-}
-.btn-accion-icono--peligro:hover {
-  background: rgba(220, 38, 38, 0.15);
-  border-color: var(--tb-danger);
-  color: #fca5a5;
+  font-weight: 600;
 }
 
 /* ============================================================
  * Tipo de Cambio (zWalter-08) — modal simple
  * ============================================================ */
-
 .modal-tipocambio {
   max-width: 520px;
   width: 92%;
 }
-
 .tc-fila-2col {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
 }
 
-/* Alineacion derecha para columnas numericas en el listado */
-.tablas-grid th.col-num,
-.tablas-grid td.col-num {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
 /* ============================================================
- * Personal (zWalter-09) — modal + badges de estado
+ * Personal (zWalter-09)
  * ============================================================ */
-
 .modal-personal {
   max-width: 620px;
   width: 92%;
 }
-
 .pe-seccion {
-  border-top: 1px solid var(--tb-border);
+  border-top: 1px solid var(--border-subtle);
   padding-top: 12px;
   margin-top: 12px;
 }
-
 .pe-2col {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
 }
-
 .pe-toggles-row {
   display: flex;
   flex-wrap: wrap;
@@ -567,47 +527,48 @@
   align-items: center;
   margin-top: 0.25rem;
 }
-
 .pe-toggle-item {
   display: flex;
   flex-direction: row !important;
   align-items: center;
   gap: 10px;
-  color: var(--tb-text-dim);
+  color: var(--text-secondary);
   font-size: 13px;
 }
 
-/* Badges de estado (reusable en listados) */
+/* ============================================================
+ * Badges (estado, etc.)
+ * ============================================================ */
 .badge {
-  display: inline-block;
-  padding: 2px 10px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  font-size: 11.5px;
+  font-weight: 600;
   line-height: 1.4;
 }
-.badge-success {
-  background: rgba(34, 197, 94, 0.15);
-  color: #4ade80;
+.badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
 }
-.badge-muted {
-  background: rgba(100, 116, 139, 0.15);
-  color: #94a3b8;
-}
+.badge-success { background: var(--success-bg); color: var(--success); }
+.badge-danger  { background: var(--danger-bg);  color: var(--danger); }
+.badge-warning { background: var(--warning-bg); color: var(--warning); }
+.badge-info    { background: var(--info-bg);    color: var(--info); }
+.badge-muted   { background: var(--bg-soft);    color: var(--text-muted); }
+.badge-muted::before { background: var(--text-muted); }
 
 /* ============================================================
- * Textareas — heredan estilo oscuro de inputs (zWalter-12)
- * Ámbito: dentro de modales o contenido de Tablas/Configuración.
+ * Textareas en modales / contenido
  * ============================================================ */
-
 .modal-dialog textarea,
 .submodal-contenido textarea,
 .tablas-contenido textarea {
-  background: var(--tb-input);
-  color: var(--tb-text);
-  border: 1px solid #374151;
-  border-radius: 4px;
-  padding: 8px 10px;
   font-family: inherit;
   font-size: 13px;
   line-height: 1.4;
@@ -615,58 +576,38 @@
   min-height: 60px;
   width: 100%;
   box-sizing: border-box;
-  outline: none;
-  transition: border-color 0.12s, background 0.12s;
-}
-
-.modal-dialog textarea:focus,
-.submodal-contenido textarea:focus,
-.tablas-contenido textarea:focus {
-  border-color: var(--tb-border-focus);
-}
-
-.modal-dialog textarea::placeholder,
-.submodal-contenido textarea::placeholder,
-.tablas-contenido textarea::placeholder {
-  color: var(--tb-text-muted);
-  opacity: 0.7;
 }
 
 /* ============================================================
- * Banner de TC SUNAT (zWalter-13)
+ * Banner TC SUNAT (zWalter-13)
  * ============================================================ */
-
 .banner-tc-sunat {
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 8px 12px;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   font-size: 0.85rem;
   margin-top: 8px;
   margin-bottom: 4px;
   line-height: 1.3;
   transition: opacity 0.2s ease;
 }
-
 .banner-tc-sunat--ok {
-  background: rgba(34, 197, 94, 0.15);
-  border: 1px solid rgba(34, 197, 94, 0.4);
-  color: #4ade80;
+  background: var(--success-bg);
+  border: 1px solid var(--success);
+  color: var(--success);
 }
-
 .banner-tc-sunat--warn {
-  background: rgba(217, 119, 6, 0.15);
-  border: 1px solid rgba(217, 119, 6, 0.4);
-  color: #fbbf24;
+  background: var(--warning-bg);
+  border: 1px solid var(--warning);
+  color: var(--warning);
 }
-
 .banner-tc-sunat--loading {
-  background: rgba(100, 116, 139, 0.15);
-  border: 1px solid rgba(100, 116, 139, 0.4);
-  color: #94a3b8;
+  background: var(--bg-soft);
+  border: 1px solid var(--border-default);
+  color: var(--text-muted);
 }
-
 .banner-tc-icon {
   flex-shrink: 0;
   font-weight: 700;
@@ -677,64 +618,51 @@
 /* ============================================================
  * Clasificador de Gastos (zWalter-16) — panel doble
  * ============================================================ */
-
 .clasif-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
   margin-top: 8px;
 }
-
 .clasif-panel {
-  background: var(--tb-panel);
-  border: 1px solid var(--tb-border);
-  border-radius: 8px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
   overflow: hidden;
 }
-
 .clasif-panel__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 12px 16px;
-  background: var(--tb-bg-alt);
-  border-bottom: 1px solid var(--tb-border);
+  background: var(--gradient-soft);
+  border-bottom: 1px solid var(--border-default);
 }
-
 .clasif-panel__header h3 {
   margin: 0;
   font-size: 0.95rem;
-  color: var(--tb-text);
-  font-weight: 600;
+  color: var(--text-primary);
+  font-weight: 700;
 }
-
 .clasif-panel .tablas-grid {
   width: 100%;
   margin: 0;
+  border: 0;
+  border-radius: 0;
 }
-
 .row-clagas1 {
   cursor: pointer;
   transition: background 0.12s;
 }
-
-.row-clagas1:hover {
-  background: var(--tb-hover);
-}
-
-.row-clagas1.selected {
-  background: var(--tb-activa);
-  color: var(--tb-text);
-}
-
 .row-clagas1.selected td {
-  color: inherit;
+  background: #3b82f6;
+  color: #ffffff;
+  font-weight: 600;
 }
-
 .texto-vacio {
   padding: 24px 16px;
   text-align: center;
-  color: var(--tb-text-muted);
+  color: var(--text-muted);
   font-style: italic;
 }
 
