@@ -284,7 +284,7 @@
 :root[data-density="compact"] input[type="date"],
 :root[data-density="compact"] select,
 :root[data-density="compact"] textarea {
-    padding: 6px 10px;
+    padding: 10px 10px;
     font-size: 12px;
 }
 :root[data-density="compact"] .tablas-grid tbody td { padding: 6px 10px; font-size: 12px; }
@@ -309,7 +309,7 @@
 :root[data-density="spacious"] input[type="date"],
 :root[data-density="spacious"] select,
 :root[data-density="spacious"] textarea {
-    padding: 12px 16px;
+    padding: 20px 16px;
     font-size: 15px;
 }
 :root[data-density="spacious"] .tablas-grid tbody td { padding: 14px 18px; font-size: 14px; }

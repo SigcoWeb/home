@@ -873,7 +873,7 @@ input[type="search"],
 select,
 textarea {
     width: 100%;
-    padding: 13px 14px;
+    padding: 17px 14px;
     font-family: inherit;
     font-size: 14px;
     color: var(--text-primary);
@@ -886,8 +886,8 @@ textarea {
 }
 
 .input {
-    padding: 10px 12px;
-} 
+    padding: 14px 12px;
+}
 
 
 .input:hover,
@@ -920,7 +920,7 @@ select {
     -webkit-appearance: none;
     -moz-appearance: none;
     padding-right: 38px;
-    min-height: 44px;
+    min-height: 52px;
     cursor: pointer;
     background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230ea5e9' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
