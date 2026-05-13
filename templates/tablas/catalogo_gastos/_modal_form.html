@@ -9,7 +9,8 @@
 
       <div class="pe-2col">
         <label>Código:
-          <input id="cg-codigo"
+          <input class="sigco-input"
+                 id="cg-codigo"
                  name="codigo_gasto"
                  maxlength="20"
                  value="{{ gasto.codigo_gasto if gasto else '' }}"
@@ -26,7 +27,8 @@
       </div>
 
       <label>Nombre del gasto:
-        <input id="cg-nombre"
+        <input class="sigco-input"
+               id="cg-nombre"
                name="nombre_gasto"
                maxlength="100"
                value="{{ gasto.nombre_gasto if gasto else '' }}"
@@ -34,7 +36,7 @@
       </label>
 
       <label>Unidad:
-        <select id="cg-unidad" name="id_unidad" required>
+        <select class="sigco-input" id="cg-unidad" name="id_unidad" required>
           <option value="">— seleccionar —</option>
           {% for u in unidades %}
             <option value="{{ u.id_unidad }}"
@@ -47,7 +49,7 @@
 
       <div class="pe-2col">
         <label>Clasificador 1:
-          <select id="cg-clagas1" name="id_clagas1" required onchange="cargarClagas2()">
+          <select class="sigco-input" id="cg-clagas1" name="id_clagas1" required onchange="cargarClagas2()">
             <option value="">— seleccionar —</option>
             {% for c in clagas1s %}
               <option value="{{ c.id_clagas1 }}"
@@ -58,7 +60,7 @@
           </select>
         </label>
         <label>Clasificador 2:
-          <select id="cg-clagas2" name="id_clagas2" required>
+          <select class="sigco-input" id="cg-clagas2" name="id_clagas2" required>
             <option value="">— seleccionar —</option>
             {% for c in clagas2s %}
               <option value="{{ c.id_clagas2 }}"
@@ -72,7 +74,8 @@
 
       <div class="pe-2col">
         <label>Precio Costo:
-          <input id="cg-precio"
+          <input class="sigco-input"
+                 id="cg-precio"
                  name="precio_costo"
                  type="number"
                  step="0.01"
@@ -83,7 +86,8 @@
       </div>
 
       <label>Nota:
-        <textarea id="cg-nota"
+        <textarea class="sigco-input"
+                  id="cg-nota"
                   name="nota"
                   rows="3"
                   maxlength="500">{{ gasto.nota if gasto and gasto.nota else '' }}</textarea>
