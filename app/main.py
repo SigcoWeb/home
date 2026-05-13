@@ -124,7 +124,6 @@ async def walter(request: Request):
 async def walter(request: Request):
     return templates.TemplateResponse("design_exportable.html", {"request": request})
 
-
 @app.get("/ping")
 async def ping():
     return {"status": "ok", "version": settings.APP_VERSION, "modo": settings.MODO_DEPLOY}
