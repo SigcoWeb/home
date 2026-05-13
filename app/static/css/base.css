@@ -1055,3 +1055,100 @@ select optgroup {
     font-weight: 700;
     font-style: normal;
 }
+
+/* ============================================================
+ * CLASE ÚNICA PARA INPUTS DE FORMULARIOS (zWalter-18d)
+ * Aplica a todos los <input>, <select>, <textarea> en modales
+ * y formularios de cualquier módulo. Un solo lugar controla la
+ * altura, padding y borde — modifica aquí para cambiar todos.
+ * ============================================================ */
+
+.sigco-input {
+    width: 100%;
+    padding: 14px 14px;
+    min-height: 48px;
+    box-sizing: border-box;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--text-primary);
+    background: var(--bg-surface);
+    border: var(--cfg-input-border-width, 2px) solid var(--border-default);
+    border-radius: var(--cfg-input-radius, 10px);
+    transition: all 0.2s ease;
+    outline: none;
+}
+
+.sigco-input:hover {
+    border-color: var(--border-strong);
+}
+
+.sigco-input:focus {
+    border-color: var(--border-focus);
+    box-shadow: 0 0 0 4px var(--brand-glow);
+}
+
+.sigco-input::placeholder {
+    color: var(--text-muted);
+}
+
+.sigco-input:disabled {
+    background: var(--bg-canvas);
+    color: var(--text-muted);
+    cursor: not-allowed;
+}
+
+textarea.sigco-input {
+    min-height: 96px;
+    padding: 12px 14px;
+    resize: vertical;
+    line-height: 1.5;
+}
+
+select.sigco-input {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding-right: 40px;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230ea5e9' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 16px;
+}
+
+:root[data-theme="oscuro"] select.sigco-input {
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2338bdf8' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+}
+
+:root[data-theme="claro"] select.sigco-input {
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+}
+
+/* ============================================================
+ * RED DE SEGURIDAD: inputs dentro de modales y formularios
+ * sin la clase .sigco-input también reciben altura mínima.
+ * Cubre casos olvidados o templates nuevos.
+ * ============================================================ */
+
+.modal-dialog input[type="text"]:not(.sigco-input),
+.modal-dialog input[type="number"]:not(.sigco-input),
+.modal-dialog input[type="email"]:not(.sigco-input),
+.modal-dialog input[type="password"]:not(.sigco-input),
+.modal-dialog input[type="date"]:not(.sigco-input),
+.modal-dialog input[type="tel"]:not(.sigco-input),
+.modal-dialog input:not([type]):not(.sigco-input),
+.modal-dialog select:not(.sigco-input),
+.modal-dialog textarea:not(.sigco-input),
+.form-grupo input[type="text"]:not(.sigco-input),
+.form-grupo input[type="number"]:not(.sigco-input),
+.form-grupo input[type="email"]:not(.sigco-input),
+.form-grupo input[type="password"]:not(.sigco-input),
+.form-grupo input[type="date"]:not(.sigco-input),
+.form-grupo input[type="tel"]:not(.sigco-input),
+.form-grupo input:not([type]):not(.sigco-input),
+.form-grupo select:not(.sigco-input),
+.form-grupo textarea:not(.sigco-input) {
+    min-height: 48px !important;
+    padding: 14px 14px !important;
+    box-sizing: border-box !important;
+}
