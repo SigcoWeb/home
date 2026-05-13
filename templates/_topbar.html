@@ -13,14 +13,26 @@
   </div>
 
   <div class="topbar-right">
-    <div class="user-dropdown" id="user-dropdown">
-      <button type="button" class="user-dropdown-toggle" onclick="toggleUserDropdown()">
-        <span class="user-icon">👤</span>
-        <span class="user-name">{{ _topbar_nombre }}</span>
-        <span class="user-caret">▾</span>
-      </button>
-      <div class="user-dropdown-menu" id="user-dropdown-menu" hidden>
-        <a href="/logout" class="user-dropdown-item">Cerrar sesión</a>
+    <div class="topbar-actions">
+      <select class="density-select" id="density-select" onchange="setDensity(this.value)" aria-label="Tamaño">
+        <option value="compact">Compacto</option>
+        <option value="comfortable" selected>Cómodo</option>
+        <option value="spacious">Amplio</option>
+      </select>
+      <div class="theme-switcher" role="group" aria-label="Tema">
+        <button type="button" class="theme-btn active" data-theme="sigco" onclick="setTheme('sigco')">Sigco</button>
+        <button type="button" class="theme-btn" data-theme="oscuro" onclick="setTheme('oscuro')">Oscuro</button>
+        <button type="button" class="theme-btn" data-theme="claro" onclick="setTheme('claro')">Claro</button>
+      </div>
+      <div class="user-dropdown" id="user-dropdown">
+        <button type="button" class="user-dropdown-toggle" onclick="toggleUserDropdown()">
+          <span class="user-icon">👤</span>
+          <span class="user-name">{{ _topbar_nombre }}</span>
+          <span class="user-caret">▾</span>
+        </button>
+        <div class="user-dropdown-menu" id="user-dropdown-menu" hidden>
+          <a href="/logout" class="user-dropdown-item">Cerrar sesión</a>
+        </div>
       </div>
     </div>
   </div>
