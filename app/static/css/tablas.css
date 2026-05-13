@@ -12,12 +12,16 @@
   font-family: inherit;
 }
 
-/* ============ SIDEBAR ============ */
+/* ============================================================
+ * SIDEBAR — oscuro azul FIJO en los 3 temas (zWalter-18a)
+ * Usa variables --sidebar-* definidas en tokens.css (NO se override).
+ * ============================================================ */
 .tablas-sidebar {
   width: 260px;
-  background: var(--bg-surface);
-  border-right: 1px solid var(--border-subtle);
-  padding: 16px 8px;
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--sidebar-border);
+  color: var(--sidebar-text);
+  padding: 16px 10px;
   overflow-y: auto;
   max-height: 100vh;
   flex-shrink: 0;
@@ -39,30 +43,44 @@
   .tablas-sidebar.sidebar-colapsado { display: none; }
 }
 
+/* Scrollbar más sutil dentro del sidebar oscuro */
+.tablas-sidebar::-webkit-scrollbar { width: 6px; }
+.tablas-sidebar::-webkit-scrollbar-track { background: transparent; }
+.tablas-sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-full);
+}
+.tablas-sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
 .tablas-sidebar__titulo {
-  color: var(--brand);
+  color: var(--sidebar-section-title);
   font-weight: 700;
-  font-size: 16px;
+  font-size: 12px;
   text-align: center;
   margin-bottom: 12px;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .tablas-sidebar__buscador {
   width: 100%;
-  background: var(--bg-base);
-  border: 1px solid var(--border-default);
-  color: var(--text-primary);
+  background: var(--sidebar-search-bg);
+  border: 1px solid var(--sidebar-search-border);
+  color: var(--sidebar-search-text);
   padding: 8px 12px;
   border-radius: var(--radius-sm);
   outline: none;
   margin-bottom: 12px;
   font-size: 13px;
 }
+.tablas-sidebar__buscador::placeholder {
+  color: var(--sidebar-text-muted);
+}
 .tablas-sidebar__buscador:focus {
-  border-color: var(--border-focus);
-  box-shadow: 0 0 0 3px var(--brand-glow);
+  border-color: var(--sidebar-section-title);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
 }
 
 .tablas-sidebar__nav {
@@ -78,9 +96,11 @@
 .tablas-sidebar__seccion > summary {
   cursor: pointer;
   padding: 8px 12px;
-  color: var(--brand);
+  color: var(--sidebar-section-title);
   font-weight: 700;
-  font-size: 13px;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
   list-style: none;
   border-radius: var(--radius-sm);
   user-select: none;
@@ -90,45 +110,48 @@
   content: "▶";
   display: inline-block;
   margin-right: 6px;
-  font-size: 10px;
+  font-size: 9px;
   transition: transform 0.15s ease;
 }
 .tablas-sidebar__seccion[open] > summary::before {
   content: "▼";
 }
 .tablas-sidebar__seccion > summary:hover {
-  background: var(--bg-soft);
+  background: var(--sidebar-hover-bg);
 }
 
 .tablas-sidebar__opcion,
 .tablas-sidebar__opcion-suelta {
   display: block;
-  padding: 6px 12px 6px 28px;
-  color: var(--text-secondary);
+  padding: 8px 12px 8px 28px;
+  color: var(--sidebar-text);
   font-size: 13px;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
   text-decoration: none;
+  transition: all 0.15s ease;
 }
 .tablas-sidebar__opcion-suelta {
   padding-left: 12px;
-  color: var(--brand);
+  color: var(--sidebar-section-title);
   font-weight: 600;
 }
 .tablas-sidebar__seccion--disabled,
 .tablas-sidebar__opcion--disabled {
-  color: var(--text-muted) !important;
-  opacity: 0.55;
+  color: var(--sidebar-text-muted) !important;
+  opacity: 0.6;
   cursor: not-allowed !important;
   pointer-events: none;
 }
 .tablas-sidebar__opcion:hover,
 .tablas-sidebar__opcion-suelta:hover {
-  background: var(--bg-soft);
-  color: var(--text-primary);
+  background: var(--sidebar-hover-bg);
+  color: var(--sidebar-text-active);
 }
 .tablas-sidebar__opcion--activa {
-  background: var(--brand);
-  color: var(--text-inverse);
+  background: var(--sidebar-active-bg);
+  color: var(--sidebar-text-active);
+  font-weight: 600;
+  box-shadow: var(--sidebar-active-glow);
 }
 
 /* ============ MAIN ============ */
@@ -178,9 +201,10 @@
   border-collapse: collapse;
   font-size: 13px;
   background: var(--bg-surface);
-  border: 1px solid var(--border-walter);
+  border: 2px solid var(--border-walter);
   border-radius: var(--radius-md);
   overflow: hidden;
+  box-shadow: var(--shadow-sm);
 }
 
 .tablas-grid thead th {
@@ -391,9 +415,10 @@
   border-collapse: collapse;
   font-size: 12.5px;
   background: var(--bg-surface);
-  border: 1px solid var(--border-walter);
+  border: 2px solid var(--border-walter);
   border-radius: var(--radius-md);
   overflow: hidden;
+  box-shadow: var(--shadow-sm);
 }
 #tabla-vehiculos th,
 #tabla-vehiculos td {

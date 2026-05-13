@@ -6,25 +6,45 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
+/* ============================================================
+ * SIDEBAR — colores FIJOS en los 3 temas (zWalter-18a)
+ * NO repetir dentro de los bloques [data-theme] para que no se override.
+ * ============================================================ */
+:root {
+    --sidebar-bg: #0c1d3a;
+    --sidebar-bg-soft: #102744;
+    --sidebar-border: rgba(255, 255, 255, 0.08);
+    --sidebar-text: #cbd5e1;
+    --sidebar-text-muted: #64748b;
+    --sidebar-text-active: #ffffff;
+    --sidebar-hover-bg: rgba(56, 189, 248, 0.1);
+    --sidebar-active-bg: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%);
+    --sidebar-active-glow: 0 4px 14px rgba(14, 165, 233, 0.4);
+    --sidebar-section-title: #38bdf8;
+    --sidebar-search-bg: rgba(255, 255, 255, 0.04);
+    --sidebar-search-border: rgba(255, 255, 255, 0.1);
+    --sidebar-search-text: #e0f2fe;
+}
+
 /* ---------- Tema: Sigco (default) ---------- */
 :root,
 :root[data-theme="sigco"] {
-    --bg-base: #f0f9ff;
-    --bg-canvas: #e0f2fe;
+    --bg-base: #dbeafe;
+    --bg-canvas: #bfdbfe;
     --bg-surface: #ffffff;
     --bg-elevated: #ffffff;
-    --bg-soft: rgba(14, 165, 233, 0.06);
+    --bg-soft: rgba(14, 165, 233, 0.08);
 
     --text-primary: #0c1d3a;
     --text-secondary: #475569;
     --text-muted: #94a3b8;
     --text-inverse: #ffffff;
 
-    --border-subtle: rgba(14, 165, 233, 0.22);
-    --border-default: rgba(14, 165, 233, 0.38);
-    --border-strong: rgba(14, 165, 233, 0.6);
+    --border-subtle: rgba(14, 165, 233, 0.3);
+    --border-default: rgba(14, 165, 233, 0.5);
+    --border-strong: rgba(14, 165, 233, 0.7);
     --border-focus: #0ea5e9;
-    --border-walter: #6ba8d6;
+    --border-walter: #60a5fa;
 
     --brand: #0ea5e9;
     --brand-hover: #0284c7;
@@ -33,9 +53,9 @@
 
     --gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #2563eb 50%, #6366f1 100%);
     --gradient-soft: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 50%, #7dd3fc 100%);
-    --gradient-canvas: radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.12) 0%, transparent 50%),
-                       radial-gradient(at 100% 0%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
-                       linear-gradient(180deg, #f0f9ff 0%, #ffffff 100%);
+    --gradient-canvas: radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.2) 0%, transparent 50%),
+                       radial-gradient(at 100% 0%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                       linear-gradient(180deg, #dbeafe 0%, #bfdbfe 100%);
     --gradient-table-header: linear-gradient(180deg, #cfe7fb 0%, #97c8ee 100%);
     --tabla-zebra: rgba(14, 165, 233, 0.06);
     --tabla-hover: rgba(14, 165, 233, 0.14);
@@ -184,11 +204,11 @@
     --text-muted: #a1a1aa;
     --text-inverse: #fafafa;
 
-    --border-subtle: rgba(0, 0, 0, 0.12);
-    --border-default: rgba(0, 0, 0, 0.22);
-    --border-strong: rgba(0, 0, 0, 0.35);
+    --border-subtle: rgba(0, 0, 0, 0.18);
+    --border-default: rgba(0, 0, 0, 0.3);
+    --border-strong: rgba(0, 0, 0, 0.42);
     --border-focus: #2563eb;
-    --border-walter: #94a3b8;
+    --border-walter: #64748b;
 
     --brand: #2563eb;
     --brand-hover: #1d4ed8;
