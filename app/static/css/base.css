@@ -834,28 +834,29 @@ img { max-width: 100%; display: block; }
 }
 .btn-warning:hover { filter: brightness(1.08); transform: translateY(-1px); }
 
-/* DANGER / Eliminar — rojo sólido */
+/* DANGER / Eliminar — rojo sólido con borde según tema (zWalter-18c) */
 .btn-danger,
 .btn-peligro {
-    background: var(--danger);
+    background: var(--cfg-btn-danger-bg, var(--danger));
     color: #ffffff;
+    border: 2px solid var(--cfg-btn-danger-border, transparent);
     box-shadow: var(--shadow-sm), 0 4px 14px var(--danger-glow);
 }
 .btn-danger:hover,
 .btn-peligro:hover { filter: brightness(1.08); transform: translateY(-1px); }
 
-/* SECONDARY / Cancelar — rojo outline (ambos rojos pero distinguibles) */
+/* SECONDARY / Cancelar — rojo sólido con borde según tema (zWalter-18c)
+   Walter pidió ambos botones rojos sólidos, distinguidos por color del borde. */
 .btn-sec,
 .btn-secundario {
-    background: transparent;
-    color: var(--danger);
-    border: 2px solid var(--danger);
-    box-shadow: none;
-    padding: 8px 16px;
+    background: var(--cfg-btn-secondary-bg, var(--bg-canvas));
+    color: var(--cfg-btn-secondary-text, var(--text-primary));
+    border: 2px solid var(--cfg-btn-secondary-border, var(--border-default));
+    box-shadow: var(--shadow-sm), 0 4px 14px var(--danger-glow);
 }
 .btn-sec:hover,
 .btn-secundario:hover {
-    background: var(--danger-bg);
+    filter: brightness(1.08);
     transform: translateY(-1px);
 }
 
@@ -869,24 +870,33 @@ input[type="number"],
 input[type="email"],
 input[type="password"],
 input[type="date"],
+input[type="tel"],
 input[type="search"],
 select,
 textarea {
     width: 100%;
-    padding: 17px 14px;
+    padding: 14px 14px;
+    min-height: 48px;
+    box-sizing: border-box;
     font-family: inherit;
     font-size: 14px;
     color: var(--text-primary);
     background: var(--bg-surface);
-    border: 2px solid var(--border-default);
-    border-radius: var(--radius-md);
+    border: var(--cfg-input-border-width, 2px) solid var(--border-default);
+    border-radius: var(--cfg-input-radius, var(--radius-md));
     transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
     outline: none;
     line-height: 1.4;
 }
 
 .input {
-    padding: 14px 12px;
+    padding: 14px 14px;
+    min-height: 48px;
+}
+
+textarea {
+    min-height: 80px;
+    padding: 12px 14px;
 }
 
 
@@ -920,7 +930,7 @@ select {
     -webkit-appearance: none;
     -moz-appearance: none;
     padding-right: 38px;
-    min-height: 52px;
+    min-height: 48px;
     cursor: pointer;
     background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230ea5e9' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
     background-repeat: no-repeat;

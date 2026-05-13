@@ -201,7 +201,7 @@
   border-collapse: collapse;
   font-size: 13px;
   background: var(--bg-surface);
-  border: 2px solid var(--border-walter);
+  border: 2px solid var(--cfg-tabla-border-color, var(--border-walter));
   border-radius: 0;
   overflow: visible;
   box-shadow: var(--shadow-sm);
@@ -415,7 +415,7 @@
   border-collapse: collapse;
   font-size: 12.5px;
   background: var(--bg-surface);
-  border: 2px solid var(--border-walter);
+  border: 2px solid var(--cfg-tabla-border-color, var(--border-walter));
   border-radius: 0;
   overflow: visible;
   box-shadow: var(--shadow-sm);
@@ -652,8 +652,8 @@
 .clasif-panel {
   background: var(--bg-surface);
   border: 1px solid var(--border-default);
-  border-radius: var(--radius-md);
-  overflow: hidden;
+  border-radius: 0;
+  overflow: visible;
 }
 .clasif-panel__header {
   display: flex;

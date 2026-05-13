@@ -24,6 +24,14 @@
     --sidebar-search-bg: rgba(255, 255, 255, 0.04);
     --sidebar-search-border: rgba(255, 255, 255, 0.1);
     --sidebar-search-text: #e0f2fe;
+
+    /* ===== Configuración personalizada de Walter (zWalter-18c) ===== */
+    --cfg-btn-radius: 10px;
+    --cfg-btn-border-width: 0px;
+    --cfg-btn-border-color: transparent;
+    --cfg-input-radius: 10px;
+    --cfg-input-border-width: 2px;
+    --cfg-card-radius: 14px;
 }
 
 /* ---------- Tema: Sigco (default) ---------- */
@@ -119,6 +127,14 @@
     --sombra-lg:  var(--shadow-lg);
     --radio:      var(--radius-md);
     --radio-sm:   var(--radius-sm);
+
+    /* ===== Personalización Walter (zWalter-18c) ===== */
+    --cfg-tabla-border-color: #6ba8d6;
+    --cfg-btn-danger-bg: #e70808;
+    --cfg-btn-danger-border: #000000;
+    --cfg-btn-secondary-bg: #e70808;
+    --cfg-btn-secondary-text: #fafafa;
+    --cfg-btn-secondary-border: #fafafa;
 }
 
 /* ---------- Tema: Oscuro ---------- */
@@ -189,6 +205,13 @@
     --tb-danger: #dc2626;
     --tb-danger-hover: #b91c1c;
     --tb-card-bg: var(--bg-surface);
+
+    /* ===== Personalización Walter (zWalter-18c) ===== */
+    --cfg-tabla-border-color: #1e40af;
+    --cfg-btn-danger-bg: #e70808;
+    --cfg-btn-danger-border: #000000;
+    --cfg-btn-secondary-bg: #e70808;
+    --cfg-btn-secondary-border: #fafafa;
 }
 
 /* ---------- Tema: Claro ---------- */
@@ -257,6 +280,14 @@
     --tb-danger: var(--danger);
     --tb-danger-hover: #b91c1c;
     --tb-card-bg: var(--bg-surface);
+
+    /* ===== Personalización Walter (zWalter-18c) ===== */
+    --cfg-tabla-border-color: #264f94;
+    --cfg-btn-danger-bg: #e70808;
+    --cfg-btn-danger-border: #fafafa;
+    --cfg-btn-secondary-bg: #e70808;
+    --cfg-btn-secondary-text: #fafafa;
+    --cfg-btn-secondary-border: #000000;
 }
 
 /* ---------- Densidades — escala global de tamaño ---------- */
