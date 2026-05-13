@@ -862,11 +862,6 @@ img { max-width: 100%; display: block; }
 /* ============================================================
  * Inputs / Selects / Textareas (zWalter-18)
  * ============================================================ */
-
-.input {
-    padding: 12px 14px;
-} 
-
 .input,
 input[type="text"],
 input[type="number"],
@@ -888,6 +883,12 @@ textarea {
     outline: none;
     line-height: 1.4;
 }
+
+.input {
+    padding: 10px 12px;
+} 
+
+
 .input:hover,
 input[type="text"]:hover,
 input[type="number"]:hover,
