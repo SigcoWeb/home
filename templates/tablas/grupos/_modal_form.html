@@ -17,7 +17,7 @@
       hx-on::after-request="if(event.detail.successful) cerrarModal()"
     >
       <label>Nombre:
-        <input name="nombre_grupo" value="{{ grupo.nombre_grupo if grupo else '' }}" maxlength="50" required>
+        <input class="sigco-input" name="nombre_grupo" value="{{ grupo.nombre_grupo if grupo else '' }}" maxlength="50" required>
       </label>
       <div class="modal-footer">
         <button type="submit" class="btn-primary">Guardar</button>
