@@ -9,7 +9,8 @@
 
       <div class="pe-2col">
         <label>Código:
-          <input id="ds-codigo"
+          <input class="sigco-input"
+                 id="ds-codigo"
                  name="codigo_docsunat"
                  inputmode="numeric"
                  maxlength="2"
@@ -18,7 +19,8 @@
                  required>
         </label>
         <label>Abreviado:
-          <input id="ds-abreviado"
+          <input class="sigco-input"
+                 id="ds-abreviado"
                  name="abreviado_docsunat"
                  maxlength="10"
                  value="{{ doc.abreviado_docsunat if doc and doc.abreviado_docsunat else '' }}">
@@ -26,7 +28,8 @@
       </div>
 
       <label>Nombre:
-        <input id="ds-nombre"
+        <input class="sigco-input"
+               id="ds-nombre"
                name="nombre_docsunat"
                maxlength="200"
                value="{{ doc.nombre_docsunat if doc else '' }}"
