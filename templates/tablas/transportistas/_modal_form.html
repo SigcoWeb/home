@@ -17,7 +17,8 @@
       </div>
 
       <label>RUC:
-        <input id="tp-ruc"
+        <input class="sigco-input"
+               id="tp-ruc"
                name="ruc"
                inputmode="numeric"
                maxlength="11"
@@ -27,7 +28,8 @@
       </label>
 
       <label>Razón Social / Nombre:
-        <input id="tp-nombre"
+        <input class="sigco-input"
+               id="tp-nombre"
                name="nombre"
                maxlength="200"
                value="{{ transportista.nombre if transportista else '' }}"
@@ -35,7 +37,8 @@
       </label>
 
       <label>Dirección:
-        <input id="tp-direccion"
+        <input class="sigco-input"
+               id="tp-direccion"
                name="direccion"
                maxlength="200"
                value="{{ transportista.direccion if transportista and transportista.direccion else '' }}">
@@ -43,13 +46,15 @@
 
       <div class="tp-fila-2col">
         <label>Localidad:
-          <input id="tp-localidad"
+          <input class="sigco-input"
+                 id="tp-localidad"
                  name="localidad"
                  maxlength="100"
                  value="{{ transportista.localidad if transportista and transportista.localidad else '' }}">
         </label>
         <label>Celular:
-          <input id="tp-celular"
+          <input class="sigco-input"
+                 id="tp-celular"
                  name="celular"
                  maxlength="20"
                  value="{{ transportista.celular if transportista and transportista.celular else '' }}">
@@ -57,7 +62,8 @@
       </div>
 
       <label>Correo:
-        <input id="tp-correo"
+        <input class="sigco-input"
+               id="tp-correo"
                name="correo"
                type="email"
                maxlength="100"
