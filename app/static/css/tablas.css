@@ -202,8 +202,8 @@
   font-size: 13px;
   background: var(--bg-surface);
   border: 2px solid var(--border-walter);
-  border-radius: var(--radius-md);
-  overflow: hidden;
+  border-radius: 0;
+  overflow: visible;
   box-shadow: var(--shadow-sm);
 }
 
@@ -416,8 +416,8 @@
   font-size: 12.5px;
   background: var(--bg-surface);
   border: 2px solid var(--border-walter);
-  border-radius: var(--radius-md);
-  overflow: hidden;
+  border-radius: 0;
+  overflow: visible;
   box-shadow: var(--shadow-sm);
 }
 #tabla-vehiculos th,

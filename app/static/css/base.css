@@ -872,7 +872,7 @@ input[type="search"],
 select,
 textarea {
     width: 100%;
-    padding: 10px 14px;
+    padding: 13px 14px;
     font-family: inherit;
     font-size: 14px;
     color: var(--text-primary);
@@ -913,6 +913,7 @@ select {
     -webkit-appearance: none;
     -moz-appearance: none;
     padding-right: 38px;
+    min-height: 44px;
     cursor: pointer;
     background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230ea5e9' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
@@ -984,6 +985,7 @@ select {
     font-size: 12px;
     font-weight: 600;
     padding: 5px 28px 5px 12px;
+    min-height: 0;
     border-radius: var(--radius-full);
     cursor: pointer;
     background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23cbd5e1' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
@@ -1005,4 +1007,34 @@ select {
     .theme-switcher { padding: 2px; }
     .theme-btn { padding: 4px 8px; font-size: 11px; }
     .density-select { font-size: 11px; padding: 4px 22px 4px 10px; }
+}
+
+/* ============================================================
+ * Dropdown nativo: <option> legible en los 3 temas (zWalter-18b)
+ * Soporte: Chrome, Edge, Firefox. Safari macOS puede ignorar parte.
+ * ============================================================ */
+select option {
+    background: var(--bg-elevated);
+    color: var(--text-primary);
+    padding: 10px 14px;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+select option:checked {
+    background: var(--brand);
+    color: #ffffff;
+    font-weight: 600;
+}
+
+select option:hover {
+    background: var(--bg-soft);
+    color: var(--text-primary);
+}
+
+select optgroup {
+    background: var(--bg-canvas);
+    color: var(--text-secondary);
+    font-weight: 700;
+    font-style: normal;
 }
