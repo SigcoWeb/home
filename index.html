@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIGCO SYSTEMS - Sistemas de Facturación Electrónica</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <img src="imgs/logo.png" alt="SIGCO SYSTEMS Logo">
+            </div>
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#servicios">Servicios</a></li>
+                    <li><a href="#modulos">Módulos</a></li>
+                    <li><a href="#nosotros">Nosotros</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Carrusel Integrado con Hero -->
+    <section class="hero-carousel" id="inicio">
+        <div class="carousel">
+            <div class="carousel-slide">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Sistema de Facturación">
+                <div class="carousel-overlay">
+                    <div class="hero-content">
+                        <h2>Soluciones Tecnológicas para tu Empresa</h2>
+                        <p>Especialistas en sistemas de facturación electrónica y servicios de informática en Iquitos, Perú</p>
+                        <a href="#contacto" class="btn">Contáctanos</a>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Módulo de Ventas">
+                <div class="carousel-overlay">
+                    <div class="hero-content">
+                        <h2>Sistemas de Gestión Empresarial</h2>
+                        <p>Módulos integrados para optimizar todos los procesos de tu negocio</p>
+                        <a href="#modulos" class="btn">Ver Módulos</a>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Servicios de Informática">
+                <div class="carousel-overlay">
+                    <div class="hero-content">
+                        <h2>Soporte Técnico Especializado</h2>
+                        <p>Asistencia profesional para garantizar el funcionamiento óptimo de tus sistemas</p>
+                        <a href="#servicios" class="btn">Nuestros Servicios</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-nav">
+            <button id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+            <button id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        <div class="carousel-dots">
+            <span class="dot active"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="servicios">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nuestros Servicios</h2>
+                <p>Soluciones integrales diseñadas para optimizar la gestión de tu empresa</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3>Desarrollo de Software Personalizado</h3>
+                    <p>Creación de sistemas a medida que se adaptan perfectamente a los procesos únicos de tu empresa, garantizando máxima eficiencia y productividad.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                    </div>
+                    <h3>Facturación Electrónica SUNAT</h3>
+                    <p>Implementación completa de facturación electrónica 100% compatible con los requisitos de la SUNAT, incluyendo boletas, facturas y notas.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>Soporte Técnico</h3>
+                    <p>Asistencia técnica especializada con respuesta inmediata, mantenimiento preventivo y correctivo para garantizar operatividad continua.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <h3>Implementación en la Nube</h3>
+                    <p>Migración segura de tus sistemas a la nube, permitiendo acceso remoto, backup automático y mayor flexibilidad operativa.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Consultoría Tecnológica</h3>
+                    <p>Análisis y diagnóstico de procesos empresariales para implementar las mejores soluciones tecnológicas que impulsen tu crecimiento.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Seguridad Informática</h3>
+                    <p>Protección integral de tus datos, backups programados, antivirus empresariales y políticas de seguridad robustas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modules Section -->
+    <section class="services" id="modulos" style="background-color: #f5f7fa;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Módulos del Sistema</h2>
+                <p>Plataforma integral con módulos especializados para cada área de tu empresa</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-warehouse"></i>
+                    </div>
+                    <h3>Gestión de Almacén</h3>
+                    <p>Control completo de inventarios, kardex valorizado, gestión de stock mínimo/máximo, reportes de rotación y valuación de inventarios en tiempo real.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <h3>Ventas y CRM</h3>
+                    <p>Gestión integral de clientes, cotizaciones, pedidos, notas de venta, control de créditos y cartera de clientes con historial completo.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-receipt"></i>
+                    </div>
+                    <h3>Facturación Electrónica</h3>
+                    <p>Emisión masiva de comprobantes electrónicos, comunicación directa con SUNAT, libros electrónicos (SIRE) automatizados.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-cash-register"></i>
+                    </div>
+                    <h3>Caja y Tesorería</h3>
+                    <p>Control de ingresos/egresos, arqueos de caja, conciliación bancaria automática, cuentas por pagar y gestión de cobranzas.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                    <h3>Producción y Costos</h3>
+                    <p>Gestión de órdenes de producción, control de materia prima, cálculo de costos estándar y reales, rendimientos y eficiencia operativa.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h3>Contabilidad Integral</h3>
+                    <p>Gestión contable, Libros contables automatizados, plan de cuentas personalizable, balances generales, estados de resultados y análisis financiero.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Recursos Humanos</h3>
+                    <p>Gestión de planillas, control de asistencia, vacaciones, beneficios sociales y reportes legales para el área de personal.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <h3>Logística y Compras</h3>
+                    <p>Control de órdenes de compra, gestión de proveedores, cotizaciones comparativas y seguimiento de entregas y calidad.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3>Business Intelligence</h3>
+                    <p>Dashboards ejecutivos, reportes gerenciales personalizados, indicadores KPI y análisis predictivo para toma de decisiones.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="nosotros">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>Sobre SIGCO SYSTEMS</h2>
+                    <p>Con más de 15 años de experiencia en el mercado peruano, nos hemos consolidado como líderes en desarrollo de sistemas de gestión empresarial en la región Loreto - Iquitos.</p>
+                    <p>Nuestro equipo de ingenieros especializados combina conocimiento técnico con comprensión profunda de los procesos empresariales locales, ofreciendo soluciones que realmente funcionan en el contexto peruano.</p>
+                    <p>Creemos en el acompañamiento continuo, por eso ofrecemos capacitación permanente, actualizaciones constantes y soporte técnico especializado para garantizar el éxito de cada implementación.</p>
+                    <a href="#contacto" class="btn">Contáctanos</a>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="Oficina de capacitación con computadoras">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contacto">
+        <div class="container">
+            <div class="section-title">
+                <h2>Contáctanos</h2>
+                <p>Estamos aquí para ayudarte a optimizar la gestión de tu empresa</p>
+            </div>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Ubicación</h3>
+                            <p>Iquitos - Perú</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Teléfono</h3>
+                            <p>944 831 711</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Email</h3>
+                            <p>sigcosystems@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Horario de Atención</h3>
+                            <p>Lunes - Viernes: 9:00 AM - 7:00 PM</p>
+                            <p>Sábados: 9:00 AM - 1:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Nombre</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Teléfono</label>
+                            <input type="tel" id="phone" name="phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="service">Servicio de Interés</label>
+                            <select id="service" name="service">
+                                <option value="">Seleccione un servicio</option>
+                                <option value="facturacion">Facturación Electrónica</option>
+                                <option value="almacen">Módulo de Almacén</option>
+                                <option value="ventas">Módulo de Ventas</option>
+                                <option value="caja">Caja y Bancos</option>
+                                <option value="produccion">Producción</option>
+                                <option value="contabilidad">Contabilidad</option>
+                                <option value="soporte">Soporte Técnico</option>
+                                <option value="consultoria">Consultoría Tecnológica</option>
+                                <option value="implementacion">Implementación en la Nube</option>
+                                <option value="otro">Otro</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Mensaje</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Enviar Mensaje</button>
+                        <div id="formMessage" class="form-message"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>SIGCO SYSTEMS</h3>
+                    <p>Especialistas en sistemas de gestión comercial, asesoramos y proveemos de informática.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul>
+                        <li><a href="#inicio">Inicio</a></li>
+                        <li><a href="#servicios">Servicios</a></li>
+                        <li><a href="#modulos">Módulos</a></li>
+                        <li><a href="#nosotros">Nosotros</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Módulos</h3>
+                    <ul>
+                        <li><a href="#">Almacén</a></li>
+                        <li><a href="#">Ventas</a></li>
+                        <li><a href="#">Facturación Electrónica</a></li>
+                        <li><a href="#">Caja y Bancos</a></li>
+                        <li><a href="#">Producción</a></li>
+                        <li><a href="#">Contabilidad</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contacto</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Iquitos - Perú</li>
+                        <li><i class="fas fa-phone"></i> +51 944 831 711</li>
+                        <li><i class="fas fa-envelope"></i> sigcosystems@gmail.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 SIGCO SYSTEMS. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float Button -->
+    <a href="https://wa.me/51944831711?text=Hola%20SIGCO%20SYSTEMS,%20me%20interesa%20conocer%20más%20sobre%20sus%20servicios" 
+       class="whatsapp-float" 
+       target="_blank"
+       aria-label="Chatear por WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+        <div class="whatsapp-tooltip">¿Necesitas ayuda?</div>
+    </a>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
