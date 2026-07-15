@@ -1,4 +1,5 @@
 FROM python:3.11-alpine
-WORKDIR /
+WORKDIR /app
 COPY . .
-CMD python -m http.server ${PORT:-8000}
+EXPOSE 8000
+CMD ["python", "-u", "-m", "http.server", "8000", "--bind", "0.0.0.0"]
